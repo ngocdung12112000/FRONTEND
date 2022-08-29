@@ -63,10 +63,10 @@
                         </div>
                     </div>
                     <div class="total-exp-chart">
-                        <Chart :size="{ width: 400, height: 230 }" :data="data" :margin="margin" :direction="direction">
+                        <Chart :size="{ width: 400, height: 230 }"  :data="data" :margin="margin" :direction="direction">
                             <template #layers>
                                 <Grid strokeDasharray="2,2" />
-                                <Line :dataKeys="['name', 'pl']" />
+                                <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
                             </template>
                         </Chart>
                     </div>
@@ -79,6 +79,7 @@
 <script>
 import { ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
+// import $ from "jquery";
 export default {
     components: { Chart, Grid, Line },
     setup() {
@@ -129,7 +130,6 @@ export default {
 .personal {
     position: sticky;
     top: 93px;
-    /* background: rgb(195, 195, 223); */
     height: 835px;
 }
 
@@ -282,12 +282,16 @@ export default {
     left: 0;
     height: 14px;
     width: 100px;
-    background-color: #8884d8;
+    background-color: #ffc800;
     border-radius: 10px;
 }
 
 .total-exp-chart {
     width: 100%;
     height: 250px;
+}
+
+.chart svg{
+    padding-top: 10px;
 }
 </style>

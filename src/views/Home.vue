@@ -134,7 +134,6 @@ export default {
     margin-top: 20px;
 }
 
-
 .scroll-top {
     border: 2px solid #e6e6e6;
     padding: 10px;

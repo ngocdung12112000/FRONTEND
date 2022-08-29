@@ -48,7 +48,9 @@
                     <div class="user-img section-item-img"></div>
                     <div v-show="isHoverUserImg" class="user-info">
                         <div class="user-account text-start">Tài khoản</div>
-                        <div class="user-profile text-start">Hồ sơ</div>
+                        <router-link to="/profile">
+                            <div class="user-profile text-start">Hồ sơ</div>
+                        </router-link>
                         <div class="help text-start">Trợ giúp</div>
                         <div class="logout text-start">Đăng xuất</div>
                     </div>
