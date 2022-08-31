@@ -49,7 +49,7 @@
                     <div v-show="isHoverUserImg" class="user-info">
                         <div class="user-account text-start">Tài khoản</div>
                         <router-link to="/profile">
-                            <div class="user-profile text-start">Hồ sơ</div>
+                            <div @click="toProfile" class="user-profile text-start">Hồ sơ</div>
                         </router-link>
                         <div class="help text-start">Trợ giúp</div>
                         <div class="logout text-start">Đăng xuất</div>
@@ -73,6 +73,9 @@ export default {
             $(".section-item").removeClass("selected");
             $(`.${name}`).addClass("selected");
         },
+        toProfile() {
+            $('.section-item').removeClass("selected");
+        }
     },
 
 }
@@ -182,11 +185,20 @@ export default {
 }
 
 .user-info > div {
-    padding: 8px;
+    padding: 8px 12px;
+    color: #49bcf1;
+}
+
+.user-info a > div {
+    padding: 8px 12px;
     color: #49bcf1;
 }
 
 .user-info > div:hover {
+    background-color: #ececec;
+}
+
+.user-info a > div:hover {
     background-color: #ececec;
 }
 

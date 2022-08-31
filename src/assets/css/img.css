@@ -174,4 +174,20 @@
     height: 15px;
 }
 
+.img-clock {
+    background-image: url(../images/icon-clock.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 16px;
+    height: 16px;
+}
+
+.img-followers {
+    background-image: url(../images/icon-followers.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 16px;
+    height: 13px;
+}
+
 
