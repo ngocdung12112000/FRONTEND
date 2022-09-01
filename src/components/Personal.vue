@@ -15,7 +15,7 @@
             <div class="line"></div>
             <div class="rank-users">
                 <div v-for="(user, index) in listUser" :key="user.id" class="user-item"
-                    :class="{ selected: currentUser.id == user.id }">
+                    :class="{ selected: currentUser.id == user.id }" @click="() => userClick(user.id)">
                     <div class="user-info">
                         <div class="user-index"> {{ index + 1 }} </div>
                         <div class="user-avatar ms-2">
@@ -121,7 +121,9 @@ export default {
     },
 
     methods: {
-
+        userClick(id) {
+            this.$router.push(`/profile/${id}`)
+        }
     }
 }
 </script>

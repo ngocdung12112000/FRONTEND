@@ -4,13 +4,13 @@
         <div class="profile-info">
             <div class="info-section">
                 <div class="profile-avatar">
-                    Z
+                    {{ userId }}
                     <div class="icon-edit d-flex align-items-center justify-content-center">
                         <div class="img-icon-edit"></div>
                     </div>
                 </div>
                 <div class="profile-detail">
-                    <div class="profile-name fw-bold fs-2 text-dark">Zaxua</div>
+                    <div class="profile-name fw-bold fs-2 text-dark">{{ userId }}</div>
                     <div class="profile-username text-black-50 my-2">Zaxua</div>
                     <div class="joined-date text-black-50 my-2 d-flex align-items-center">
                         <div class="img-clock me-2"></div>
@@ -20,11 +20,13 @@
                         <div class="img-followers me-2"></div>
                         Đang theo dõi 0 / 0 Người theo dõi
                     </div>
-                    <svg viewBox="0 0 82 66" data-test="flag-en" style="height: 37.0244px; width: 46px; margin-top: 10px;">
-                        <image height="3168" href="../assets/images/countries.svg" 
-                        width="82" xlink:href="../assets/images/countries.svg">
-                    </image></svg>
-                    
+                    <svg viewBox="0 0 82 66" data-test="flag-en"
+                        style="height: 37.0244px; width: 46px; margin-top: 10px;">
+                        <image height="3168" href="../assets/images/countries.svg" width="82"
+                            xlink:href="../assets/images/countries.svg">
+                        </image>
+                    </svg>
+
                 </div>
             </div>
             <div class="edit-wrapper">
@@ -140,9 +142,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="achievement-item d-flex border border-0 fw-bolder fs-4 text-black-50 ms-4">
-                            Xem thêm
-                        </div>
+                        <router-link to="/">
+                            <div class="achievement-item d-flex border border-0 fw-bolder fs-4 text-black-50 ms-4"
+                                style="cursor: pointer;">
+                                Xem thêm
+                            </div>
+                        </router-link>
+
                     </div>
                 </div>
             </div>
@@ -150,16 +156,45 @@
                 <div class="friend-title">Bạn bè</div>
                 <div class="friend-wrapper">
                     <div class="friend-tabs d-flex col-12 flex-wrap">
-                        <div class="following col-6" :class="{active : !toggleTab}" @click="toggleTab = false">
+                        <div class="following col-6" :class="{ active: !toggleTab }" @click="toggleTab = false">
                             Đang theo dõi
                         </div>
-                        <div class="follower col-6" :class="{active : toggleTab}" @click="toggleTab = true">
+                        <div class="follower col-6" :class="{ active: toggleTab }" @click="toggleTab = true">
                             Người theo dõi
                         </div>
                     </div>
                     <div class="friend-list">
                         <div class="following-list" v-show="!toggleTab">
-                            Kết nối bạn bè giúp học vui và hiệu quả hơn.
+                            <div class="following-item my-2 py-2">
+                                <div class="d-flex">
+                                    <div class="following-avatar mx-2">
+                                        <img class="rounded-circle" src="../assets/images/user.jpg" alt="pic">
+                                    </div>
+                                    <div class="following-name mx-2">
+                                        <div class="fw-bold"> HIii </div>
+                                        <div class="following-score text-black-50"> 100 KN</div>
+                                    </div>
+                                </div>
+                                <div class="btn-follow">
+                                    <img src="../assets/images/add-follow.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="following-item my-2 py-2 border-0">
+                                <div class="d-flex">
+                                    <div class="following-avatar mx-2">
+                                        <img class="rounded-circle" src="../assets/images/user.jpg" alt="pic">
+                                    </div>
+                                    <div class="following-name mx-2">
+                                        <div class="fw-bold"> HIii </div>
+                                        <div class="following-score text-black-50"> 100 KN</div>
+                                    </div>
+                                </div>
+                                <div class="btn-follow">
+                                    <img src="../assets/images/add-follow.svg" alt="">
+                                </div>
+                            </div>
+                            
+                            <span v-show="false">Kết nối bạn bè giúp học vui và hiệu quả hơn.</span>
                         </div>
                         <div class="follower-list" v-show="toggleTab">
                             Chưa có người theo dõi
@@ -173,18 +208,23 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
+import { useRoute } from "vue-router";
 export default {
     mounted() {
         $("svg").attr("viewBox", `1 ${this.countryCode} 82 66`);
+        const route = useRoute();
+        this.userId = route.params.id;
+
     },
     data() {
         return {
             countryCode: 1190, // Vietnam,
             toggleTab: false,
+            userId: "",
         };
     },
     methods: {
-        
+
     },
 
 }
@@ -194,6 +234,7 @@ export default {
 .profile {
     padding: 0 80px;
 }
+
 .profile-info {
     display: flex;
     justify-content: space-between;
@@ -272,7 +313,7 @@ export default {
     width: 40px;
 }
 
-.statistic-section .statistic-item{
+.statistic-section .statistic-item {
     display: flex;
     width: 46%;
     align-items: center;
@@ -294,12 +335,12 @@ export default {
 
 .friend-section .friend-wrapper {
     width: 100%;
-    height: 388px;
+    /* height: 388px; */
     border: 2px solid #e6e6e6;
     border-radius: 20px;
 }
 
-.friend-tabs > div{
+.friend-tabs>div {
     border-bottom: 2px solid #e6e6e6;
     display: flex;
     justify-content: center;
@@ -309,10 +350,15 @@ export default {
     font-weight: bold;
     cursor: pointer;
 }
-.friend-tabs > div:hover,
-.friend-tabs > div.active{
+
+.friend-tabs>div:hover,
+.friend-tabs>div.active {
     border-bottom: 2px solid #1caff6;
     color: #1caff6;
+}
+
+.achievement-section a {
+    text-decoration: none;
 }
 
 .achievement-list {
@@ -364,5 +410,30 @@ export default {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.following-list .following-item {
+    width: 100%;
+    display: flex;
+    border-bottom: 2px solid #e6e6e6;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-follow {
+    width: 41px;
+    height: 32px;
+    border-radius: 10px;
+    background-color: #1CB0F6;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.btn-follow:hover {
+    background-color: #31b8f7;
 }
 </style>

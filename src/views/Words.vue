@@ -33,19 +33,19 @@
                 <div>Thuật toán của Duolingo sẽ tính toán khi nào bạn nên luyện tập từ vựng để có thể ghi nhớ từ một cách lâu dài.</div>
                 <div class="strength-list">
                     <div class="strength-item">
-                        <div class="img-skill-strength-sprite_1 me-3"></div>
+                        <div class="img-skill-strength-sprite_4 me-3"></div>
                         <span>Xuất sắc</span>
                     </div>
                     <div class="strength-item">
-                        <div class="img-skill-strength-sprite_2 me-3"></div>
+                        <div class="img-skill-strength-sprite_3 me-3"></div>
                         <span>Vẫn tốt</span>
                     </div>
                     <div class="strength-item">
-                        <div class="img-skill-strength-sprite_3 me-3"></div>
+                        <div class="img-skill-strength-sprite_2 me-3"></div>
                         <span>Đến lúc luyện tập rồi</span>
                     </div>
                     <div class="strength-item">
-                        <div class="img-skill-strength-sprite_4 me-3"></div>
+                        <div class="img-skill-strength-sprite_1 me-3"></div>
                         <span>Đã quên</span>
                     </div>
                 </div>

@@ -48,7 +48,7 @@
                     <div class="user-img section-item-img"></div>
                     <div v-show="isHoverUserImg" class="user-info">
                         <div class="user-account text-start">Tài khoản</div>
-                        <router-link to="/profile">
+                        <router-link to="/profile/1">
                             <div @click="toProfile" class="user-profile text-start">Hồ sơ</div>
                         </router-link>
                         <div class="help text-start">Trợ giúp</div>
