@@ -95,7 +95,7 @@
                                     <div class="text-black-50">3/7</div>
                                 </div>
                                 <div class="achievement-item-process my-3">
-                                    <div class="achievement-item-process-done"></div>
+                                    <div class="achievement-item-process-done" :style="{width: `${(3/7)*100}%` }"></div>
                                 </div>
                                 <div class="achievement-item-description text-black-50">
                                     Đạt chuỗi 7 ngày streak
@@ -115,7 +115,7 @@
                                     <div class="text-black-50">561/1000</div>
                                 </div>
                                 <div class="achievement-item-process my-3">
-                                    <div class="achievement-item-process-done"></div>
+                                    <div class="achievement-item-process-done" :style="{width: `${(561/1000)*100}%` }"></div>
                                 </div>
                                 <div class="achievement-item-description text-black-50">
                                     Đạt được 1000 KN
@@ -135,14 +135,14 @@
                                     <div class="text-black-50">213/250</div>
                                 </div>
                                 <div class="achievement-item-process my-3">
-                                    <div class="achievement-item-process-done"></div>
+                                    <div class="achievement-item-process-done" :style="{width: `${(213/250)*100}%` }"></div>
                                 </div>
                                 <div class="achievement-item-description text-black-50">
                                     Học 250 từ mới
                                 </div>
                             </div>
                         </div>
-                        <router-link to="/">
+                        <router-link to="/achievements">
                             <div class="achievement-item d-flex border border-0 fw-bolder fs-4 text-black-50 ms-4"
                                 style="cursor: pointer;">
                                 Xem thêm

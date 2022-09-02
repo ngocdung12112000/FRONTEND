@@ -1,17 +1,30 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-    <Header />
-      <router-view />
-    
+    <Header v-if="isShowHeader"/>
+    <router-view />
+
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
 import Header from "./views/layouts/Header.vue";
 export default {
-  name: "App",
-  components: {
-    Header,
-  },
+    name: "App",
+    components: {
+        Header,
+    },
+    data() {
+        return {
+            // isShowHeader: false,
+        };
+    },
+    computed: {
+        isShowHeader() {
+            if(this.$route.name === "Login" || this.$route.name === "Register") {
+                return false;
+            }
+            return true;
+        },
+    },
 };
 </script>
 <!-- eslint-disable prettier/prettier -->

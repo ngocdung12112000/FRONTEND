@@ -1,5 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
+    <!-- <Header /> -->
     <div class="home container d-flex justify-content-between">
         <div class="col-8 lesson-wrapper">
             <div v-for="item in list" :key="item.id">

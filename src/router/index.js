@@ -1,14 +1,28 @@
+/* eslint-disable prettier/prettier */
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Shop from "../views/Shop.vue";
 import Words from "../views/Words.vue";
 import Profile from "../views/Profile.vue";
+import Achievements from "../views/Achievements.vue";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
   {
     path: "/about",
@@ -39,6 +53,11 @@ const routes = [
     path: "/profile/:id",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/achievements",
+    name: "Achievements",
+    component: Achievements,
   },
 ];
 
