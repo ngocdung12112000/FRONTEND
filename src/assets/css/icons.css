@@ -1,0 +1,44 @@
+.icon {
+    background-image: url(../images/ICON/icon-sprite8.svg);
+    cursor: pointer;
+}
+
+.icon-cancel {
+    width: 18px;
+    height: 18px;
+    background-position: -373px -153px;
+}
+
+.icon-keyboard {
+    background-image: url(../images/ICON/keyboard.svg);
+    width: 27px;
+    height: 19px;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.icon-word-bank {
+    background-image: url(../images/ICON/word-bank.svg);
+    width: 27px;
+    height: 19px;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.icon-speaker {
+    width: 20px;
+    height: 20px;
+    background-position: -221px -123px;
+}
+
+.icon-accurate {
+    width: 41px;
+    height: 31px;
+    background-position: -165px -90px;
+}
+
+.icon-inaccurate {
+    width: 31px;
+    height: 31px;
+    background-position: -208px -90px;
+}

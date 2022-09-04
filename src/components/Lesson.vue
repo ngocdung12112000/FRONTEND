@@ -7,7 +7,7 @@
             <div class="lesson-title-content">{{ lesson.content }}</div>
         </div>
         <div class="lesson-content mt-4">
-            <div class="d-flex justify-content-center" @click="goToLesson">
+            <div class="d-flex justify-content-center" @click="() => goToLesson(lesson.id, 1)">
                 <div class="lesson-wrapper" 
                     :class="{ disabled: isDisabled, 
                               current: currentPageUser == lesson.id && currentLessonUser == 1 }" 
@@ -30,8 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3">
-                
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 2)">
                 <div class="lesson-wrapper" 
                     :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 2, 
                                 current: currentPageUser == lesson.id && currentLessonUser == 2 ,
@@ -56,7 +55,7 @@
                 </div>
                 
             </div>
-            <div class="d-flex justify-content-center mt-3">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 3)">
                 <div class="lesson-wrapper"
                     :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 3, 
                               current: currentPageUser == lesson.id && currentLessonUser == 3,
@@ -80,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 4)">
                 <div class="lesson-wrapper"
                     :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 4, 
                               current: currentPageUser == lesson.id && currentLessonUser == 4,
@@ -112,7 +111,7 @@
 
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 5)">
                 <div class="lesson-wrapper"
                     :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 5, 
                               current: currentPageUser == lesson.id && currentLessonUser == 5,
@@ -179,8 +178,16 @@ export default {
         $('.current:before').css('color', this.lesson.colors[0]);
     },
     methods: {
-        goToLesson() {
-            this.$router.push("/about");
+        goToLesson(lessonId, lessonPage) {
+            if(lessonId ==  this.currentPageUser && lessonPage == this.currentLessonUser) {
+                this.$router.push({
+                    name: 'GamePlay',
+                    params: {
+                        currentPageUser: this.currentPageUser,
+                        currentLessonUser: this.currentLessonUser
+                    },
+                });
+            }
         },
     },
     computed: {

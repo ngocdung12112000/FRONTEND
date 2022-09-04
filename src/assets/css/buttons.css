@@ -1,0 +1,65 @@
+.word-wrapper {
+    background-color: #cfcfcf;
+    border-radius: 0.8rem;
+    padding: 1px;
+}
+
+.word-wrapper.selected {
+    background-color: #84d8ff;
+}
+
+.my-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 2px solid #cfcfcf;
+    outline: none;
+    border-radius: 0.8rem;
+    background-color: #fff;
+}
+
+.my-button.long {
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    height: 58px;
+    font-size: 20px;
+}
+
+.word-wrapper.selected .my-button.long {
+    background-color: #DDF4FF;
+    color: #1899D6;
+    border: 1px solid #84d8ff;
+}
+
+.word-wrapper.wrong {
+    background: #ea2b2b;
+}
+
+.word-wrapper.wrong .my-button.long {
+    background-color: #ffdfe0;
+    color: #ea2b2b;
+    border: 1px solid #ea2b2b;
+}
+
+.word-wrapper.ok {
+    background: #58A700;
+}
+
+.word-wrapper.ok .my-button.long {
+    background-color: #d7ffb8;
+    color: #58A700;
+    border: 1px solid #58A700;
+}
+
+.word-wrapper.disabled {
+    background: #e5e5e5;
+    cursor: context-menu;
+}
+
+.word-wrapper.disabled .my-button.long {
+    background-color: #fff;
+    color: #e5e5e5;
+    border: 1px solid #e5e5e5;
+    cursor: context-menu;
+}

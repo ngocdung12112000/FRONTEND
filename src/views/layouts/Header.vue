@@ -15,7 +15,7 @@
                         <div class="section-item-text">Cửa hàng</div>
                     </div>
                 </router-link>
-                <router-link to="/">
+                <router-link :to="{ name: 'GamePlay', params: {  id: 1, name: 'Bài 1' } }">
                     <div @click="sectionClick('courses')" class="courses section-item d-flex align-items-center">
                         <div class="courses-img section-item-img"></div>
                         <div class="section-item-text">Khóa học</div>
@@ -27,7 +27,7 @@
                         <div class="section-item-text">Từ vựng</div>
                     </div>
                 </router-link>
-                <router-link to="/">
+                <router-link to="/login">
                     <div @click="sectionClick('story')" class="story section-item d-flex align-items-center">
                         <div class="story-img section-item-img"></div>
                         <div class="section-item-text">Kho truyện</div>
@@ -130,11 +130,14 @@ export default {
 
 .shop-img {
     background-image: url(../../assets/images/shop.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .courses-img {
     background-image: url(../../assets/images/courses-icon-27.jpg);
     background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .vocab-img {
@@ -151,7 +154,6 @@ export default {
     transform: scale(1.3);
     border-radius: 50%;
 }
-
 
 .user {
     position: relative;

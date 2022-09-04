@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         isShowHeader() {
-            if(this.$route.name === "Login" || this.$route.name === "Register") {
+            if(this.$route.name === "Login" || this.$route.name === "Register" || this.$route.name === "GamePlay") {
                 return false;
             }
             return true;
@@ -31,6 +31,8 @@ export default {
 <style scoped>
 @import "./assets/bootstrap-5.0.2-dist/css/bootstrap.min.css";
 @import "./assets/css/img.css";
+@import "./assets/css/icons.css";
+@import "./assets/css/buttons.css";
 
 body {
     font-family: 'GoogleSans-Regular', sans-serif;
