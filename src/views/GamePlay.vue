@@ -9,91 +9,35 @@
                 </div>
             </div>
             <div class="play-content">
-                <div class="ques-1" v-show="indexQues == 0">
-                    <div class="title mb-5">{{ questions[0].question_text.name }}</div>
-                    <div class="ques-content mb-3 d-flex justify-content-center align-items-center ">
-                        <div class="ques-img me-3">
-                            <img src="../assets/images/STORY/s1.svg" alt="">
-                        </div>
-                        <div class="ques-text d-flex align-items-center">
-                            <div @click="speakWord(questions[0].question_text.text, questions[0].question_text.lang)"
-                                class="icon icon-speaker me-2"></div>
-                            <span>{{ questions[0].question_text.text }}</span>
-                        </div>
-                    </div>
-                    <div class="answer-area d-flex justify-content-center" style="width: 100%;">
-                        <textarea v-if="!toggleSwitch" placeholder="Nhập đáp án..." @keyup.enter="btnCheckSelectedWord"
-                            ref="textareaAnswer"></textarea>
-                        <div v-else class="answer-words-wrapper" style="width: 100%;">
-                            <div class="selected-words my-2 d-flex align-items-center"></div>
-                            <div class="answer-words d-flex justify-content-center mt-5">
-                                <div v-for="(word, index) in questions[0].arr_words.arr" :key="word"
-                                    class="word-wrapper d-flex justify-content-center me-2">
-                                    <button type="button" :id="`word${index}`" @click="btnWordClick" class="my-button">
-                                        {{ word.name }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-2" v-show="indexQues == 1">
-                    <div class="title mb-5">{{ questions[1].question_text.name }}</div>
-                    <div class="answer-area " style="width: 100%;">
-                        <div class="answer-words-wrapper" style="width: 100%;">
-                            <div class="answer-words mt-5">
-                                <div v-for="(word, index) in questions[indexQues].arr_words.arr" :key="word"
-                                    class="word-wrapper d-flex justify-content-center my-3">
-                                    <button type="button" :id="`word${index}`" @click="btnWordClick2"
-                                        class="my-button long">
-                                        {{ word.name }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-3" v-show="indexQues == 2">
-                    <div class="title mb-5">{{ questions[2].question_text.name }}</div>
-                    <div class="answer-area d-flex justify-content-center" style="width: 100%;">
-                        <div class="answer-words-wrapper d-flex justify-content-between" style="width: 100%;">
-                            <div class="answer-words left" style="width: 45%;">
-                                <div v-for="(word) in questions[indexQues].arr_words.arr" :key="word"
-                                    class="word-wrapper d-flex justify-content-center my-3" :data="word.value">
-                                    <button type="button" @click="btnWordClick3"
-                                        class="my-button long">
-                                        {{ word.name }}
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="answer-words right" style="width: 45%;">
-                                <div v-for="(word) in questions[indexQues].arr_words.arr2" :key="word"
-                                    class="word-wrapper d-flex justify-content-center my-3" :data="word.value">
-                                    <button type="button" @click="btnWordClick3"
-                                        class="my-button long">
-                                        {{ word.name }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-2" v-show="indexQues == 3">
-                    <div class="title mb-5">{{ questions[3].question_text.name }}</div>
-                    <div class="answer-area " style="width: 100%;">
-                        <div class="answer-words-wrapper" style="width: 100%;">
-                            <div class="answer-words mt-5">
-                                <div v-for="(word, index) in questions[indexQues].arr_words.arr" :key="word"
-                                    class="word-wrapper d-flex justify-content-center my-3">
-                                    <button type="button" :id="`word${index}`" @click="btnWordClick2"
-                                        class="my-button long">
-                                        {{ word.name }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <QuesMultiWords v-if="indexQues == 0" 
+                    :question="questions[0]" 
+                    :toggleSwitch="toggleSwitch"
+                    @speakWord="speakWord"
+                    @onEnterTextArea = "btnCheckSelectedWord"
+                />
+                <QuesSelectHorizon v-if="indexQues == 1" 
+                    :question="questions[1]" 
+                    @speakWord="speakWord"
+                />
+                <QuesSelectPair v-if="indexQues == 2" 
+                    :question="questions[2]" 
+                    @speakWord="speakWord"
+                    @checkAnswer="checkAnswer"
+                />
+                <QuesHearSelect v-if="indexQues == 3" 
+                    :question="questions[3]" 
+                    @speakWord="speakWord"
+                />
+                <QuesHearSelectMulti v-if="indexQues == 4"
+                    :question="questions[4]" 
+                    :toggleSwitch="toggleSwitch"
+                    @speakWord="speakWord"
+                    @onEnterTextArea = "btnCheckSelectedWord"
+                />
+                <QuesSpeak v-if="indexQues == 5"
+                    :question="questions[5]" 
+                    @speakWord="speakWord"
+                />
             </div>
         </div>
         <div class="footer position-absolute bottom-0">
@@ -147,8 +91,23 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import allQuestions from '../assets/js/data.js';
 import $ from "jquery";
+import QuesMultiWords from "../components/QuesMultiWords.vue";
+import QuesSelectHorizon from "../components/QuesSelectHorizon.vue";
+import QuesSelectPair from "../components/QuesSelectPair.vue";
+import QuesHearSelect from "../components/QuesHearSelect.vue";
+import QuesHearSelectMulti from "../components/QuesHearSelectMulti.vue";
+import QuesSpeak from "../components/QuesSpeak.vue";
 export default {
+    components: {
+        QuesMultiWords,
+        QuesSelectHorizon,
+        QuesSelectPair,
+        QuesHearSelect,
+        QuesHearSelectMulti,
+        QuesSpeak
+    },
     props: {
         currentPageUser: {
             type: Number,
@@ -161,187 +120,19 @@ export default {
     },
     data() {
         return {
-            indexQues: 0,
+            indexQues: 5,
             numberCorrect: 0,
             streakCorrect: 0,
             lang_: "en-US",
             toggleSwitch: true,
             correctAll: null,
             correct: 0,
-            questions: [
-                {
-                    id: 1,
-                    question_text: {
-                        name: "Viết lại bằng tiếng Việt",
-                        text: "Two hats",
-                        lang: "EN"
-                    },
-                    arr_words: {
-                        arr: [
-                            {
-                                id: 1,
-                                name: "ô",
-                                value: 1,
-                            },
-                            {
-                                id: 2,
-                                name: "xe",
-                                value: 2,
-                            },
-                            {
-                                id: 3,
-                                name: "mũ",
-                                value: 3,
-                            },
-                            {
-                                id: 4,
-                                name: "chiếc",
-                                value: 4,
-                            },
-                            {
-                                id: 5,
-                                name: "Hai",
-                                value: 5,
-                            }
-                        ],
-                        lang: "VN"
-                    },
-                    answer: "Hai chiếc mũ",
-                    is_show_switch: true
-                },
-                {
-                    id: 2,
-                    question_text: {
-                        name: `Làm sao để nói "những chiếc áo khoác?"`,
-                        text: "",
-                        lang: "VN"
-                    },
-                    arr_words: {
-                        arr:[
-                            {
-                                id: 1,
-                                name: "Good morning",
-                                value: 1,
-                            },
-                            {
-                                id: 2,
-                                name: "hi",
-                                value: 2,
-                            },
-                            {
-                                id: 3,
-                                name: "coats",
-                                value: 3,
-                            },
-                        ],
-                        lang: "EN"
-                    },
-                    answer: "coats",
-                    is_show_switch: false
-                },
-                {
-                    id: 3,
-                    question_text: {
-                        name: `Chọn cặp từ`,
-                        text: "",
-                        lang: "VN"
-                    },
-                    arr_words: {
-                        arr: [
-                            {
-                                id: 1,
-                                name: "này",
-                                value: 1,
-                            },
-                            {
-                                id: 2,
-                                name: "thích",
-                                value: 2,
-                            },
-                            {
-                                id: 3,
-                                name: "màu đen",
-                                value: 3,
-                            },
-                            {
-                                id: 4,
-                                name: "xin chào",
-                                value: 4,
-                            },
-                            {
-                                id: 5,
-                                name: "màu đỏ",
-                                value: 5,
-                            }
-                        ],
-                        arr2: [
-                            {
-                                id: 1,
-                                name: "black",
-                                value: 3,
-                            },
-                            {
-                                id: 2,
-                                name: "red",
-                                value: 5,
-                            },
-                            {
-                                id: 3,
-                                name: "hi",
-                                value: 4,
-                            },
-                            {
-                                id: 4,
-                                name: "this",
-                                value: 1,
-                            },
-                            {
-                                id: 5,
-                                name: "like",
-                                value: 2,
-                            }
-                        ],
-                        lang: "EN"
-                    },
-                    answer: "",
-                    is_show_switch: false
-                },
-                {
-                    id: 4,
-                    question_text: {
-                        name: `Làm sao để nói "những chiếc áo khoác?"`,
-                        text: "",
-                        lang: "VN"
-                    },
-                    arr_words: {
-                        arr:[
-                            {
-                                id: 1,
-                                name: "Good morning",
-                                value: 1,
-                            },
-                            {
-                                id: 2,
-                                name: "hi",
-                                value: 2,
-                            },
-                            {
-                                id: 3,
-                                name: "coats",
-                                value: 3,
-                            },
-                        ],
-                        lang: "EN"
-                    },
-                    answer: "coats",
-                    is_show_switch: false
-                },
-            ]
+            questions: allQuestions
         }
     },
     methods: {
         // Phát ra âm thanh từ text
-        speakWord(text, lang) {
+        speakWord(text, lang, speed) {
             if (lang == "EN") {
                 this.lang_ = "en-US";
                 window.speechSynthesis.cancel();
@@ -349,71 +140,15 @@ export default {
                 var msg = new SpeechSynthesisUtterance();
                 msg.text = text;
                 msg.lang = this.lang_;
+                // let ramdom = Math.floor(Math.random() * voices.length);
+                // console.log(ramdom);
                 msg.voice = voices[2];
                 msg.pitch = 1.8;
-                window.speechSynthesis.speak(msg);
-            }
-        },
-        // Hàm thực hiện bấm vào chọn nhiều đáp án
-        btnWordClick(e) {
-            const thisBtn = e.target;
-            const thisBtnId = thisBtn.id;
-            this.speakWord(thisBtn.innerText);
-
-            const cloneBtn = $(thisBtn).clone();
-            $(cloneBtn).addClass("me-2");
-            $(cloneBtn).click(function () {
-                $(this).remove();
-                $(`#${thisBtnId}`).css("opacity", "1");
-            });
-            $(".selected-words").append(cloneBtn);
-            $(thisBtn).css("opacity", "0");
-        },
-        // Hàm thực hiện bấm vào chọn một đáp án
-        btnWordClick2(e) {
-            const thisBtn = e.target;
-            $(".word-wrapper").removeClass("selected");
-            $(thisBtn).parent().addClass("selected");
-            this.speakWord(thisBtn.innerText, this.questions[1].arr_words.lang);
-        },
-        // Hàm thực hiện bấm vào chọn một cặp từ
-        btnWordClick3(e) {
-            let btn = e.target;
-            let length = this.questions[2].arr_words.arr.length;
-            $(btn).parent().siblings().removeClass("selected");
-            if (!$(btn).parent().hasClass("disabled")) {
-                $(btn).parent().addClass("selected");
-            }
-
-            let leftSelect = $(".left .selected");
-            let rightSelect = $(".right .selected");
-            this.speakWord($(rightSelect).text(), this.questions[2].arr_words.lang);
-            if (leftSelect.length > 0 && rightSelect.length > 0) {
-                let leftValue = leftSelect.attr("data");
-                let rightValue = rightSelect.attr("data");
-                if (leftValue == rightValue) {
-                    $(leftSelect).addClass("ok");
-                    $(rightSelect).addClass("ok");
-                    setTimeout(() => {
-                        $(leftSelect).removeClass("ok");
-                        $(rightSelect).removeClass("ok");
-                        $(leftSelect).removeClass("selected").addClass("disabled");
-                        $(rightSelect).removeClass("selected").addClass("disabled");
-                    }, 500);
-                    this.correct++;
-                    if (this.correct == length) {
-                        // this.correctAll = true;
-                        this.checkAnswer(true);
-                    }
-                } else {
-                    $(".word-wrapper").removeClass("selected");
-                    $(leftSelect).addClass("wrong");
-                    $(rightSelect).addClass("wrong");
-                    setTimeout(() => {
-                        $(leftSelect).removeClass("wrong");
-                        $(rightSelect).removeClass("wrong");
-                    }, 500);
+                msg.volume = 1;
+                if(speed) {
+                    msg.rate = speed;
                 }
+                window.speechSynthesis.speak(msg);
             }
         },
         // Hàm kiểm tra đáp án
@@ -422,6 +157,7 @@ export default {
                 let userAnswer = "";
                 switch(this.indexQues) {
                     case 0:
+                    case 4:    
                         if (this.toggleSwitch) {
                             let selectedWords = $(".selected-words").children();
                             let selectedWordsText = [];
@@ -435,17 +171,21 @@ export default {
                             userAnswer = userAnswer.trim().toLocaleLowerCase();
                         }
                         var res = (userAnswer == this.questions[this.indexQues].answer.toLocaleLowerCase());
-                        console.log(res);
                         this.checkAnswer(res);
                         break;
                     case 1:
+                    case 3:        
                         userAnswer = $(".word-wrapper.selected").text().trim().toLocaleLowerCase();
                         res = (userAnswer == this.questions[this.indexQues].answer.toLocaleLowerCase());
                         this.checkAnswer(res);
                         break;
                     case 2:
-                        // this.checkAnswer(true);
-                        break;    
+                        break;
+                    case 5:
+                        userAnswer = $(".text-speech").text().trim().toLocaleLowerCase();
+                        res = (userAnswer == `${this.questions[this.indexQues].answer.toLocaleLowerCase()}.`);
+                        this.checkAnswer(res);
+                        break;             
                 }
             }
             else {
@@ -507,7 +247,7 @@ export default {
         toggleSwitch: function (val) {
             if (val == false) {
                 this.$nextTick(function () {
-                    this.$refs.textareaAnswer.focus();
+                    $("textarea").focus();
                 });
             }
         },
@@ -565,7 +305,7 @@ export default {
     padding: 0 50px;
 }
 
-.play-content>div {
+.play-content > div {
     width: 70%;
     height: 70%;
 }
