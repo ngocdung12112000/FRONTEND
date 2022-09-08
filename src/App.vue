@@ -28,7 +28,7 @@ export default {
 };
 </script>
 <!-- eslint-disable prettier/prettier -->
-<style scoped>
+<style>
 @import "./assets/bootstrap-5.0.2-dist/css/bootstrap.min.css";
 @import "./assets/css/img.css";
 @import "./assets/css/icons.css";
@@ -43,5 +43,10 @@ body {
 @font-face {
     font-family: 'GoogleSans-Regular';
     src: url('assets/font/GoogleSans-Regular.otf') format('opentype');
+}
+
+button {
+    border: none;
+    outline: none;
 }
 </style>

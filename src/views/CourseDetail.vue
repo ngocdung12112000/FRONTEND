@@ -9,7 +9,20 @@
             <div class="course-overview">
                 <div class="course-content">
                     <div class="course-navbar">
+                        <div class="course-detail-tabs">
+                            <button>
+                                <span>Lợi ích</span>
+                            </button>
+                            <button>
+                                <span>Giáo trình</span>
+                            </button>
+                            <button>
+                                <span>Giảng viên</span>
+                            </button>
+                        </div>
+                        <span class="indicator">
 
+                        </span>
                     </div>
                     <div class="course-benefit">
 
@@ -83,6 +96,7 @@ export default {
 
 <style scoped>
 .course-detail-wrapper {
+    overflow-x: hidden;
     background: linear-gradient(191.1deg, rgba(255, 192, 67, 0) 14.17%, rgba(255, 192, 67, 0.28) 105.12%);
     height: 200vh;
 }
@@ -135,11 +149,70 @@ export default {
     flex-basis: 100%;
 }
 
+
 .course-content {
     flex-grow: 0;
     max-width: 66.666667%;
     flex-basis: 66.666667%;
 }
+
+.course-navbar {
+    top: 70px;
+    z-index: 900;
+    color: rgba(0, 0, 0, 0.87);
+    left: auto;
+    right: 0;
+    position: sticky;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    flex-direction: column;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.course-detail-tabs {
+    border-bottom: 3px solid #EEEEEE;
+}
+
+.course-detail-tabs button {
+    text-transform: none;
+    opacity: 0.7;
+    padding: 6px 12px;
+    overflow: hidden;
+    position: relative;
+    font-size: 0.875rem;
+    max-width: 264px;
+    min-width: 72px;
+    box-sizing: border-box;
+    min-height: 48px;
+    text-align: center;
+    flex-shrink: 0;
+    font-weight: 500;
+    line-height: 1.75;
+    white-space: normal;
+    background-color: #fff;
+}
+
+.course-detail-tabs button span {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.indicator {
+    left: 0px;
+    width: 62.0312px;
+    height: 3px;
+    bottom: 0;
+    position: absolute;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #C89F65;
+}
+
 
 .course-card-wrapper {
     position: relative;
