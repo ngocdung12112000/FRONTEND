@@ -70,6 +70,11 @@ const routes = [
         // component: GamePlay
         component: () => import("../views/GamePlay.vue"),
     },
+    {
+        path: "/courses",
+        name: "Courses",
+        component: () => import("../views/Courses.vue"),
+    },
 ];
 
 const router = createRouter({

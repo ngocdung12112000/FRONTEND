@@ -15,7 +15,7 @@
                         <div class="section-item-text">Cửa hàng</div>
                     </div>
                 </router-link>
-                <router-link :to="{ name: 'GamePlay', params: {  id: 1, name: 'Bài 1' } }">
+                <router-link to="/courses">
                     <div @click="sectionClick('courses')" class="courses section-item d-flex align-items-center">
                         <div class="courses-img section-item-img"></div>
                         <div class="section-item-text">Khóa học</div>

@@ -3,7 +3,7 @@
     <div>
         <div class="container position-relative">
             <div class="process mt-3">
-                <div class="icon icon-cancel me-3"></div>
+                <div class="icon icon-cancel me-3" @click="backAction"></div>
                 <div class="process-bar">
                     <div class="process-bar-done"></div>
                 </div>
@@ -241,7 +241,10 @@ export default {
             }
             $(".result").removeClass("d-none");
             $(".check-btn .my-btn").text("Tiếp tục");
-        }
+        },
+        backAction() {
+            this.$router.push("/");
+        },
     },
     watch: {
         toggleSwitch: function (val) {

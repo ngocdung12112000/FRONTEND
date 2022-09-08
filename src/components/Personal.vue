@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="total-exp-chart">
+                    <div v-if="data && data.length > 0" class="total-exp-chart ">
                         <Chart :size="{ width: 400, height: 230 }"  :data="data" :margin="margin" :direction="direction">
                             <template #layers>
                                 <Grid strokeDasharray="2,2" />
@@ -77,36 +77,27 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
 // import $ from "jquery";
 export default {
     components: { Chart, Grid, Line },
-    setup() {
-        const plByMonth = [
-            { name: 'T2', pl: 0},
-            { name: 'T3', pl: 0},
-            { name: 'T4', pl: 50},
-            { name: 'T5', pl: 50},
-            { name: 'T6', pl: 0},
-            { name: 'T7', pl: 0},
-            { name: 'CN', pl: 0},
-        ];
-        const data = ref(plByMonth)
-        const direction = ref('horizontal')
-        const margin = ref({
-            left: 20,
-            top: 0,
-            right: 0,
-            bottom: 0
-        })
-
-        return { data, direction, margin }
+    beforeMount() {
+        this.getUserStreak();
     },
     data() {
         return {
-            gradient: null,
-            gradient2: null
+            images: this.listUser,
+            dataStreak: [],
+            dataStreakNew: [],
+            data: [],
+            direction : 'horizontal',
+            margin: {
+                left: 20,
+                top: 0,
+                right: 0,
+                bottom: 0
+            },
         }
     },
     props: {
@@ -117,12 +108,30 @@ export default {
         currentUser: {
             type: Object,
             required: true,
-        }
+        },
+        // dataStreakDemo :{
+        //     type: Array,
+        //     required: true,
+        // }
     },
 
     methods: {
         userClick(id) {
             this.$router.push(`/profile/${id}`)
+        },
+        getUserStreak() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/v1/Users/UserId?UserId=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .then((response) => {
+                    const res = response.data;
+                    res.forEach(function(item) {
+                        me.data.push({
+                            name: item.week_day,
+                            pl: item.score
+                        })
+                    });
+                });
         }
     }
 }
