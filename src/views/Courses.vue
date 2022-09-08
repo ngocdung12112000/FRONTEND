@@ -24,7 +24,7 @@
             </div>
             <div class="course-main">
                 <div class="d-flex flex-wrap mb-3">
-                    <div v-for="item in courses" :key="item.id" class="course-item">
+                    <div v-for="item in courses" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.slug)">
                         <div class="course-item-img">
                             <img :src="require(`../assets/images/COURSES/${item.image}`)" alt="">
                         </div>
@@ -78,6 +78,9 @@ export default {
     methods: {
         clickCallback(page) {
             console.log(page);
+        },
+        courseClick(courseId, courseName){
+            this.$router.push({ name: 'CourseDetail', params: { slug: courseName, id: courseId } });
         }
     }
 }
