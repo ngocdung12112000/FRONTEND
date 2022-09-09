@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-    <div>
+    <div style="height: calc(100vh - 17px)">
         <div class="container position-relative">
             <div class="process mt-3">
                 <div class="icon icon-cancel me-3" @click="backAction"></div>
@@ -120,7 +120,7 @@ export default {
     },
     data() {
         return {
-            indexQues: 5,
+            indexQues: 0,
             numberCorrect: 0,
             streakCorrect: 0,
             lang_: "en-US",

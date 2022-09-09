@@ -4,19 +4,27 @@
             <div class="header-circle">
             </div>
             <img src="../assets/images/background/course-detail-bg.png" alt="">
+            <div class="header-text">
+                <div class="header-title fw-bolder py-3 fs-2 mt-5">
+                    Nền tảng tiếng Anh cho người mới bắt đầu
+                </div>
+                <div class="header-description mb-3">
+                    Trọn bộ kỹ năng tiếng Anh cơ bản, tiếng Anh giao tiếp cơ bản từ con số 0.
+                </div>
+            </div>
         </div>
         <div class="course-overview-wrapper">
             <div class="course-overview">
                 <div class="course-content">
                     <div class="course-navbar">
                         <div class="course-detail-tabs">
-                            <button>
+                            <button @click="() => tabClick('course-benefit')">
                                 <span>Lợi ích</span>
                             </button>
-                            <button>
+                            <button  @click="() => tabClick('course-roadmap')">
                                 <span>Giáo trình</span>
                             </button>
-                            <button>
+                            <button  @click="() => tabClick('course-teacher')">
                                 <span>Giảng viên</span>
                             </button>
                         </div>
@@ -25,13 +33,146 @@
                         </span>
                     </div>
                     <div class="course-benefit">
-
+                        <div class="benefit-title my-3">
+                            <h2>Lợi ích từ khóa học</h2>
+                        </div>
+                        <div class="benefit-list">
+                            <div class="benefit-item my-2">
+                                <div class="benefit-icon me-3"></div>
+                                Luyện phát âm chuẩn toàn bộ 44 âm trong Bảng phiên âm quốc tế (Bảng IPA)
+                            </div>
+                            <div class="benefit-item my-2">
+                                <div class="benefit-icon me-3"></div>
+                                Hệ thống hóa lại toàn bộ kiến thức từ vựng, ngữ pháp và ứng dụng chúng dễ dàng trong giao tiếp
+                            </div>
+                            <div class="benefit-item my-2">
+                                <div class="benefit-icon me-3"></div>
+                                Học giao tiếp, phản xạ qua các chủ điểm thông dụng, nối âm, biến âm, ngữ điệu lên xuống một cách tự nhiên nhất như người bản ngữ
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"></div>
+                                Những cách hay mẹo nhỏ giúp bắt chuyện, gợi mở câu chuyện với người nước ngoài một cách tự nhiên và đầy hứng thú
+                            </div>
+                        </div>
                     </div>
                     <div class="course-roadmap">
-
+                        <div class="roadmap-title my-3">
+                            <h2>Lộ trình khoá học</h2>
+                        </div>
+                        <div class="roadmap-list ps-5 pe-3">
+                            <div class="roadmap-item">
+                                <div class="roadmap-item-title d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="roadmap-item-number" style="margin-left: -25px;">1</div>
+                                        <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">Giới thiệu</div>
+                                    </div>
+                                    <div class="roadmap-item-time" style="color: #C89F65">00:10:42</div>
+                                </div>
+                                <div class="roadmap-item-content ">
+                                    <div class="total-video py-2">
+                                        <div class="d-flex justify-content-between align-items-center" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 12px;" class="d-none">
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-item-title d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="roadmap-item-number" style="margin-left: -25px;">2</div>
+                                        <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">Giới thiệu</div>
+                                    </div>
+                                    <div class="roadmap-item-time" style="color: #C89F65">00:10:42</div>
+                                </div>
+                                <div class="roadmap-item-content ">
+                                    <div class="total-video py-2">
+                                        <div class="d-flex justify-content-between align-items-center" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 12px;" class="d-none">
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                            <div class="d-flex">
+                                                <div class="icon-video"></div>
+                                                <div>3 videos</div>
+                                                <div class="icon-dropdown"></div>
+                                            </div>
+                                            <div >00:10:42</div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="course-teacher">
-
+                        <div class="my-3">
+                            <h2>Giảng viên</h2>
+                        </div>
+                        <div>
+                            <div class="teacher-item d-flex align-items-center">
+                                <div class="teacher-avatar">
+                                    <img src="../assets/images/user.jpg" alt="">
+                                </div>
+                                <div class="teacher-info ms-5">
+                                    <div class="teacher-name fs-5 fw-bolder">Nguyễn Văn A</div>
+                                    <div class="teacher-job">Giảng viên</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="course-card-wrapper">
@@ -79,6 +220,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 export default {
     data() {
         return {
@@ -89,6 +231,12 @@ export default {
     methods: {
         clickHeader() {
             console.log(this.$route.params);
+        },
+        tabClick(tab) {
+            console.log(tab);
+            $('html,body').animate({
+                scrollTop: $(`.${tab}`).offset().top},
+                'slow');
         }
     }
 }
@@ -98,7 +246,6 @@ export default {
 .course-detail-wrapper {
     overflow-x: hidden;
     background: linear-gradient(191.1deg, rgba(255, 192, 67, 0) 14.17%, rgba(255, 192, 67, 0.28) 105.12%);
-    height: 200vh;
 }
 
 .header-circle {
@@ -151,18 +298,20 @@ export default {
 
 
 .course-content {
+    position: relative;
     flex-grow: 0;
     max-width: 66.666667%;
     flex-basis: 66.666667%;
+    background-color: #fff;
 }
 
 .course-navbar {
+    position: sticky;
     top: 70px;
     z-index: 900;
     color: rgba(0, 0, 0, 0.87);
     left: auto;
     right: 0;
-    position: sticky;
     width: 100%;
     display: flex;
     box-sizing: border-box;
@@ -212,7 +361,6 @@ export default {
     transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: #C89F65;
 }
-
 
 .course-card-wrapper {
     position: relative;
@@ -326,6 +474,37 @@ export default {
     display: flex;
     align-items: center;
 }
+
+.course-roadmap,
+.course-teacher,
+.course-benefit {
+    margin-top: 15px;
+    padding: 0px 28px 28px 28px;
+    width: 100%;
+    border: 1px solid #000;
+}
+
+.roadmap-item-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(201, 144, 30, 0) 0%, rgba(255, 192, 67, 0.508) 100%);
+    color: #C89F65;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.roadmap-item-content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 30px;
+    border-left: 1px solid #C89F65;
+}
+
+
 
 
 /* @media (min-width: 960px) {
