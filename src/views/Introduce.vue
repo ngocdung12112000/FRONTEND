@@ -28,14 +28,14 @@
             </div>
         </div>
         <div class="container" style="padding: 30px 100px">
-            <div class="intro-detail d-flex align-items-center justify-content-between">
+            <div class="intro-detail d-flex align-items-center justify-content-between pb-5 border-bottom">
                 <div class="img img-happy"></div>
                 <div class="text" style="width: 75%">
                     <h3>Cách học ngôn ngữ</h3>
                     <div>Học cùng Duolingo rất vui nhộn. Với các bài học nhỏ gọn, bạn có thể vừa ghi điểm và mở khóa các cấp độ mới vừa luyện tập các kỹ năng giao tiếp hữu dụng.</div>
                 </div>
             </div>
-            <div class="intro-detail d-flex align-items-center justify-content-between">
+            <div class="intro-detail d-flex align-items-center justify-content-between mt-5 pb-5 border-bottom">
                 <div style="width: 30%">
                     <h5 class="fw-bolder">Cách học ngôn ngữ</h5>
                     <div>Các khóa học của chúng tôi giảng dạy một cách hiệu quả các kỹ năng nghe, đọc và viết. </div>
@@ -46,14 +46,14 @@
                     <div>Chúng tôi giúp người học dễ dàng xây dựng thói quen học tập, qua những tính năng mô phỏng trò chơi, các thử thách vui vẻ. Học hiệu quả mà không nhàm chán! Xây dựng kỹ năng mỗi ngày với các bài học thú vị.</div>
                 </div>
             </div>
-            <div class="intro-detail d-flex align-items-center justify-content-between">
+            <div class="intro-detail d-flex align-items-center justify-content-between mt-5 pb-5 border-bottom">
                 <div>
                     <h3>Học mọi lúc mọi nơi</h3>
                     <div>Thử giao diện mới với ứng dụng cho iPhone và Android của chúng tôi.</div>
                 </div>
                 <div class="img img-working"></div>
             </div>
-            <div class="intro-detail d-flex align-items-center justify-content-between">
+            <div class="intro-detail d-flex align-items-center justify-content-between mt-5">
                 <div class="img img-educator"></div>
                 <div style="width: 75%">
                     <h3>Các khóa học thực sự hiệu quả</h3>
@@ -223,7 +223,6 @@ export default {
 .img {
     width: 234px;
     height: 200px;
-    /* background-color: rgb(206, 142, 142); */
 }
 
 /* The typing effect */

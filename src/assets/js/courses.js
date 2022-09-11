@@ -67,7 +67,7 @@ var dataCourses = [
         teacher: "Nguyễn Văn A",
     },
     {
-        id: 6,
+        id: 8,
         name: "100 ngày nâng cao trình độ nói tiếng Anh",
         description: `Bạn đã mất khá nhiều thời gian và tiền bạc để đầu tư cho việc học tiếng Anh, nhưng đến nay bạn vẫn không thể nào nói được một câu tiếng Anh hoàn chỉnh; tiếng Anh của bạn vẫn chỉ ở mức độ căn bản mà thôi. Bạn bị mất gốc tiếng Anh mà không biết bắt đầu học lại từ đâu? Khóa học tiếng Anh online giúp bạn nói tiếng Anh tự tin sau 3 tháng này được xây dựng một cách khoa học, logic, từ căn bản đến nâng cao, với mục tiêu "đã học thì phải dùng được". Từ vựng và ngữ pháp được kết hợp một cách hài hòa thông qua các mẫu câu đàm thoại thực tế giúp học viên dễ dàng tiếp thu và áp dụng nói được ngay. Ngoài ra, khóa học còn chia sẻ cho bạn các kinh nghiệm học tiếng Anh hiệu quả, được đúc kết trong quá trình giảng dạy của giảng viên. Khóa học sẽ giúp bạn khôi phục được vốn kiến thức tiếng Anh đã bị mất, củng cố lại từ vựng và cấu trúc câu chỉ trong 3 tháng học.`,
         price: 500000,
@@ -76,7 +76,7 @@ var dataCourses = [
         teacher: "Nguyễn Văn A",
     },
     {
-        id: 7,
+        id: 9,
         name: "100 ngày nâng cao trình độ nói tiếng Anh",
         description: `Bạn đã mất khá nhiều thời gian và tiền bạc để đầu tư cho việc học tiếng Anh, nhưng đến nay bạn vẫn không thể nào nói được một câu tiếng Anh hoàn chỉnh; tiếng Anh của bạn vẫn chỉ ở mức độ căn bản mà thôi. Bạn bị mất gốc tiếng Anh mà không biết bắt đầu học lại từ đâu? Khóa học tiếng Anh online giúp bạn nói tiếng Anh tự tin sau 3 tháng này được xây dựng một cách khoa học, logic, từ căn bản đến nâng cao, với mục tiêu "đã học thì phải dùng được". Từ vựng và ngữ pháp được kết hợp một cách hài hòa thông qua các mẫu câu đàm thoại thực tế giúp học viên dễ dàng tiếp thu và áp dụng nói được ngay. Ngoài ra, khóa học còn chia sẻ cho bạn các kinh nghiệm học tiếng Anh hiệu quả, được đúc kết trong quá trình giảng dạy của giảng viên. Khóa học sẽ giúp bạn khôi phục được vốn kiến thức tiếng Anh đã bị mất, củng cố lại từ vựng và cấu trúc câu chỉ trong 3 tháng học.`,
         price: 500000,
@@ -85,7 +85,7 @@ var dataCourses = [
         teacher: "Nguyễn Văn A",
     },
     {
-        id: 6,
+        id: 10,
         name: "100 ngày nâng cao trình độ nói tiếng Anh",
         description: `Bạn đã mất khá nhiều thời gian và tiền bạc để đầu tư cho việc học tiếng Anh, nhưng đến nay bạn vẫn không thể nào nói được một câu tiếng Anh hoàn chỉnh; tiếng Anh của bạn vẫn chỉ ở mức độ căn bản mà thôi. Bạn bị mất gốc tiếng Anh mà không biết bắt đầu học lại từ đâu? Khóa học tiếng Anh online giúp bạn nói tiếng Anh tự tin sau 3 tháng này được xây dựng một cách khoa học, logic, từ căn bản đến nâng cao, với mục tiêu "đã học thì phải dùng được". Từ vựng và ngữ pháp được kết hợp một cách hài hòa thông qua các mẫu câu đàm thoại thực tế giúp học viên dễ dàng tiếp thu và áp dụng nói được ngay. Ngoài ra, khóa học còn chia sẻ cho bạn các kinh nghiệm học tiếng Anh hiệu quả, được đúc kết trong quá trình giảng dạy của giảng viên. Khóa học sẽ giúp bạn khôi phục được vốn kiến thức tiếng Anh đã bị mất, củng cố lại từ vựng và cấu trúc câu chỉ trong 3 tháng học.`,
         price: 500000,
@@ -94,7 +94,7 @@ var dataCourses = [
         teacher: "Nguyễn Văn A",
     },
     {
-        id: 7,
+        id: 11,
         name: "100 ngày nâng cao trình độ nói tiếng Anh",
         description: `Bạn đã mất khá nhiều thời gian và tiền bạc để đầu tư cho việc học tiếng Anh, nhưng đến nay bạn vẫn không thể nào nói được một câu tiếng Anh hoàn chỉnh; tiếng Anh của bạn vẫn chỉ ở mức độ căn bản mà thôi. Bạn bị mất gốc tiếng Anh mà không biết bắt đầu học lại từ đâu? Khóa học tiếng Anh online giúp bạn nói tiếng Anh tự tin sau 3 tháng này được xây dựng một cách khoa học, logic, từ căn bản đến nâng cao, với mục tiêu "đã học thì phải dùng được". Từ vựng và ngữ pháp được kết hợp một cách hài hòa thông qua các mẫu câu đàm thoại thực tế giúp học viên dễ dàng tiếp thu và áp dụng nói được ngay. Ngoài ra, khóa học còn chia sẻ cho bạn các kinh nghiệm học tiếng Anh hiệu quả, được đúc kết trong quá trình giảng dạy của giảng viên. Khóa học sẽ giúp bạn khôi phục được vốn kiến thức tiếng Anh đã bị mất, củng cố lại từ vựng và cấu trúc câu chỉ trong 3 tháng học.`,
         price: 500000,

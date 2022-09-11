@@ -3,7 +3,7 @@
     <div class="header sticky-top">
         <div class="container d-flex justify-content-center">
             <div class="col-9 col-md-9 left-section d-flex justify-content-evenly">
-                <router-link to="/">
+                <router-link to="/home">
                     <div @click="sectionClick('learn')" class="learn section-item selected d-flex align-items-center">
                         <div class="learn-img section-item-img"></div>
                         <div class="section-item-text">Học</div>
@@ -27,7 +27,7 @@
                         <div class="section-item-text">Từ vựng</div>
                     </div>
                 </router-link>
-                <router-link to="/login">
+                <router-link to="/home">
                     <div @click="sectionClick('story')" class="story section-item d-flex align-items-center">
                         <div class="story-img section-item-img"></div>
                         <div class="section-item-text">Kho truyện</div>
@@ -51,8 +51,13 @@
                         <router-link to="/profile/1">
                             <div @click="toProfile" class="user-profile text-start">Hồ sơ</div>
                         </router-link>
-                        <div class="help text-start">Khóa học của tôi</div>
-                        <div class="help text-start">Trợ giúp</div>
+                        <router-link to="/my-courses">
+                            <div @click="toProfile" class="help user-profile text-start">Khóa học của tôi</div>
+                        </router-link>
+                        <router-link to="/cart">
+                            <div @click="toProfile" class="help user-profile text-start">Giỏ hàng</div>
+                        </router-link>
+                        <!-- <div class="help text-start">Giỏ hàng</div> -->
                         <div class="logout text-start">Đăng xuất</div>
                     </div>
                 </div>
