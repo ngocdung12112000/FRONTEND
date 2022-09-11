@@ -51,6 +51,7 @@
                         <router-link to="/profile/1">
                             <div @click="toProfile" class="user-profile text-start">Hồ sơ</div>
                         </router-link>
+                        <div class="help text-start">Khóa học của tôi</div>
                         <div class="help text-start">Trợ giúp</div>
                         <div class="logout text-start">Đăng xuất</div>
                     </div>

@@ -198,4 +198,36 @@
     background-color: #fff;
 }
 
+.img-earth {
+    background-image: url(../images/earth.svg);
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    width: 360px;
+    height: 360px;
+}
+
+.img-happy {
+    background-image: url(../images/happy_announcement.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.img-learning {
+    background-image: url(../images/learning_sketching.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.img-educator {
+    background-image: url(../images/educator.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.img-working {
+    background-image: url(../images/working_remotely.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 

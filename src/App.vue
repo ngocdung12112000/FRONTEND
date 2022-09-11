@@ -19,7 +19,8 @@ export default {
     },
     computed: {
         isShowHeader() {
-            if(this.$route.name === "Login" || this.$route.name === "Register" || this.$route.name === "GamePlay") {
+            if(this.$route.name === "Login" || this.$route.name === "Register" 
+            || this.$route.name === "GamePlay" || this.$route.name === "Introduce") {
                 return false;
             }
             return true;
@@ -33,6 +34,7 @@ export default {
 @import "./assets/css/img.css";
 @import "./assets/css/icons.css";
 @import "./assets/css/buttons.css";
+@import "./assets/font/fontawesome-5.15.1/css/all.min.css";
 
 body {
     font-family: 'GoogleSans-Regular', sans-serif;

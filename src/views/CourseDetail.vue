@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="course-detail-wrapper">
         <div class="course-header">
@@ -28,9 +29,7 @@
                                 <span>Giảng viên</span>
                             </button>
                         </div>
-                        <span class="indicator">
-
-                        </span>
+                        <span class="indicator"></span>
                     </div>
                     <div class="course-benefit">
                         <div class="benefit-title my-3">
@@ -38,19 +37,19 @@
                         </div>
                         <div class="benefit-list">
                             <div class="benefit-item my-2">
-                                <div class="benefit-icon me-3"></div>
+                                <i class="far fa-check-circle me-3"></i>
                                 Luyện phát âm chuẩn toàn bộ 44 âm trong Bảng phiên âm quốc tế (Bảng IPA)
                             </div>
                             <div class="benefit-item my-2">
-                                <div class="benefit-icon me-3"></div>
+                                <i class="far fa-check-circle me-3"></i>
                                 Hệ thống hóa lại toàn bộ kiến thức từ vựng, ngữ pháp và ứng dụng chúng dễ dàng trong giao tiếp
                             </div>
                             <div class="benefit-item my-2">
-                                <div class="benefit-icon me-3"></div>
+                                <i class="far fa-check-circle me-3"></i>
                                 Học giao tiếp, phản xạ qua các chủ điểm thông dụng, nối âm, biến âm, ngữ điệu lên xuống một cách tự nhiên nhất như người bản ngữ
                             </div>
                             <div class="benefit-item">
-                                <div class="benefit-icon"></div>
+                                <i class="far fa-check-circle me-3"></i>
                                 Những cách hay mẹo nhỏ giúp bắt chuyện, gợi mở câu chuyện với người nước ngoài một cách tự nhiên và đầy hứng thú
                             </div>
                         </div>
@@ -60,100 +59,36 @@
                             <h2>Lộ trình khoá học</h2>
                         </div>
                         <div class="roadmap-list ps-5 pe-3">
-                            <div class="roadmap-item">
+                            <div v-for="(item,index) in dataVideos" :key="item.id" class="roadmap-item">
                                 <div class="roadmap-item-title d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center">
-                                        <div class="roadmap-item-number" style="margin-left: -25px;">1</div>
-                                        <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">Giới thiệu</div>
+                                        <div class="roadmap-item-number" style="margin-left: -25px;"> {{index + 1}} </div>
+                                        <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">{{ item.title }}</div>
                                     </div>
-                                    <div class="roadmap-item-time" style="color: #C89F65">00:10:42</div>
+                                    <div class="roadmap-item-time" style="color: #C89F65">{{ item.totalTime }}</div>
                                 </div>
                                 <div class="roadmap-item-content ">
                                     <div class="total-video py-2">
-                                        <div class="d-flex justify-content-between align-items-center" >
+                                        <div class="d-flex justify-content-between align-items-center" @click="expandVideos" style="cursor: pointer;">
                                             <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
+                                                <i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i>
+                                                <div>{{ item.listVideos.length }} videos</div>
+                                                <i class="fas fa-caret-down ms-2 mt-1"></i>
                                             </div>
-                                            <div >00:10:42</div>
+                                            <div>{{ item.totalTime }}</div>
                                         </div>
                                     </div>
                                     <div style="margin-left: 12px;" class="d-none">
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
+                                        <div v-for="video in item.listVideos" :key="video.id" 
+                                            class="d-flex justify-content-between align-items-center py-2" 
+                                        >
                                             <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
+                                                <i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i>
+                                                <div>{{ video.title }}</div>
                                             </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
+                                            <div >{{ video.time }}</div>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="roadmap-item">
-                                <div class="roadmap-item-title d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="roadmap-item-number" style="margin-left: -25px;">2</div>
-                                        <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">Giới thiệu</div>
-                                    </div>
-                                    <div class="roadmap-item-time" style="color: #C89F65">00:10:42</div>
-                                </div>
-                                <div class="roadmap-item-content ">
-                                    <div class="total-video py-2">
-                                        <div class="d-flex justify-content-between align-items-center" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-left: 12px;" class="d-none">
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center py-1" >
-                                            <div class="d-flex">
-                                                <div class="icon-video"></div>
-                                                <div>3 videos</div>
-                                                <div class="icon-dropdown"></div>
-                                            </div>
-                                            <div >00:10:42</div>
-                                        </div>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -164,8 +99,8 @@
                         </div>
                         <div>
                             <div class="teacher-item d-flex align-items-center">
-                                <div class="teacher-avatar">
-                                    <img src="../assets/images/user.jpg" alt="">
+                                <div class="teacher-avatar ">
+                                    <img class="rounded-circle" style="width: 100px; height: 100px;" src="../assets/images/user.jpg" alt="">
                                 </div>
                                 <div class="teacher-info ms-5">
                                     <div class="teacher-name fs-5 fw-bolder">Nguyễn Văn A</div>
@@ -190,22 +125,22 @@
                                 </div>
                                 <div class="add-to-cart my-2">
                                     <div class="label">
-                                        <div class="icon-cart"></div>
+                                        <i class="fas fa-cart-plus"></i>
                                         Thêm vào giỏ hàng
                                     </div>
                                 </div>
-                                <div class="buy-now my-2">
+                                <div class="buy-now my-2" @click="() =>startLearning()">
                                     <div class="label">
                                         Mua ngay
                                     </div>
                                 </div>
                                 <div class="courseAdAction">
                                     <div class="wishlistAction">
-                                        <div class="icon-header"></div>
+                                        <i class="far fa-heart me-2"></i>
                                         <span>Lưu vào Yêu thích</span>
                                     </div>
                                     <div class="shareAction">
-                                        <div class="icon-share"></div>
+                                        <i class="fas fa-share-alt me-2"></i>
                                         <span>Chia sẻ</span>
                                     </div>
                                 </div>
@@ -225,7 +160,53 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
-            slug: this.$route.params.slug
+            slug: this.$route.params.slug,
+            dataVideos: [
+                {
+                    id: 1,
+                    title: "Giới thiệu",
+                    listVideos: [
+                        {
+                            id: 1,
+                            title: "Giới thiệu",
+                            time: "00:04:05",
+                        },
+                        {
+                            id: 2,
+                            title: "Nhập môn",
+                            time: "00:05:49",
+                        },
+                        {
+                            id: 3,
+                            title: "Tài liệu học tập",
+                            time: "00:00:22",
+                        }
+                    ],
+                    totalTime: "00:10:42",
+                },
+                {
+                    id: 2,
+                    title: "Ngữ âm cơ bản",
+                    listVideos: [
+                        {
+                            id: 1,
+                            title: "Giới thiệu",
+                            time: "00:04:05",
+                        },
+                        {
+                            id: 2,
+                            title: "Nhập môn",
+                            time: "00:05:49",
+                        },
+                        {
+                            id: 3,
+                            title: "Tài liệu học tập",
+                            time: "00:00:22",
+                        }
+                    ],
+                    totalTime: "00:10:42",
+                }
+            ]
         }
     },
     methods: {
@@ -237,6 +218,19 @@ export default {
             $('html,body').animate({
                 scrollTop: $(`.${tab}`).offset().top},
                 'slow');
+        },
+        expandVideos(e) {
+            const $this = $(e.currentTarget);
+            $($this).parent().next().toggleClass('d-none');
+        },
+        startLearning() {
+            this.$router.push({
+                name: 'LearnCourse',
+                params: {
+                    id: this.id,
+                    slug: this.slug
+                }
+            });
         }
     }
 }
@@ -443,6 +437,7 @@ export default {
     border-radius: 100px;
     width: 100%;
     padding: 5px 15px;
+    cursor: pointer;
 }
 
 .label {
@@ -458,6 +453,7 @@ export default {
     background: #FCCF00;
     font-weight: 700;
     border-radius: 100px;
+    cursor: pointer;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
 

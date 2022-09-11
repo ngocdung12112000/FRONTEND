@@ -6,7 +6,7 @@ import Register from "../views/Register.vue";
 
 const routes = [
     {
-        path: "/",
+        path: "/home",
         name: "Home",
         component: Home,
     },
@@ -66,6 +66,18 @@ const routes = [
         name: "CourseDetail",
         component: () =>
             import(/* webpackChunkName: "prepare" */ "../views/CourseDetail.vue"),
+    },
+    {
+        path: "/courses/learn/:slug",
+        name: "LearnCourse",
+        component: () =>
+            import(/* webpackChunkName: "prepare" */ "../views/LearnCourse.vue"),
+    },
+    {
+        path: "/",
+        name: "Introduce",
+        component: () =>
+            import(/* webpackChunkName: "prepare" */ "../views/Introduce.vue"),
     },
 ];
 

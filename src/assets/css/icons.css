@@ -48,3 +48,35 @@
     height: 51px;
     background-position: -295px -90px;
 }
+
+.icon-heart {
+    width: 24px;
+    height: 24px;
+    background-image: url(../images/ICON/icon-heart.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.icon-share {
+    width: 24px;
+    height: 24px;
+    background-image: url(../images/ICON/icon-share.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.icon-video {
+    width: 24px;
+    height: 24px;
+    background-image: url(../images/ICON/icon-video.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.icon-dropdown {
+    width: 24px;
+    height: 20px;
+    background-image: url(../images/ICON/icon-dropdown.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
