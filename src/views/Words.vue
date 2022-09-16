@@ -51,11 +51,17 @@
                 </div>
             </div>
         </div>
+        <Loading />
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
+
 <script>
+import Loading from "../components/Loading.vue";
 export default {
+    components: {
+        Loading,
+    },
     data() {
         return {
             words: [
@@ -103,6 +109,7 @@ export default {
 <style scoped>
 .words-wrapper {
     display: flex;
+    flex-wrap: wrap;
 }    
 
 .learnt-words {

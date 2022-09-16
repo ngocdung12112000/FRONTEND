@@ -150,7 +150,7 @@
                 </div>
             </div>
             <div class="lesson-svg position-absolute" :class="{bottom_20 : lesson.id % 2 == 0, top_20 : lesson.id % 2 == 1}" style="left: 50px">
-                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s1.svg" alt="">
+                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s4.svg" alt="">
             </div>
             <div class="lesson-svg position-absolute" :class="{top_20 : lesson.id % 2 == 0, bottom_20 : lesson.id % 2 == 1}" style="right: 70px">
                 <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s3.svg" alt="">
