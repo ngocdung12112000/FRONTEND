@@ -1,7 +1,7 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
     <div class="ques-3">
-        <div class="title mb-5">{{ question.question_text.name }}</div>
+        <div class="title mb-3">{{ question.question_text.name }}</div>
         <div class="answer-area d-flex justify-content-center" style="width: 100%;">
             <div class="answer-words-wrapper d-flex justify-content-between" style="width: 100%;">
                 <div class="answer-words left" style="width: 45%;">

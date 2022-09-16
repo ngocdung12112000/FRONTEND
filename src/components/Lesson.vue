@@ -149,6 +149,12 @@
                     </div>
                 </div>
             </div>
+            <div class="lesson-svg position-absolute" :class="{bottom_20 : lesson.id % 2 == 0, top_20 : lesson.id % 2 == 1}" style="left: 50px">
+                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s1.svg" alt="">
+            </div>
+            <div class="lesson-svg position-absolute" :class="{top_20 : lesson.id % 2 == 0, bottom_20 : lesson.id % 2 == 1}" style="right: 70px">
+                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s3.svg" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -236,6 +242,7 @@ export default {
 
 .lesson .lesson-content {
     width: 630px;
+    position: relative;
 }
 
 .lesson .lesson-wrapper {
@@ -364,6 +371,14 @@ export default {
 
 .mr_200 {
     margin-right: 200px;
+}
+
+.top_20 {
+    top: 15%;
+}
+
+.bottom_20 {
+    bottom: 15%;
 }
 
 @keyframes up_down_1 {

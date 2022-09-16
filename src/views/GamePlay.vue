@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="my-btn-wrapper skip-btn">
+                <div class="my-btn-wrapper skip-btn" @click="skipClick">
                     <div class="my-btn">
                         Bỏ qua
                     </div>
@@ -193,7 +193,7 @@ export default {
                     // Thực hiện lưu dữ liệu
 
                     // Thực hiện trở về home
-                    this.$router.push("/");
+                    this.$router.push("/home");
                 }
                 else {
                     this.indexQues++;
@@ -202,6 +202,9 @@ export default {
                     this.resetFooter();
                 }
             }
+        },
+        skipClick() {
+            this.checkAnswer(null);
         },
         resetFooter() {
             $(".selected-words").empty();
@@ -212,6 +215,7 @@ export default {
             $(".check-btn > .my-btn").css("background", "#58CC02");
             $(".result").addClass("d-none");
             $(".skip-btn").removeClass("d-none");
+            $(".check-btn .my-btn").text("Kiểm tra");
         },
         correctFooter() {
             $(".footer").removeClass("incorrect");
@@ -243,7 +247,7 @@ export default {
             $(".check-btn .my-btn").text("Tiếp tục");
         },
         backAction() {
-            this.$router.push("/");
+            this.$router.push("/home");
         },
     },
     watch: {
