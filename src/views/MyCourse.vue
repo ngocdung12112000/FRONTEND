@@ -17,10 +17,6 @@
                         <div class="course-item-teacher">
                             {{ item.teacher }}
                         </div>
-                        <div class="course-item-price">
-                            <div>{{ item.salePrice }} đ</div>
-                            <div>{{ item.price }} đ</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -54,7 +50,7 @@ export default {
     min-height: 300px;
     overflow: hidden;
     margin-bottom: 20px;
-    margin-right: 30px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
@@ -160,5 +156,18 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration-line: line-through;
+}
+
+@media screen and (max-width: 997px) {
+    .course-item {
+        width: 46%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .course-item {
+        width: 100%;
+        margin-right: 0;
+    }
 }
 </style>

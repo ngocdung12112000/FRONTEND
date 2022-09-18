@@ -27,12 +27,12 @@
                         <div class="section-item-text">Từ vựng</div>
                     </div>
                 </router-link>
-                <router-link to="/home">
+                <!-- <router-link to="/home">
                     <div @click="sectionClick('story')" class="story section-item d-flex align-items-center">
                         <div class="story-img section-item-img"></div>
                         <div class="section-item-text">Kho truyện</div>
                     </div>
-                </router-link>
+                </router-link> -->
             </div>
             <div class="col-3 col-md-3 right-section d-flex justify-content-center">
                 <div class="streak section-item d-flex align-items-center">
@@ -225,6 +225,48 @@ export default {
 .logout {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+@media screen and (max-width: 1200px) {
+    .section-item {
+        padding: 10px 3px;
+    }
+
+    .section-item-text {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 993px) {
+    .left-section .section-item-text {
+        display: none;
+    }
+
+    .left-section .section-item {
+        padding: 10px;
+    }
+
+    .left-section .section-item-img {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .left-section {
+        width: 100%;
+    }
+
+    .right-section {
+        width: 50px;
+    }
+
+    .right-section .gem, .streak{
+        display: none !important;
+    }
+
+    .user {
+        margin: 0;
+    }
 }
 
 

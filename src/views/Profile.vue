@@ -436,4 +436,49 @@ export default {
 .btn-follow:hover {
     background-color: #31b8f7;
 }
+
+@media screen and (max-width: 998px) {
+    .profile {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .edit-wrapper {
+        display: none;
+    }
+
+    .info-section {
+        justify-content: space-between;
+    }
+
+    .profile-info .profile-avatar {
+        width: 90px ;
+        height: 90px ;
+        font-size: 50px ;
+    }
+
+    .profile-info .profile-avatar .icon-edit {
+        top: 10px;
+        right: -10px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-content > div {
+        margin-left: 20px;
+        width: 100% !important;;
+    }
+
+    .achievement-list {
+        width: 97%;
+    }
+
+    .friend-section .friend-wrapper {
+        width: 97%;
+    }
+}
 </style>

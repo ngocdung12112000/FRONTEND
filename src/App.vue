@@ -44,7 +44,17 @@ body {
 
 @font-face {
     font-family: 'GoogleSans-Regular';
-    src: url('assets/font/GoogleSans-Regular.otf') format('opentype');
+    src: url('./assets/font/GoogleSans-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('./assets/font/GoogleSans-Bold.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GoogleSans-Italic';
+    src: url('./assets/font/GoogleSans-Italic.otf') format('opentype');
 }
 
 button {

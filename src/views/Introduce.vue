@@ -48,7 +48,7 @@
             </div>
             <div class="intro-detail d-flex align-items-center justify-content-between mt-5 pb-5 border-bottom">
                 <div>
-                    <h3>Học mọi lúc mọi nơi</h3>
+                    <h3 class="fw-bolder">Học mọi lúc mọi nơi</h3>
                     <div>Thử giao diện mới với ứng dụng cho iPhone và Android của chúng tôi.</div>
                 </div>
                 <div class="img img-working"></div>
@@ -56,7 +56,7 @@
             <div class="intro-detail d-flex align-items-center justify-content-between mt-5">
                 <div class="img img-educator"></div>
                 <div style="width: 75%">
-                    <h3>Các khóa học thực sự hiệu quả</h3>
+                    <h3 class="fw-bolder">Các khóa học thực sự hiệu quả</h3>
                     <div>Các khóa học của chúng tôi thực sự hiệu quả trong việc giảng dạy kỹ năng nghe, đọc và nói. Hãy xem những nghiên cứu mới nhất của chúng tôi!</div>
                 </div>
             </div>
@@ -236,6 +236,40 @@ export default {
   from, to { border-color: transparent }
   50% { border-color: orange; }
 }
+
+@media screen and (max-width: 1366px) {
+    .intro-banner > div.container {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .intro-banner-title > h1 {
+        font-size: 18px !important;
+    }
+
+    .intro-container .container {
+        margin-top: 30px;
+        padding: 0 !important;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .sign-in,
+    .sign-up {
+        font-size: 11px;
+    }
+
+    .intro-detail {
+        flex-direction: column !important;
+    }
+
+    .intro-detail >div{
+        width: 90% !important;
+        margin-bottom: 15px;
+    }
+}
+
 
 
 </style>

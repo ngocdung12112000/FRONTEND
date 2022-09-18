@@ -48,12 +48,12 @@
                 
                 <paginate
                     v-model="page"
-                    :page-count="20"
+                    :page-count="10"
                     :page-range="3"
                     :margin-pages="2"
                     :click-handler="clickCallback"
-                    :prev-text="'Prev'"
-                    :next-text="'Next'"
+                    :prev-text="'<'"
+                    :next-text="'>'"
                     :container-class="'pagination'"
                     :page-class="'page-item'"
                 />
@@ -72,7 +72,7 @@ export default {
     data() {
         return {
             courses: dataCourses,
-            page: 10
+            page: 1
         }
     },
     methods: {
@@ -100,6 +100,7 @@ export default {
     background-size: cover;
     background-position: center;
     border-radius: 5px;
+    background-repeat: no-repeat;
 }
 
 .course {
@@ -263,5 +264,21 @@ export default {
         margin-right: 0px;
     }
 } 
+
+@media screen and (max-width: 426px) {
+    .course-category {
+        display: none;
+    }
+
+    .course-main {
+        width: 100%;
+    }
+
+    .course-header {
+        height: 200px;
+    }
+} 
+
+
     
 </style>

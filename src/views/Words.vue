@@ -3,7 +3,7 @@
     <div class="container words-wrapper">
         <div class="learnt-words col-8">
             <div class="title">
-                <h1>Đã học từ vựng Tiếng Anh</h1>
+                <h1>Từ vựng Tiếng Anh đã học</h1>
                 <div class="total-words"> 150 Từ </div>
             </div>
             <div class="list-words">
@@ -27,10 +27,10 @@
                 </table>
             </div>
         </div>
-        <div class="description col-4">
+        <div class="description col-4 ">
             <div class="description-wrapper">
                 <h1>Lặp lại cách quãng</h1>
-                <div>Thuật toán của Duolingo sẽ tính toán khi nào bạn nên luyện tập từ vựng để có thể ghi nhớ từ một cách lâu dài.</div>
+                <div>Thang đo mức độ các từ vựng đã học</div>
                 <div class="strength-list">
                     <div class="strength-item">
                         <div class="img-skill-strength-sprite_4 me-3"></div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <Loading />
+        <Loading v-show="false" />
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
@@ -180,6 +180,25 @@ export default {
 
 .description .description-wrapper .strength-item span{
     font-size: 16px;
+}
+
+@media screen and (max-width: 998px) {
+    .words-wrapper {
+        flex-direction: column-reverse;
+    }
+
+    .learnt-words, .description  {
+        width: 100% !important;
+    }
+
+    .description {
+        display: flex;
+        justify-content: center;
+    }
+
+    .learnt-words {
+        padding: 20px 0;
+    }
 }
 
 </style>
