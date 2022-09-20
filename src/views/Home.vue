@@ -3,11 +3,11 @@
     <!-- <Header /> -->
     <div class="home-background">
         <div class="home container d-flex justify-content-between">
-            <div class="col-8 lesson-wrapper">
+            <div class="col-8 lesson-map">
                 <div v-for="item in list" :key="item.id">
                     <Lesson :lesson="item" :currentPageUser="currentPageUser" :currentLessonUser="currentLessonUser" />
                 </div>
-                <a href="#" class="scroll-top">
+                <a class="scroll-top" @click="scollToCurrent">
                     <div class="img-up-arrow"></div>
                 </a>
             </div>
@@ -32,6 +32,12 @@ export default {
         Personal,
         // Header
     },
+    created () {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     data() {
         return {
             toggleTab: true,
@@ -48,6 +54,22 @@ export default {
         // this.getUserStreak();
     },
     methods: {
+        handleScroll() {
+            var currentLesson = document.getElementsByClassName("current")[0];
+            currentLesson = currentLesson.parentElement.parentElement.parentElement;
+            var imgArrow = document.getElementsByClassName("img-up-arrow")[0];
+            if(window.scrollY > currentLesson.offsetTop) {
+                imgArrow.style.transform = 'rotate(0deg)';
+            } else {
+                imgArrow.style.transform = 'rotate(180deg)';
+            }
+        },
+        scollToCurrent() {
+            var currentLesson = document.getElementsByClassName("current")[0];
+            currentLesson = currentLesson.parentElement.parentElement.parentElement;
+            console.log(currentLesson.offsetTop);
+            currentLesson.scrollIntoView({ behavior: "smooth" });
+        },
         getList() {
             let me = this;
             this.axios
@@ -101,8 +123,25 @@ export default {
     text-align: center;
     position: fixed;
     bottom: 20px;
-    right: calc(40%);
+    right: 40%;
     z-index: 1;
+    background-color: #fff;
+    cursor: pointer;
     /* display: none; */
 }
+
+@media screen and (max-width: 768px) {
+    .personal  {
+        display: none !important;
+    }
+
+    .lesson-map {
+        width: 100%;
+    }
+
+    .scroll-top {
+        right: 15%;
+    }
+}
+
 </style>

@@ -84,4 +84,19 @@ export default {
     background-color: #dbdbdb;
 }
 
+@media screen and (max-width: 768px) {
+    .answer-area {
+        flex-direction: column;
+    }
+
+    .img-speaker-large-wrapper {
+        width: 35% !important;
+        margin-bottom: 20px;
+    }
+
+    .img-speaker-large {
+        height: 120px;
+    }
+}
+
 </style>

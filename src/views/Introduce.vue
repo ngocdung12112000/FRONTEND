@@ -31,7 +31,7 @@
             <div class="intro-detail d-flex align-items-center justify-content-between pb-5 border-bottom">
                 <div class="img img-happy"></div>
                 <div class="text" style="width: 75%">
-                    <h3>Cách học ngôn ngữ</h3>
+                    <h3 class="fw-bolder">Cách học ngôn ngữ</h3>
                     <div>Học cùng Duolingo rất vui nhộn. Với các bài học nhỏ gọn, bạn có thể vừa ghi điểm và mở khóa các cấp độ mới vừa luyện tập các kỹ năng giao tiếp hữu dụng.</div>
                 </div>
             </div>

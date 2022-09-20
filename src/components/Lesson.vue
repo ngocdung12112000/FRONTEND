@@ -149,11 +149,11 @@
                     </div>
                 </div>
             </div>
-            <div class="lesson-svg position-absolute" :class="{bottom_20 : lesson.id % 2 == 0, top_20 : lesson.id % 2 == 1}" style="left: 50px">
+            <div class="lesson-svg position-absolute" :class="{bottom_20 : lesson.id % 2 == 0, top_20 : lesson.id % 2 == 1}" style="left: 20px">
                 <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s4.svg" alt="">
             </div>
-            <div class="lesson-svg position-absolute" :class="{top_20 : lesson.id % 2 == 0, bottom_20 : lesson.id % 2 == 1}" style="right: 70px">
-                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s3.svg" alt="">
+            <div class="lesson-svg position-absolute" :class="{top_20 : lesson.id % 2 == 0, bottom_20 : lesson.id % 2 == 1}" style="right: 40px">
+                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s6.svg" alt="">
             </div>
         </div>
     </div>
@@ -391,5 +391,21 @@ export default {
   0%   {top: -50px;}
   50%  {top: -35px;}
   100% {top: -50px;}
+}
+
+@media screen and (max-width: 768px) {
+    
+    .lesson .lesson-header {
+        width: 100%;
+    }
+
+    .lesson .lesson-content {
+        width: 100%;
+    }
+
+    .lesson-svg img{
+        width: 120px !important;
+        height: 120px !important;
+    }
 }
 </style>

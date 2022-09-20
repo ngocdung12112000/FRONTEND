@@ -19,9 +19,9 @@
                 ref="textareaAnswer"></textarea>
             <div v-else class="answer-words-wrapper" style="width: 100%;">
                 <div class="selected-words my-2 d-flex align-items-center"></div>
-                <div class="answer-words d-flex justify-content-center mt-5">
+                <div class="answer-words d-flex justify-content-center mt-5 flex-wrap">
                     <div v-for="(word, index) in question.arr_words.arr" :key="word"
-                        class="word-wrapper d-flex justify-content-center me-2">
+                        class="word-wrapper d-flex justify-content-center me-2 mb-2">
                         <button type="button" :id="`word${index}`" @click="btnWordClick" class="my-button">
                             {{ word.name }}
                         </button>

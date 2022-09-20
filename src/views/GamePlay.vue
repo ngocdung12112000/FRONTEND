@@ -437,4 +437,31 @@ export default {
 .switch-input:hover {
     color: rgb(197, 197, 197);
 }
+
+@media screen and (max-width: 768px) {
+    .play-content {
+        padding: 0;
+    }
+
+    .play-content > div {
+        width: 90%;
+    }
+
+    .footer .container {
+        padding: 0 !important;
+        flex-direction: column;
+    }
+
+    .skip-btn, .switch-input {
+        display: none;
+    }
+
+    .check-btn {
+        width: 90%;
+    }
+
+    .my-btn {
+        width: 100%;
+    }
+}
 </style>
