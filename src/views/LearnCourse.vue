@@ -30,12 +30,13 @@
             <div class="course-detail-area">
                 <div class="course-detail-tabs my-3">
                     <div>
-                        <button class="active me-2" @click="switchTab">Giới thiệu</button>
-                        <button @click="switchTab">Tài liệu</button>
+                        <button class="active me-2" @click="() => switchTab(1)">Giới thiệu</button>
+                        <button @click="() => switchTab(3)" class="lesson">Bài học</button>
+                        <button class="me-2" @click="() => switchTab(2)">Tài liệu</button>
                     </div>
                     <span class="indicator"></span>
                 </div>
-                <div class="course-about mt-4" v-show="switchToggle">
+                <div class="course-about mt-4" v-show="switchToggle == 1">
                     <div class="course-intro">
                         <p>Khoá học với 100% giảng viên người bản ngữ, đến từ Topica Native</p>
                         <p>Học viên thường xuyên được kiểm tra, đánh giá qua các bài kiểm tra trong và sau mỗi bài học</p>
@@ -82,7 +83,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="course-document" v-show="!switchToggle">
+                <div class="list-lesson-tab" v-show="switchToggle == 3">
+                    <div class="list-lesson">
+                        <div class="item-lesson d-flex" @click="() =>itemLessonClick(1)">
+                            <div class="item-title">
+                                <span>Chương 1: What you miss the most at school</span>
+                            </div>
+                            <div class="item-quantity d-flex align-items-center">
+                                4 Videos
+                                <i class="fas fa-chevron-right ms-2"></i>
+                            </div>
+                        </div>
+                        <div class="item-lesson d-flex">
+                            <div class="item-title">
+                                <span>Chương 1: What you miss the most at school</span>
+                            </div>
+                            <div class="item-quantity d-flex align-items-center">
+                                4 Videos
+                                <i class="fas fa-chevron-right ms-2"></i>
+                            </div>
+                        </div>
+                        <div class="item-lesson d-flex" >
+                            <div class="item-title">
+                                <span>Chương 1: What you miss the most at school</span>
+                            </div>
+                            <div class="item-quantity d-flex align-items-center">
+                                4 Videos
+                                <i class="fas fa-chevron-right ms-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-document" v-show="switchToggle == 2">
                     <h4>Tài liệu</h4>
                     <div class="list-document">
                         <div class="item-document d-flex align-items-center justify-content-between my-3">
@@ -139,21 +171,19 @@ import $ from "jquery";
 export default {
     data() {
         return {
-            switchToggle: true
+            switchToggle: 1
         }
     },
     methods: {
-        switchTab(e) {
-            const thisBtn = e.target;
-            const left = $(thisBtn).offset().left;
+        switchTab(index) {
+            const thisBtn = event.currentTarget;
+            const left = thisBtn.offsetLeft;
             const width = $(thisBtn).width();
-            let pLeft = left - (width / 2);
-            pLeft = pLeft < 0 ? 0 : pLeft;
             $('.course-detail-tabs button').removeClass('active');
             $(thisBtn).addClass('active');
-            $('.indicator').css('left', (pLeft ) + 'px');
+            $('.indicator').css('left', (left ) + 'px');
             $('.indicator').css('width', (width + 10) + 'px');
-            this.switchToggle = !this.switchToggle;
+            this.switchToggle = index;
         },
         itemLessonClick(id) {
             const itemLesson = event.currentTarget;
@@ -232,6 +262,12 @@ export default {
     overflow-y: auto;
 }
 
+.list-lesson-tab {
+    width: 100%;
+    max-height: 900px;
+    overflow-y: auto;
+}
+
 .list-document {
     width: 100%;
     padding: 0 15px;     
@@ -293,5 +329,27 @@ export default {
     text-align: right;
     line-height: 24px;
     cursor: pointer;
+}
+
+.lesson {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .lesson {
+        display: inline-block;
+    }
+    .left-section {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .video-section {
+        height: 30vh;
+    }
+
+    .right-section {
+        display: none;
+    }
 }
 </style>

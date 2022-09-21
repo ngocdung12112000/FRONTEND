@@ -63,3 +63,9 @@
     border: 1px solid #e5e5e5;
     cursor: context-menu;
 }
+
+@media screen and (max-width: 768px) {
+    .my-button {
+        padding: 0.45rem 0.5rem;
+    }
+}

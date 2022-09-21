@@ -148,9 +148,37 @@
                         </div>
                     </div>
                 </div>
+                <div class="course-detail-footer">
+                <div class="courseDetails">
+                    <div class="priceInfo">
+                        <div class="actualPrice">749,000 đ</div>
+                        <div class="sellingPrice">399,000 đ</div>
+                    </div>
+                    <div class="add-to-cart my-2">
+                        <div class="label">
+                            <i class="fas fa-cart-plus"></i>
+                            Thêm vào giỏ hàng
+                        </div>
+                    </div>
+                    <div class="buy-now my-2" @click="() =>startLearning()">
+                        <div class="label">
+                            Mua ngay
+                        </div>
+                    </div>
+                    <div class="courseAdAction">
+                        <div class="wishlistAction">
+                            <i class="far fa-heart me-2"></i>
+                            <span>Lưu vào Yêu thích</span>
+                        </div>
+                        <div class="shareAction">
+                            <i class="fas fa-share-alt me-2"></i>
+                            <span>Chia sẻ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -500,10 +528,50 @@ export default {
     border-left: 1px solid #C89F65;
 }
 
+.course-detail-footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    display: none;
+    z-index: 999;
+}
 
+@media screen and (max-width: 768px) {
+    .course-overview {
+        margin-bottom: 200px;
 
+    }
+    .course-header {
+        width: 100%;
+        padding: 0px 15px;
+        text-align: center;
+    }
+    .course-card-wrapper {
+        display: none;
+    }
 
-/* @media (min-width: 960px) {
-    
-} */
+    .course-content {
+        max-width: 95%;
+        flex-basis: 95%;
+    }
+
+    .course-detail-footer {
+        display: block;
+    }
+
+    .courseDetails {
+        padding: 0px 20px;
+        border-top: 1px solid #bbbbbb;
+    }
+
+    .courseDetails .priceInfo {
+        margin-top: 5px;
+    }
+
+    .courseDetails .priceInfo .sellingPrice {
+        font-size: 25px;
+    }
+}
 </style>

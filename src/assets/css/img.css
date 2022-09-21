@@ -230,4 +230,12 @@
     background-size: contain;
 }
 
+@media screen and (max-width: 768px) {
+    .img-inaccurate,
+    .img-accurate {
+        width: 60px;
+        height: 60px;
+    }
+}
+
 

@@ -16,10 +16,10 @@
             <textarea v-if="!toggleSwitch" placeholder="Nhập đáp án..." @keyup.enter="onEnterTextArea"
                 ref="textareaAnswer"></textarea>
             <div v-else class="answer-words-wrapper" style="width: 100%;">
-                <div class="selected-words my-2 d-flex align-items-center"></div>
-                <div class="answer-words d-flex justify-content-center mt-5">
+                <div class="selected-words my-2 d-flex align-items-center flex-wrap"></div>
+                <div class="answer-words d-flex justify-content-center mt-5 flex-wrap">
                     <div v-for="(word, index) in question.arr_words.arr" :key="word"
-                        class="word-wrapper d-flex justify-content-center me-2">
+                        class="word-wrapper d-flex justify-content-center me-2 mb-2">
                         <button type="button" :id="`word${index}`" @click="btnWordClick" class="my-button">
                             {{ word.name }}
                         </button>
@@ -93,10 +93,11 @@ export default {
 }
 
 .selected-words {
-    height: 60px;
+    min-height: 60px;
     width: 100%;
     border-top: 2px solid #ebebeb;
     border-bottom: 2px solid #ebebeb;
+    padding: 10px 0;
 }
 
 textarea {
@@ -109,5 +110,11 @@ textarea {
     padding: 10px;
     border-radius: 10px;
     background-color: rgb(235, 235, 235);
+}
+
+@media screen and (max-width: 768px) {
+    .title {
+        margin-bottom: 20px !important;
+    }
 }
 </style>

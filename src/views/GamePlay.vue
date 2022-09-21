@@ -445,11 +445,13 @@ export default {
 
     .play-content > div {
         width: 90%;
+        height: 85%;
     }
 
     .footer .container {
         padding: 0 !important;
         flex-direction: column;
+        justify-content: space-around !important;
     }
 
     .skip-btn, .switch-input {

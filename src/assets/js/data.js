@@ -4,7 +4,7 @@ const allQuestions = [
         id: 1,
         question_text: {
             name: "Viết lại bằng tiếng Việt",
-            text: "Two hats",
+            text: "I have two hats",
             lang: "EN"
         },
         arr_words: {
@@ -33,11 +33,26 @@ const allQuestions = [
                     id: 5,
                     name: "Hai",
                     value: 5,
+                },
+                {
+                    id: 6,
+                    name: "Tôi",
+                    value: 6,
+                },
+                {
+                    id: 7,
+                    name: "có",
+                    value: 7,
+                },
+                {
+                    id: 8,
+                    name: "này",
+                    value: 8,
                 }
             ],
             lang: "VN"
         },
-        answer: "Hai chiếc mũ",
+        answer: "Tôi có hai chiếc mũ",
         is_show_switch: true
     },
     {
