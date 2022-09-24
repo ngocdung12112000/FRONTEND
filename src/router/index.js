@@ -91,11 +91,29 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "prepare" */ "../views/Cart.vue"),
     },
+    // {
+    //     path: "/admin",
+    //     name: "Admin",
+    //     component: () =>
+    //         import(/* webpackChunkName: "prepare" */ "../views/ADMIN/Admin.vue"),
+    // },
     {
         path: "/admin",
-        name: "Admin",
+        name: "Dashboard",
         component: () =>
-            import(/* webpackChunkName: "prepare" */ "../views/ADMIN/Admin.vue"),
+            import(/* webpackChunkName: "prepare" */ "../views/ADMIN/Dashboard.vue"),
+    },
+    {
+        path: "/admin/user-management",
+        name: "UserManagement",
+        component: () =>
+            import(/* webpackChunkName: "prepare" */ "../views/ADMIN/USER/UserList.vue"),
+    },
+    {
+        path: "/admin/course-management",
+        name: "CourseManagement",
+        component: () =>
+            import(/* webpackChunkName: "prepare" */ "../views/ADMIN/COURSE/CourseList.vue"),
     },
 ];
 

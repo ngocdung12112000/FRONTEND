@@ -1,6 +1,6 @@
 <template>
-    <div class="dashboard px-3 py-3">
-        DASHBOARD
+    <div>
+        <h1>Course LIST</h1>
     </div>
 </template>
 
@@ -10,6 +10,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

@@ -1,21 +1,22 @@
-// import {createStore} from 'vuex';
-import Vue from 'vue';
-import Vuex from 'vuex';
+import {createStore} from 'vuex';
+// import Vue from 'vue';
+// import Vuex from 'vuex';
 
-Vue.use(Vuex);
+import AuthStore from "./modules/auth";
 
-export default new Vuex.Store({
-    modules: {}
-})
+// Vue.use(Vuex);
 
-// const store = createStore({
-//     state: {
-//         appName: 'My App',
-//     },
-//     getters: {
-//         appName: state => state.appName,
+// export default new Vuex.Store({
+//     modules: {
+//         AUTH: AuthStore
 //     }
 // })
 
-// export default store;
+const store = createStore({
+    modules: {
+        AUTH: AuthStore
+    }
+})
+
+export default store;
 
