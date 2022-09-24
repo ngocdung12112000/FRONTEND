@@ -4,13 +4,14 @@
             <div class="video-wrapper">
                 <div class="video-section">
                     <div class="video-container" style="width: 100%; height: 100%;">
-                        <video id="video" controls style="width: 100%; height: 100%;">
-                            <source src="../assets/videos/Stay.mp4" type="video/mp4">
-                        </video>
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/y4rVYbfbhcE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <!-- <video id="video" controls style="width: 100%; height: 100%;">
+                            <source src="https://www.youtube.com/embed/JHSRTU31T14" type="video/mp4">
+                        </video> -->
                     </div>
                 </div>
             </div>
-            <h1 class="mt-3">Chủ đề: International working environment</h1>
+            <h1 class="mt-3">Chủ đề: Travelling</h1>
             <div class="time-wrapper d-flex my-3">
                 <div class="time d-flex me-5">
                     <div class="me-4">
@@ -85,31 +86,12 @@
                 </div>
                 <div class="list-lesson-tab" v-show="switchToggle == 3">
                     <div class="list-lesson">
-                        <div class="item-lesson d-flex" @click="() =>itemLessonClick(1)">
+                        <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="item.link" @click="itemLessonClick">
                             <div class="item-title">
-                                <span>Chương 1: What you miss the most at school</span>
+                                <span>Video {{ index + 1 }}: {{ item.title }}</span>
                             </div>
                             <div class="item-quantity d-flex align-items-center">
-                                4 Videos
-                                <i class="fas fa-chevron-right ms-2"></i>
-                            </div>
-                        </div>
-                        <div class="item-lesson d-flex">
-                            <div class="item-title">
-                                <span>Chương 1: What you miss the most at school</span>
-                            </div>
-                            <div class="item-quantity d-flex align-items-center">
-                                4 Videos
-                                <i class="fas fa-chevron-right ms-2"></i>
-                            </div>
-                        </div>
-                        <div class="item-lesson d-flex" >
-                            <div class="item-title">
-                                <span>Chương 1: What you miss the most at school</span>
-                            </div>
-                            <div class="item-quantity d-flex align-items-center">
-                                4 Videos
-                                <i class="fas fa-chevron-right ms-2"></i>
+                                {{ item.time }}
                             </div>
                         </div>
                     </div>
@@ -134,31 +116,12 @@
         </div>
         <div class="right-section">
             <div class="list-lesson">
-                <div class="item-lesson d-flex" @click="() =>itemLessonClick(1)">
+                <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="item.link" @click="itemLessonClick">
                     <div class="item-title">
-                        <span>Chương 1: What you miss the most at school</span>
+                        <span>Video {{ index + 1 }}: {{ item.title }}</span>
                     </div>
                     <div class="item-quantity d-flex align-items-center">
-                        4 Videos
-                        <i class="fas fa-chevron-right ms-2"></i>
-                    </div>
-                </div>
-                <div class="item-lesson d-flex">
-                    <div class="item-title">
-                        <span>Chương 1: What you miss the most at school</span>
-                    </div>
-                    <div class="item-quantity d-flex align-items-center">
-                        4 Videos
-                        <i class="fas fa-chevron-right ms-2"></i>
-                    </div>
-                </div>
-                <div class="item-lesson d-flex" >
-                    <div class="item-title">
-                        <span>Chương 1: What you miss the most at school</span>
-                    </div>
-                    <div class="item-quantity d-flex align-items-center">
-                        4 Videos
-                        <i class="fas fa-chevron-right ms-2"></i>
+                        {{ item.time }}
                     </div>
                 </div>
             </div>
@@ -171,7 +134,27 @@ import $ from "jquery";
 export default {
     data() {
         return {
-            switchToggle: 1
+            switchToggle: 1,
+            data: [
+                {
+                    id: 1,
+                    title: "Going to a hotel",
+                    time: "00:04:05",
+                    link: "y4rVYbfbhcE",
+                },
+                {
+                    id: 2,
+                    title: "In the Airport",
+                    time: "00:04:05",
+                    link: "61Pgo-puryk",
+                },
+                {
+                    id: 3,
+                    title: "Using Transportation",
+                    time: "00:04:05",
+                    link: "y4rVYbfbhcE",
+                }
+            ]
         }
     },
     methods: {
@@ -185,19 +168,11 @@ export default {
             $('.indicator').css('width', (width + 10) + 'px');
             this.switchToggle = index;
         },
-        itemLessonClick(id) {
-            const itemLesson = event.currentTarget;
-            $(itemLesson).toggleClass('active');
-            const div = 
-            `<div class="ps-2 pe-4 py-2">
-                <div class="d-flex justify-content-between align-items-center py-2"><div class="d-flex"><i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i><div>1. Giới thiệu</div></div><div>00:04:05</div></div>
-                <div class="d-flex justify-content-between align-items-center py-2"><div class="d-flex"><i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i><div>2. Giới thiệu</div></div><div>00:04:05</div></div>
-            </div>`;
-            if($(itemLesson).hasClass('active')) {
-                $(itemLesson).after(div);
-            } else {
-                $(itemLesson).next().remove();
-            }
+        itemLessonClick(e) {
+            $('.item-lesson').removeClass('active');
+            const itemLesson = e.currentTarget;
+            $(itemLesson).addClass('active');
+            $('iframe').attr('src', 'https://www.youtube.com/embed/' + $(itemLesson).attr('data'));
         }
     }
 }
@@ -301,6 +276,10 @@ export default {
     cursor: pointer;
 }
 
+.item-lesson:hover {
+    background-color: rgba(212, 212, 212,0.4);
+}
+
 .item-lesson.active span{
     color: #E3BA00;
 }
@@ -328,6 +307,10 @@ export default {
     margin-top: 4px;
     text-align: right;
     line-height: 24px;
+    cursor: pointer;
+}
+
+.video-item {
     cursor: pointer;
 }
 

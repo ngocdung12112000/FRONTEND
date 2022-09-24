@@ -20,7 +20,8 @@ export default {
     computed: {
         isShowHeader() {
             if(this.$route.name === "Login" || this.$route.name === "Register" 
-            || this.$route.name === "GamePlay" || this.$route.name === "Introduce") {
+            || this.$route.name === "GamePlay" || this.$route.name === "Introduce" 
+            || this.$route.name === "Admin") {
                 return false;
             }
             return true;

@@ -302,8 +302,5 @@ export default {
     height: 250px;
 }
 
-.chart svg{
-    padding-top: 10px;
-}
 
 </style>
