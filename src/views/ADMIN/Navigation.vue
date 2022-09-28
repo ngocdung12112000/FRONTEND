@@ -75,7 +75,7 @@ export default {
 
 .nav-item.active{
     box-shadow: 0px 4px 8px -4px rgb(58 53 65 / 42%);
-    background-image: linear-gradient(98deg, #8fadff, #5566fd 94%);
+    background-image: linear-gradient(98deg, #5da5ec, #1a7fe4 94%);
     color: #fff;
 }
 

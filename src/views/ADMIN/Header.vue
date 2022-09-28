@@ -8,10 +8,10 @@
             <div class="d-flex justify-content-between header-main">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-bars me-3 fs-4" style="cursor: pointer;" @click="onCollapse"></i>
-                    <div class="search d-flex align-items-center">
+                    <!-- <div class="search d-flex align-items-center">
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="user-admin d-flex align-items-center">
                     <div class="icon-notify me-3">
@@ -92,7 +92,7 @@ export default {
 
 .header-logo {
     width: 275px;
-    background: #6673fd;
+    background: #2e86de;
     color: #fff;
     text-align: center;
     font-size: 25px;
@@ -131,7 +131,7 @@ export default {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #6673fd;
+    color: #2e86de;
 }
 
 .search input {
@@ -170,6 +170,14 @@ export default {
     }
     .header-logo span {
         display: none !important;
+    }
+
+    .header-main {
+        padding: 0 15px;
+    }
+
+    .search  input{
+        width: 150px;
     }
 }
 </style>

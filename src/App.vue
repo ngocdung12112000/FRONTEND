@@ -104,7 +104,7 @@ a {
     top: 80px;
     left: 275px;
     width: calc(100% - 275px);
-    height: 100vh;
+    min-height: calc(100vh - 80px);
     background: #f1f1f1;
 }
 
