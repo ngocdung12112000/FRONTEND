@@ -3,7 +3,7 @@
         <div class="header-content d-flex align-items-center">
             <div class="header-logo d-flex align-items-center justify-content-center" :class="{collapsed: isCollapse}">
                 <img src="../../assets/images/logo-white-3.png" alt="logo" />
-                <span>BNDZ ENGLISH</span>
+                <span>BNZ ENGLISH</span>
             </div>
             <div class="d-flex justify-content-between header-main">
                 <div class="d-flex align-items-center">

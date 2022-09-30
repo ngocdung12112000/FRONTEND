@@ -1,6 +1,6 @@
 <template>
     <div class="course-list-container py-3 px-4">
-        <h3 class="fw-bolder">Danh sách khóa học</h3>
+        <h3 class="fw-bolder mb-4">Danh sách khóa học</h3>
         <div class="course-control d-flex justify-content-between">
             <div>
                 <div class="course-search-input me-3">
@@ -24,16 +24,25 @@
                         <div class="course-item-title">
                             {{ item.name }}
                         </div>
-                        <!-- <p class="course-item-description text-black-50 d-flex justify-content-between">
-                            {{ item.name }}: 
-                            {{ item.name }}
-                        </p> -->
-                        <div class="course-item-teacher">
-                            Giáo viên: {{ item.teacher }}
+                        <div class="course-item-teacher d-flex justify-content-between py-2 border-bottom">
+                            <span style="color: #666666; font-size: 15px;">Giáo viên:</span>  
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.teacher }}</span>
                         </div>
-                        <div class="course-item-price">
-                            Giá gốc: {{ item.salePrice }} đ <br/>
-                            Giá khuyến mãi: {{ item.price }} đ
+                        <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
+                            <span style="color: #666666;font-size: 15px;">Giá gốc:</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.price }} đ</span> 
+                        </div>
+                        <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
+                            <span style="color: #666666;font-size: 15px;">Giá khuyến mãi:</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.salePrice }} đ</span> 
+                        </div>
+                        <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
+                            <span style="color: #666666;font-size: 15px;">Thời lượng:</span> 
+                            <span style="font-size: 16px;" class="fw-bold">02:45:00</span> 
+                        </div>
+                        <div class="course-item-price d-flex justify-content-between py-2">
+                            <span style="color: #666666;font-size: 15px;">Đã bán:</span> 
+                            <span style="font-size: 16px;" class="fw-bold">100</span> 
                         </div>
                     </div>
                 </div>
@@ -111,7 +120,7 @@ export default {
 
 .course-item {
     position: relative;
-    width: 23%;
+    width: 22%;
     min-width: 310px;
     /* width: 320px; */
     box-shadow: 0px 0px 15px rgb(84 84 84 / 20%);
@@ -174,55 +183,5 @@ export default {
 }
 
 
-.course-item-teacher {
-    color: black;
-    height: 24px;
-    overflow: hidden;
-    font-size: 14px;
-    line-height: 24px;
-    white-space: nowrap;
-    margin-bottom: 4px;
-    text-overflow: ellipsis;
-}
 
-.course-item-description {
-    color: #757575;
-    height: 40px;
-    display: -webkit-box;
-    overflow: hidden;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom: 4px;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-}
-
-/* .course-item-price {
-    gap: 4px;
-    height: 24px;
-    display: flex;
-}
-
-.course-item-price div:first-child {
-    color: #E11800;
-    width: fit-content;
-    overflow: hidden;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 24px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.course-item-price div:last-child {
-    color: #757575;
-    width: fit-content;
-    overflow: hidden;
-    font-size: 14px;
-    align-self: center;
-    line-height: 17px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-decoration-line: line-through;
-} */
 </style>

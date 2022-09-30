@@ -11,7 +11,7 @@
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 80% trong 20 ngày</div>
+                    <div style="font-size: 12px;">Tăng 80% trong 30 ngày</div>
                 </div>
             </div>
             <div class="total-course d-flex align-items-center ">
@@ -24,7 +24,7 @@
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 20 ngày</div>
+                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
                 </div>
             </div>
             <div class="total-proceed d-flex align-items-center">
@@ -37,11 +37,11 @@
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 20 ngày</div>
+                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
                 </div>
             </div>
             <div class="total-new-user d-flex align-items-center">
-                <div class="info-img "> 
+                <div class="info-img ">
                     <i class="fas fa-dollar-sign" style="color: #ee5253;"></i>
                 </div>
                 <div class="info-content">
@@ -50,59 +50,112 @@
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 20 ngày</div>
+                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
                 </div>
             </div>
         </div>
+        <div class="d-flex ps-3">
+            <select style="width: 300px; height: 40px;" v-model="timeSelect"
+            class="form-select mb-3 me-3" aria-label=".form-select-lg example">
+                <option value="3">3 Tháng</option>
+                <option value="6">6 Tháng</option>
+                <option value="12">1 Năm</option>
+            </select>
+            <button @click="changeDataChart" style="height: 40px;" class="btn btn-danger">Thay đổi</button>
+        </div>
         <div class="chart-info d-flex justify-content-between flex-wrap">
-            <div class="line-chart" style="background-color: #fff; padding-bottom: 20px;">
-                <Chart :size="sizeChart"  :data="dataBarChart" :margin="margin" :direction="direction">
+            <div class="line-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
+                <h4 class="py-3 ms-3">Số lượng người dùng trong 6 tháng</h4>
+                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction">
                     <template #layers>
                         <Grid strokeDasharray="2,2" />
                         <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
+                        <LabelsLayer :dataKeys="['name', 'pl']" />
                     </template>
                 </Chart>
             </div>
-            <div class="bar-chart" style="background-color: #fff; padding-bottom: 20px;">
-                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction" :axis="axis">
-                <template #layers>
-                    <Grid strokeDasharray="2,2" />
-                    <Bar :dataKeys="['name', 'pl']" :barStyle="{ fill: '#90e0ef', }" />
-                </template>
+            <div class="line-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
+                <h4 class="py-3 ms-3">Số lượng khóa học trong 6 tháng</h4>
+                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction">
+                    <template #layers>
+                        <Grid strokeDasharray="2,2" />
+                        <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
+                        <LabelsLayer :dataKeys="['name', 'pl']" />
+                    </template>
+                </Chart>
+            </div>
+            <div class="bar-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
+                <h4 class="py-3 ms-3">Doanh thu trong 6 tháng</h4>
+                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction" >
+                    <template #layers>
+                        <Grid strokeDasharray="2,2" />
+                        <Bar :dataKeys="['name', 'pl']" :barStyle="{ fill: '#90e0ef', }" />
+                        <LabelsLayer :dataKeys="['name', 'pl']" />
+                    </template>
+                </Chart>
+            </div>
+            <div class="pie-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
+                <h4 class="py-3 ms-3">Chủ đề khóa học</h4>
+                <Chart direction="circular" :size="sizeChart" :data="dataBarChart" 
+                    :margin="{
+                        left: Math.round((sizeChart.width - 360)/2),
+                        top: 50,
+                        right: 0,
+                        bottom: 0
+                    }" 
+                     :config="{ controlHover: false }">
+                    <template #layers>
+                        <Pie :dataKeys="['name', 'pl']" :pie-style="{ innerRadius: 100, padAngle: 0.05, 
+                            colors : ['#4daf4a', '#377eb8','#ffeaa7','#ff7675','#6c5ce7','#30336b','#130f40','#95afc0'] }" />
+                    </template>
+                    <template #widgets>
+                        <Tooltip :config="{
+                          name: { },
+                          avg: { hide: true},
+                          pl: { label: 'value' },
+                          inc: { hide: true }
+                        }" hideLine />
+                    </template>
                 </Chart>
             </div>
         </div>
-        <div class="top-info">
-
-        </div>
+        <TableInfo />
     </div>
 </template>
 
 <script>
 import $ from "jquery";
-import { Chart, Grid, Line, Bar } from 'vue3-charts';
+import { Chart, Grid, Line, Bar,Pie, Tooltip } from 'vue3-charts';
+import LabelsLayer from './Components/LabelsLayer.vue';
+import TableInfo from './Tables.vue'
 export default {
     components: {
         Chart,
         Grid,
         Line,
-        Bar
+        Bar,
+        LabelsLayer,
+        Pie, 
+        Tooltip,
+        TableInfo
     },
     data() {
         return {
+            timeSelect: 6,
             windowWidth: window.innerWidth,
             sizeChart: {
                 width: 0,
                 height: 420
             },
             dataBarChart: [
-                { name: 'T1', pl: 1000,},
-                { name: 'T2', pl: 2000,},
-                { name: 'T3', pl: 400,},
-                { name: 'T4', pl: 3100,},
-                { name: 'T5', pl: 200,},
-                { name: 'T7', pl: 600,},
-                { name: 'T8', pl: 500,},
+                { name: 'T1', pl: 1000, },
+                { name: 'T2', pl: 2000, },
+                { name: 'T3', pl: 453, },
+                { name: 'T4', pl: 2960, },
+                { name: 'T5', pl: 200, },
+                { name: 'T6', pl: 200, },
+                { name: 'T7', pl: 600, },
+                { name: 'T8', pl: 500, },
             ],
             direction: 'horizontal',
             margin: {
@@ -115,11 +168,6 @@ export default {
                 primary: {
                     type: 'band'
                 },
-                secondary: {
-                    domain: ['dataMin', 'dataMax + 100'],
-                    type: 'linear',
-                    ticks: 8
-                }
             }
         }
     },
@@ -132,11 +180,10 @@ export default {
             window.addEventListener('resize', this.onResize);
         });
         let containerWith = $('.dashboard').width();
-        // $('svg').attr('width', `${containerWith/2 - 40}`);
-        if(containerWith > 1100) {
-            $('.chart-info svg').attr('width', `${containerWith/2 -40}`);
+        if (containerWith > 1100) {
+            $('.chart-info svg').attr('width', `${containerWith / 2 - 45}`);
             this.sizeChart = {
-                width: containerWith/2 - 40,
+                width: containerWith / 2 - 45,
                 height: 420
             }
         }
@@ -147,23 +194,40 @@ export default {
                 height: 420
             }
         }
-
+        $(".pie-chart .axis").hide();
     },
-    beforeDestroy() { 
-        window.removeEventListener('resize', this.onResize); 
+    beforeDestroy() {
+        window.removeEventListener('resize', this.onResize);
     },
     methods: {
         onResize() {
             let containerWith = $('.dashboard').width();
             this.windowWidth = containerWith;
+        },
+        changeDataChart() {
+            this.dataBarChart= [
+                { name: 'T1', pl: 800, },
+                { name: 'T2', pl: 1500, },
+                { name: 'T3', pl: 453, },
+                { name: 'T4', pl: 3150, },
+                { name: 'T5', pl: 300, },
+                { name: 'T6', pl: 300, },
+                { name: 'T7', pl: 400, },
+                { name: 'T8', pl: 750, },
+            ];
+            let value = $('.chart-info svg').width();
+            this.sizeChart = {
+                width: value + 0.0001,
+                height: 420
+            }
         }
     },
     watch: {
-        windowWidth: function(value) {
-            if(value > 1100) {
-                $('.chart-info svg').attr('width', `${value/2 -40}`);
+        windowWidth: function (value) {
+            if (value > 1100) {
+                $('.chart-info svg').attr('width', `${value / 2 - 40}`);
                 this.sizeChart = {
-                    width: value/2 - 40,
+                    width: value / 2 - 40,
                     height: 420
                 }
             }
@@ -180,31 +244,37 @@ export default {
 </script>
 
 <style scoped>
+.dashboard {
+    overflow-x: hidden;
+}    
 .number-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
 }
 
-.number-info > div{
+.number-info>div {
     width: 25%;
     margin-left: 12px;
     margin-right: 12px;
     height: 170px;
     border-radius: 20px;
     padding: 10px 20px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .number-info .total-user {
     background-color: #2e86de;
 }
+
 .number-info .total-course {
     background-color: #01a3a4;
 }
+
 .number-info .total-proceed {
     background-color: #ff9f43;
 }
+
 .number-info .total-new-user {
     background-color: #ee5253;
 }
@@ -238,18 +308,20 @@ export default {
 
 .info-content {
     color: #fff;
-    flex:1;
+    flex: 1;
 }
 
-.chart-info > div {
+.chart-info>div {
     margin: 0 15px;
 }
+
 
 @media screen and (max-width: 1100px) {
     .number-info {
         flex-wrap: wrap;
     }
-    .number-info > div{
+
+    .number-info>div {
         width: 49%;
         margin: 0;
         margin-bottom: 20px;
@@ -257,12 +329,12 @@ export default {
 }
 
 @media screen and (max-width: 660px) {
-    .number-info > div{
+    .number-info>div {
         width: 100%;
         margin-bottom: 20px;
     }
 
-    .chart-info > div {
+    .chart-info>div {
         margin: 10px 0;
     }
 
