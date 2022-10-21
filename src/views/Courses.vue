@@ -8,25 +8,17 @@
                     Chủ đề
                 </div>
                 <div class="course-category-list">
-                    <div class="course-category-item">
-                        Học Tiếng Anh Theo Chủ Đề (85)
-                    </div>
-                    <div class="course-category-item">
-                        Học Tiếng Anh Theo Chủ Đề (85)
-                    </div>
-                    <div class="course-category-item">
-                        Học Tiếng Anh Theo Chủ Đề (85)
-                    </div>
-                    <div class="course-category-item">
-                        Học Tiếng Anh Theo Chủ Đề (85)
+                    <div v-for="item in category" :key="item.id" class="course-category-item" 
+                        :data="item.id" @click="categoryClick">
+                        {{ item.name }} ({{ item.quantity }})
                     </div>
                 </div>
             </div>
             <div class="course-main">
                 <div class="d-flex flex-wrap mb-3">
-                    <div v-for="item in courses" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.slug)">
+                    <div v-for="item in coursesDisplay" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.name)">
                         <div class="course-item-img">
-                            <img :src="require(`../assets/images/COURSES/${item.image}`)" alt="">
+                            <img :src="item.image" alt="">
                         </div>
                         <div class="course-item-content">
                             <div class="course-item-title">
@@ -36,11 +28,11 @@
                                 {{ item.description }}
                             </p>
                             <div class="course-item-teacher">
-                                {{ item.teacher }}
+                                {{ item.teacher_name }}
                             </div>
                             <div class="course-item-price">
-                                <div>{{ item.salePrice }} đ</div>
-                                <div>{{ item.price }} đ</div>
+                                <div class="me-1">{{ formatPrice(item.price*(1 - (item.discount/100))) }}đ</div>
+                                <div>{{ formatPrice(item.price) }}đ</div>
                             </div>
                         </div>
                     </div>
@@ -48,7 +40,7 @@
                 
                 <paginate
                     v-model="page"
-                    :page-count="10"
+                    :page-count="pageCount"
                     :page-range="3"
                     :margin-pages="2"
                     :click-handler="clickCallback"
@@ -69,18 +61,63 @@ export default {
     components: {
       paginate: Paginate,
     },
+    beforeMount() {
+        this.getAllDataCourse();
+        this.getAllDataCategory();
+    },
     data() {
         return {
             courses: dataCourses,
-            page: 1
+            coursesDisplay: [],
+            category: [],
+            page: 1,
+            // pageCount: 1,
         }
     },
     methods: {
         clickCallback(page) {
             console.log(page);
+            this.page = page;
+            this.coursesDisplay = this.courses.slice((page - 1) * 10, page * 10);
         },
         courseClick(courseId, courseName){
             this.$router.push({ name: 'CourseDetail', params: { slug: courseName, id: courseId } });
+        },
+        categoryClick(event){
+            let me = this;
+            let categoryId = parseInt(event.target.getAttribute('data'));
+            this.axios
+                .get(`https://localhost:44366/api/Course/CategoryId?categoryId=${categoryId}`)
+                .then((response) => {
+                    me.courses = response.data;
+                    me.coursesDisplay = me.courses.slice(0, 10);
+                });
+            console.log(categoryId);
+        },
+        getAllDataCourse() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Course/All")
+                .then((response) => {
+                    me.courses = response.data;
+                    me.coursesDisplay = me.courses.slice(0, 10);
+                });
+        },
+        getAllDataCategory() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Course/Categories")
+                .then((response) => {
+                    me.category = response.data;
+                });
+        },
+        formatPrice(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+    },
+    computed: {
+        pageCount() {
+            return Math.ceil(this.courses.length / 10);
         }
     }
 }

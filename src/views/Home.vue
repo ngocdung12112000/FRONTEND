@@ -4,8 +4,8 @@
     <div class="home-background">
         <div class="home container d-flex justify-content-between">
             <div class="col-8 lesson-map">
-                <div v-for="item in list" :key="item.id">
-                    <Lesson :lesson="item" :currentPageUser="currentPageUser" :currentLessonUser="currentLessonUser" />
+                <div v-for="item in listTopic" :key="item.id">
+                    <Lesson :lesson="item" :currentPageUser="currentTopicUser" :currentLessonUser="currentLessonUser" />
                 </div>
                 <a class="scroll-top" @click="scollToCurrent">
                     <div class="img-up-arrow"></div>
@@ -22,8 +22,8 @@
 // import Header from "./layouts/Header.vue";
 import Lesson from "../components/Lesson.vue";
 import Personal from "../components/Personal.vue";
-import listLesson from "../assets/js/lessons.js"
-import dataUser from "../assets/js/users.js"
+// import listLesson from "../assets/js/lessons.js"
+// import dataUser from "../assets/js/users.js";
 
 export default {
     name: "Home",
@@ -35,22 +35,24 @@ export default {
     created () {
         window.addEventListener('scroll', this.handleScroll);
     },
-    destroyed () {
+    unmounted () {
         window.removeEventListener('scroll', this.handleScroll);
     },
     data() {
         return {
             toggleTab: true,
-            currentPageUser: 3,
-            currentLessonUser: 3,
-            currentUser: dataUser.currentUser,
-            list: listLesson,
-            listUser: dataUser.listUser,
+            currentTopicUser: 1,
+            currentLessonUser: 1,
+            currentUser: [],
+            listTopic: [],
+            listUser: [],
             dataStreakNew: []
         };
     },
     beforeMount() {
+        console.log("beforeMount");
         this.getList();
+        this.getListTopic();
         // this.getUserStreak();
     },
     methods: {
@@ -73,14 +75,57 @@ export default {
         getList() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/v1/Users")
+                .get("https://localhost:44366/api/Users/All")
                 .then((response) => {
-                    me.listUser = response.data;
-                    me.listUser.forEach((user) => {
-                        user.name = user.user_name;
-                        user.avatar = require(`../assets/images/${user.image}`);
-                        user.score = Math.floor(Math.random() * 100);
-                    });
+                    if(response && response.data) {
+                        me.listUser = response.data;
+                        me.currentUser = response.data[0];
+                        console.log(me.currentUser);
+                        me.listUser.forEach((user) => {
+                            user.avatar = require(`../assets/images/${user.image}`);
+                        });
+                    }
+                    
+                });
+        },
+        getListTopic() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Users/AllTopic")
+                .then((response) => {
+                    if(response && response.data) {
+                        me.listTopic = response.data;
+                        me.listTopic.forEach((topic) => {
+                            switch(topic.id) {
+                                case 1:
+                                    topic.colors = ["#CE82FF", "#6608a5"];
+                                    topic.image_L = "s1.svg";
+                                    topic.image_R = "s2.svg";
+                                    break;
+                                case 2:
+                                    topic.colors = ["#00CD9C", "#088D6D"];
+                                    topic.image_L = "s3.svg";
+                                    topic.image_R = "s4.svg";
+                                    break;
+                                case 3:
+                                topic.colors = ["#1CB0F6", "#126C97"];
+                                    topic.image_L = "s5.svg";
+                                    topic.image_R = "s6.svg";
+                                    break;
+                                case 4:
+                                    topic.colors = ["#FF86D0", "#a92375"];
+                                    topic.image_L = "s7.svg";
+                                    topic.image_R = "s8.svg";
+                                    break;
+                                case 5:
+                                    topic.colors = ["#FF9600", "#b1700e"];
+                                    topic.image_L = "s9.svg";
+                                    topic.image_R = "s10.svg";
+                                    break;
+                            }
+                        });
+                    }
+                    
                 });
         },
         // getUserStreak() {

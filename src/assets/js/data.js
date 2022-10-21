@@ -190,7 +190,7 @@ const allQuestions = [
     {
         id: 5,
         question_text: {
-            name: "Viết lại bằng tiếng Anh",
+            name: "Nhấn vào những gì bạn nghe",
             text: "",
             lang: "EN"
         },

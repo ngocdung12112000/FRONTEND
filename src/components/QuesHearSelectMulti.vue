@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-    <div class="ques-5">
+    <div v-if="question" class="ques-5">
         <div class="title mb-5">{{ question.question_text.name }}</div>
         <div class="ques-content mb-3 d-flex justify-content-center align-items-center ">
             <div class="img-speaker-large-wrapper d-flex align-items-center justify-content-center me-5" >
@@ -35,6 +35,11 @@
 <script>
 import $ from "jquery";
 export default {
+    mounted() {
+        setTimeout(() => {
+            this.speakWord(this.question.answer, "EN");
+        }, 900);
+    },
     props: {
         question: {
             type: Object,

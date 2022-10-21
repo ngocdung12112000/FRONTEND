@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-    <div class="ques-2">
+    <div v-if="question" class="ques-2">
         <div class="title mb-5">{{ question.question_text.name }}</div>
         <div class="answer-area d-flex align-items-center" style="width: 100%;">
             <div class="img-speaker-large-wrapper d-flex align-items-center justify-content-center me-3" style="width: 20%;">

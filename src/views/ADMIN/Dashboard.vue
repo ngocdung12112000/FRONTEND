@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="dashboard px-4 py-3">
         <div class="number-info">
@@ -122,7 +123,7 @@
         <TableInfo />
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
 import { Chart, Grid, Line, Bar,Pie, Tooltip } from 'vue3-charts';
@@ -196,7 +197,7 @@ export default {
         }
         $(".pie-chart .axis").hide();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         window.removeEventListener('resize', this.onResize);
     },
     methods: {
@@ -242,7 +243,7 @@ export default {
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .dashboard {
     overflow-x: hidden;

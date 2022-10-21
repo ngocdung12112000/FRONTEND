@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="user-list-container py-3 px-4">
         <h1 class="text-dark">Danh sách người dùng</h1>
@@ -24,9 +25,9 @@
                             <th scope="col" class="text-center" style="width: 60px;">STT</th>
                             <th scope="col" style="width: 200px;">Tên</th>
                             <th scope="col" class="text-center" style="width: 60px;">Tuổi</th>
-                            <th scope="col" style="width: 200px;">SĐT</th>
-                            <th scope="col" style="width: 300px;">Email</th>
-                            <th scope="col" style="width: 250px;">Ngày tham gia</th>
+                            <th scope="col" style="width: 150px;">SĐT</th>
+                            <th scope="col" style="width: 250px;">Email</th>
+                            <th scope="col" style="width: 120px;">Ngày tham gia</th>
                             <th scope="col" class="text-center" style="width: 200px;">Chức năng</th>
                         </tr>
                     </thead>
@@ -61,12 +62,13 @@
                 <div class="d-flex align-items-center">
                     <div class="page-size d-flex align-items-center me-2">
                         Số bản ghi trên trang:
+                        
                         <div class="page-dropdown me-2 ms-2">
-                            <select name="" id="">
-                                <option value="10">10</option>
+                            <select style="width: 70px; height: 35px;" v-model="pageSize"
+                            class="form-select " aria-label=".form-select-lg example">
                                 <option value="20">20</option>
+                                <option value="30">30</option>
                                 <option value="50">50</option>
-                                <option value="100">100</option>
                             </select>
                         </div>
                     </div>
@@ -82,7 +84,7 @@
         <ToastMessage />
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import UserDetail from './UserDetail.vue';
 import ToastMessage from '../Components/ToastMessage.vue';
@@ -96,11 +98,15 @@ export default {
         ToastMessage
     },
     mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        });
         $('.table-wrapper').height($('.user-list-table').height() - 60);
     },
     data() {
         return {
             page: 1,
+            pageSize: 20,
             isShowDetail: false,
             userList: [
                 {
@@ -196,6 +202,9 @@ export default {
         };
     },
     methods: {
+        onResize() {
+            $('.table-wrapper').height($('.user-list-table').height() - 60);
+        },
         addClick() {
             this.isShowDetail = true;
         },
@@ -212,7 +221,7 @@ export default {
     },
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .user-list-container {
     color: rgb(109, 109, 109);
@@ -278,6 +287,16 @@ table {
 
 ul.pagination {
     margin-bottom: 0px !important;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+td input[type="checkbox"] {
+    margin-top: 10px;
 }
 
 </style>

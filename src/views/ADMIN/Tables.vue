@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="table-info  d-flex justify-content-between flex-wrap">
         <div class="top-course">
@@ -66,7 +67,7 @@
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>;
 export default {
     components: {
@@ -177,7 +178,7 @@ export default {
     },
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .table-info {
     width: 100%;

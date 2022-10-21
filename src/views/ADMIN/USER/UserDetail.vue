@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="my-modal">
         <div class="popup">
@@ -7,7 +8,7 @@
             </div>
             <div class="popup-body">
                 <form class="d-flex form-info align-items-center justify-content-between flex-wrap">
-                    <div class="mb-1">
+                    <div class="mb-3">
                         <label for="name" class="form-label">Tên</label>
                         <input type="text" class="form-control" id="name" placeholder="Nhập tên">
                     </div>
@@ -40,7 +41,7 @@
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 export default {
     data() {
@@ -55,7 +56,7 @@ export default {
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 
 .my-modal {

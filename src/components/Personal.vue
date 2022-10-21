@@ -14,15 +14,15 @@
             </div>
             <div class="line"></div>
             <div class="rank-users">
-                <div v-for="(user, index) in listUser" :key="user.id" class="user-item"
-                    :class="{ selected: currentUser.id == user.id }" @click="() => userClick(user.id)">
+                <div v-for="(user, index) in listUser" :key="user.user_id" class="user-item"
+                    :class="{ selected: currentUser.user_id == user.user_id }" @click="() => userClick(user.user_id)">
                     <div class="user-info">
                         <div class="user-index"> {{ index + 1 }} </div>
                         <div class="user-avatar ms-2">
                             <img :src="user.avatar" alt="pic">
                         </div>
                         <div class="user-name">
-                            <div class="mx-3"> {{ user.name }} </div>
+                            <div class="mx-3"> {{ user.full_name }} </div>
                             <div :class="{
                                 'small-gold-chest': index == 0,
                                 'small-silver-chest': index == 1,
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="user-score">{{ user.score }} KN</div>
+                    <div class="user-score">{{ user.point }} KN</div>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@ export default {
         getUserStreak() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/v1/Users/UserId?UserId=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .get("https://localhost:44366/api/Users/UserStreak?UserId=4760d71f-6e2f-5b32-19cb-66948daf6128")
                 .then((response) => {
                     const res = response.data;
                     res.forEach(function(item) {

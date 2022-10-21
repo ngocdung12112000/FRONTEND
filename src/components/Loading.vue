@@ -1,25 +1,40 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
-    <div class='container'>
-        <div class='loader'>
-            <div class='loader--dot'></div>
-            <div class='loader--dot'></div>
-            <div class='loader--dot'></div>
-            <div class='loader--dot'></div>
-            <div class='loader--dot'></div>
-            <div class='loader--dot'></div>
-            <div class='loader--text'></div>
+    <div class="my-modal">
+        <div class='container'>
+            <div class='loader'>
+                <div class='loader--dot'></div>
+                <div class='loader--dot'></div>
+                <div class='loader--dot'></div>
+                <div class='loader--dot'></div>
+                <div class='loader--dot'></div>
+                <div class='loader--dot'></div>
+                <div class='loader--text'></div>
+            </div>
         </div>
     </div>
 
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 export default {
 
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
+.my-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .container {
     position: absolute;
     top: 50%;
@@ -90,6 +105,7 @@ export default {
     right: 0;
     width: 4rem;
     margin: auto;
+    font-size: 25px;
 }
 
 .loader--text:after {

@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div></div>
     <!-- </div> -->
@@ -63,6 +64,6 @@ export default {
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 </style>

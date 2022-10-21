@@ -1,5 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
+    <Loading v-show="isShowLoading" />
     <div style="height: calc(100vh - 17px)">
         <div class="container position-relative">
             <div class="process mt-3">
@@ -8,36 +9,41 @@
                     <div class="process-bar-done"></div>
                 </div>
             </div>
-            <div class="play-content">
-                <QuesMultiWords v-if="indexQues == 0" 
+            <div v-if="questions.length > 0" class="play-content">
+                <QuesMultiWords v-if="indexQues == 0 " 
                     :question="questions[0]" 
                     :toggleSwitch="toggleSwitch"
                     @speakWord="speakWord"
                     @onEnterTextArea = "btnCheckSelectedWord"
                 />
-                <QuesSelectHorizon v-if="indexQues == 1" 
+                <QuesSelectHorizon v-if="indexQues == 1 " 
                     :question="questions[1]" 
                     @speakWord="speakWord"
                 />
-                <QuesSelectPair v-if="indexQues == 2" 
+                <QuesSelectPair v-if="indexQues == 2 " 
                     :question="questions[2]" 
                     @speakWord="speakWord"
                     @checkAnswer="checkAnswer"
                 />
-                <QuesHearSelect v-if="indexQues == 3" 
+                <QuesHearSelect v-if="indexQues == 3 " 
                     :question="questions[3]" 
                     @speakWord="speakWord"
                 />
-                <QuesHearSelectMulti v-if="indexQues == 4"
+                <QuesHearSelectMulti v-if="indexQues == 4 "
                     :question="questions[4]" 
                     :toggleSwitch="toggleSwitch"
                     @speakWord="speakWord"
                     @onEnterTextArea = "btnCheckSelectedWord"
                 />
-                <QuesSpeak v-if="indexQues == 5"
+                <QuesSpeak v-if="indexQues == 5 "
                     :question="questions[5]" 
                     @speakWord="speakWord"
                 />
+            </div>
+            <div class="finish" v-show="isShowFinish">
+                <div>
+                    HOÀN THÀNH
+                </div>
             </div>
         </div>
         <div class="footer position-absolute bottom-0">
@@ -69,7 +75,7 @@
                         Bỏ qua
                     </div>
                 </div>
-                <div v-show="questions[indexQues].is_show_switch" class="switch-input fs-5"
+                <div v-show="questions[indexQues] && questions[indexQues].is_show_switch" class="switch-input fs-5"
                     @click="toggleSwitch = !toggleSwitch">
                     <div v-if="toggleSwitch" class="switch-input-wrapper d-flex align-items-center">
                         <div class="icon-keyboard me-3"></div>
@@ -91,7 +97,7 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import allQuestions from '../assets/js/data.js';
+// import allQuestions from '../assets/js/data.js';
 import $ from "jquery";
 import QuesMultiWords from "../components/QuesMultiWords.vue";
 import QuesSelectHorizon from "../components/QuesSelectHorizon.vue";
@@ -99,6 +105,7 @@ import QuesSelectPair from "../components/QuesSelectPair.vue";
 import QuesHearSelect from "../components/QuesHearSelect.vue";
 import QuesHearSelectMulti from "../components/QuesHearSelectMulti.vue";
 import QuesSpeak from "../components/QuesSpeak.vue";
+import Loading from "../components/Loading.vue";
 export default {
     components: {
         QuesMultiWords,
@@ -106,7 +113,12 @@ export default {
         QuesSelectPair,
         QuesHearSelect,
         QuesHearSelectMulti,
-        QuesSpeak
+        QuesSpeak,
+        Loading
+    },
+    beforeMount(){
+        console.log(this.$route.params.idLesson);
+        this.getLessonQuestions(this.$route.params.idLesson);
     },
     props: {
         currentPageUser: {
@@ -120,6 +132,7 @@ export default {
     },
     data() {
         return {
+            isShowLoading: true,
             indexQues: 0,
             numberCorrect: 0,
             streakCorrect: 0,
@@ -127,7 +140,8 @@ export default {
             toggleSwitch: true,
             correctAll: null,
             correct: 0,
-            questions: allQuestions
+            questions: [],
+            isShowFinish: false,
         }
     },
     methods: {
@@ -185,21 +199,28 @@ export default {
                         userAnswer = $(".text-speech").text().trim().toLocaleLowerCase();
                         res = (userAnswer == `${this.questions[this.indexQues].answer.toLocaleLowerCase()}.`);
                         this.checkAnswer(res);
+                        // this.indexQues++;
                         break;             
                 }
             }
             else {
-                if(this.indexQues == 5) {
+                if(!this.isShowFinish) {
+                    if(this.indexQues == 5) {
                     // Thực hiện lưu dữ liệu
-
+                    this.isShowFinish = true;
+                    // this.indexQues++;
+                    // this.correctAll = false;
                     // Thực hiện trở về home
-                    this.$router.push("/home");
+                    }
+                    else {
+                        this.indexQues++;
+                        // Thực hiện chuyển câu hỏi
+                        this.correctAll = null;
+                        this.resetFooter();
+                    }
                 }
                 else {
-                    this.indexQues++;
-                    // Thực hiện chuyển câu hỏi
-                    this.correctAll = null;
-                    this.resetFooter();
+                    this.$router.push("/home");
                 }
             }
         },
@@ -249,6 +270,29 @@ export default {
         backAction() {
             this.$router.push("/home");
         },
+        getLessonQuestions(idLesson) {
+            let me = this;
+            this.axios.get(`https://localhost:44366/api/Lesson/Id?lessonId=${idLesson}`)
+            .then(res => {
+                if(res.data) {
+                    let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
+                    // console.log(JSON.parse(arrQuestions[0]));
+                    // console.log(JSON.parse(arrQuestions[1]));
+                    // console.log(JSON.parse(arrQuestions[2]));
+                    // console.log(JSON.parse(arrQuestions[3]));
+                    // console.log(JSON.parse(arrQuestions[4]));
+                    // console.log(JSON.parse(arrQuestions[5]));
+                    arrQuestions = arrQuestions.sort((a,b) => a.id - b.id);
+                    me.questions = arrQuestions;
+                    setTimeout(() => {
+                        me.isShowLoading = false;
+                    }, 1000);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     },
     watch: {
         toggleSwitch: function (val) {
@@ -436,6 +480,15 @@ export default {
 
 .switch-input:hover {
     color: rgb(197, 197, 197);
+}
+
+.finish {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
 }
 
 @media screen and (max-width: 768px) {

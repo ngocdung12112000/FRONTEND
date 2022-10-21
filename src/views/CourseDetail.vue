@@ -6,11 +6,11 @@
             </div>
             <img src="../assets/images/background/course-detail-bg.png" alt="">
             <div class="header-text">
-                <div class="header-title fw-bolder py-3 fs-2 mt-5">
-                    Nền tảng tiếng Anh cho người mới bắt đầu
+                <div v-if="dataCourseDetail.name" class="header-title fw-bolder py-3 fs-2 mt-5">
+                    {{dataCourseDetail.name}}
                 </div>
-                <div class="header-description mb-3">
-                    Trọn bộ kỹ năng tiếng Anh cơ bản, tiếng Anh giao tiếp cơ bản từ con số 0.
+                <div v-if="dataCourseDetail.description" class="header-description mb-3">
+                    {{dataCourseDetail.description}}
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                                     <img class="rounded-circle" style="width: 100px; height: 100px;" src="../assets/images/user.jpg" alt="">
                                 </div>
                                 <div class="teacher-info ms-5">
-                                    <div class="teacher-name fs-5 fw-bolder">Nguyễn Văn A</div>
+                                    <div v-if="dataCourseDetail.teacher" class="teacher-name fs-5 fw-bolder">{{dataCourseDetail.teacher.name}}</div>
                                     <div class="teacher-job">Giảng viên</div>
                                 </div>
                             </div>
@@ -115,21 +115,27 @@
                         <div class="course-card-content">
                             <div class="courseImg">
                                 <div>
-                                    <img src="../assets/images/COURSES/c1.png" alt="">
+                                    <!-- <img src="../assets/images/COURSES/c1.png" alt=""> -->
+                                    <img :src="dataCourseDetail.image" alt="">
                                 </div>
                             </div>
                             <div class="courseDetails">
                                 <div class="priceInfo">
-                                    <div class="actualPrice">749,000 đ</div>
-                                    <div class="sellingPrice">399,000 đ</div>
+                                    <div v-if="dataCourseDetail.price" class="actualPrice">{{formatPrice(dataCourseDetail.price)}} đ</div>
+                                    <div v-if="dataCourseDetail.discount" class="sellingPrice">{{ formatPrice(dataCourseDetail.price*(1 - (dataCourseDetail.discount/100))) }} đ</div>
                                 </div>
-                                <div class="add-to-cart my-2">
+                                <div v-if="dataCourseDetail.is_bought == true" class="buy-now my-2" @click="() =>startLearning()">
+                                    <div class="label">
+                                        Học ngay
+                                    </div>
+                                </div>
+                                <div v-if="dataCourseDetail.is_bought == false" class="add-to-cart my-2">
                                     <div class="label">
                                         <i class="fas fa-cart-plus"></i>
                                         Thêm vào giỏ hàng
                                     </div>
                                 </div>
-                                <div class="buy-now my-2" @click="() =>startLearning()">
+                                <div v-if="dataCourseDetail.is_bought == false" class="buy-now my-2" >
                                     <div class="label">
                                         Mua ngay
                                     </div>
@@ -151,8 +157,8 @@
                 <div class="course-detail-footer">
                 <div class="courseDetails">
                     <div class="priceInfo">
-                        <div class="actualPrice">749,000 đ</div>
-                        <div class="sellingPrice">399,000 đ</div>
+                        <div v-if="dataCourseDetail.price" class="actualPrice">{{formatPrice(dataCourseDetail.price)}} đ</div>
+                        <div v-if="dataCourseDetail.discount" class="sellingPrice">{{ formatPrice(dataCourseDetail.price*(1 - (dataCourseDetail.discount/100))) }} đ</div>
                     </div>
                     <div class="add-to-cart my-2">
                         <div class="label">
@@ -181,12 +187,17 @@
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
 export default {
+    beforeMount() {
+        console.log(this.$route.params.id);
+        this.getDataDetailCourse();
+    },
     data() {
         return {
+            dataCourseDetail: {},
             id: this.$route.params.id,
             slug: this.$route.params.slug,
             dataVideos: [
@@ -259,11 +270,25 @@ export default {
                     slug: this.slug
                 }
             });
+        },
+        formatPrice(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        },
+        getDataDetailCourse() {
+            let me = this;
+            console.log(this.$route.params.id);
+            this.axios
+                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=4760d71f-6e2f-5b32-19cb-66948daf6128`)
+                .then((response) => {
+                    if(response.data != null) {
+                        me.dataCourseDetail = response.data;
+                    }
+                });
         }
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .course-detail-wrapper {
     overflow-x: hidden;
@@ -289,6 +314,10 @@ export default {
     background: linear-gradient(191deg, rgba(255, 192, 67, 0) 5.02%, rgba(255, 192, 67, 0.5) 94.1%);
     margin-top: -7px;
     min-height: 385px;
+}
+
+.header-description {
+    max-width: 60%;
 }
 
 .course-header img {

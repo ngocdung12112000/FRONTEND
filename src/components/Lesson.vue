@@ -3,8 +3,8 @@
     <div class="lesson col-12">
         <div class="lesson-header"
             :style="{ backgroundColor: currentPageUser > lesson.id ? '#FFC800' : lesson.colors[0] }">
-            <div class="lesson-title">{{ lesson.title }}</div>
-            <div class="lesson-title-content">{{ lesson.content }}</div>
+            <div class="lesson-title">Bài {{ lesson.id }}</div>
+            <div class="lesson-title-content">{{ lesson.name }}</div>
         </div>
         <div class="lesson-content mt-4">
             <div class="d-flex justify-content-center" @click="() => goToLesson(lesson.id, 1)">
@@ -190,7 +190,8 @@ export default {
                     name: 'GamePlay',
                     params: {
                         currentPageUser: this.currentPageUser,
-                        currentLessonUser: this.currentLessonUser
+                        currentLessonUser: this.currentLessonUser,
+                        idLesson: lessonPage,
                     },
                 });
             }
