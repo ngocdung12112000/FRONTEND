@@ -41,8 +41,15 @@
                 />
             </div>
             <div class="finish" v-show="isShowFinish">
-                <div>
-                    HOÀN THÀNH
+                <div class="finish-container">
+                    <div class="finish-header">
+                        <img src="../assets/images/complete-text.png" alt="">
+                    </div>  
+                    <div class="finish-content">
+                        <h3>Số câu đúng {{numberCorrect}}/6</h3>
+                        <img src="../assets/images/complete.svg" alt="">
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -207,6 +214,8 @@ export default {
                 if(!this.isShowFinish) {
                     if(this.indexQues == 5) {
                     // Thực hiện lưu dữ liệu
+                    this.resetFooter();
+                    $(".check-btn .my-btn").text("Tiếp tục");
                     this.isShowFinish = true;
                     // this.indexQues++;
                     // this.correctAll = false;
@@ -220,7 +229,13 @@ export default {
                     }
                 }
                 else {
-                    this.$router.push("/home");
+                    this.isShowFinish = false;
+                    this.isShowLoading = true;
+                    setTimeout(() => {
+                        this.isShowLoading = false;
+                        this.$router.push({name: "Home"});
+                    }, 1000);
+                    
                 }
             }
         },
@@ -489,6 +504,12 @@ export default {
     bottom: 0;
     width: 100%;
     background-color: #fff;
+    text-align: center;
+}
+
+.finish-content img{
+    width: 200px;
+    height: 200px;
 }
 
 @media screen and (max-width: 768px) {
