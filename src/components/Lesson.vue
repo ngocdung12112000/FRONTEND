@@ -2,48 +2,48 @@
 <template>
     <div class="lesson col-12">
         <div class="lesson-header"
-            :style="{ backgroundColor: currentPageUser > lesson.id ? '#FFC800' : lesson.colors[0] }">
-            <div class="lesson-title">Bài {{ lesson.id }}</div>
-            <div class="lesson-title-content">{{ lesson.name }}</div>
+            :style="{ backgroundColor: currentPageUser > topic.id ? '#FFC800' : topic.colors[0] }">
+            <div class="lesson-title">Bài {{ topic.id }}</div>
+            <div class="lesson-title-content">{{ topic.name }}</div>
         </div>
         <div class="lesson-content mt-4">
-            <div class="d-flex justify-content-center" @click="() => goToLesson(lesson.id, 1)">
+            <div class="d-flex justify-content-center" @click="() => goToLesson(topic.id, 1)">
                 <div class="lesson-wrapper" 
                     :class="{ disabled: isDisabled, 
-                              current: currentPageUser == lesson.id && currentLessonUser == 1 }" 
-                    :style="{backgroundColor: currentPageUser == lesson.id && currentLessonUser == 1 ? lesson.colors[1] :
-                        currentPageUser == lesson.id && currentLessonUser > 1 ? '#C19B11' :
-                        currentPageUser > lesson.id ? '#C19B11' : lesson.colors[1]
+                              current: currentPageUser == topic.id && currentLessonUser == 1 }" 
+                    :style="{backgroundColor: currentPageUser == topic.id && currentLessonUser == 1 ? topic.colors[1] :
+                        currentPageUser == topic.id && currentLessonUser > 1 ? '#C19B11' :
+                        currentPageUser > topic.id ? '#C19B11' : topic.colors[1]
                 }">
-                    <div v-if="currentPageUser == lesson.id && currentLessonUser == 1" class="lesson-item"
-                        :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-if="currentPageUser == topic.id && currentLessonUser == 1" class="lesson-item"
+                        :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-current-lesson"></div>
                     </div>
-                    <div v-else-if="(currentPageUser == lesson.id && currentLessonUser > 1) || (currentPageUser > lesson.id)"
+                    <div v-else-if="(currentPageUser == topic.id && currentLessonUser > 1) || (currentPageUser > topic.id)"
                         class="lesson-item" style="background-color: #FFC800;">
                         <div class="img-yellow-slash d-flex align-items-center justify-content-center">
                             <div class="img-done-tick"></div>
                         </div>
                     </div>
-                    <div v-else class="lesson-item" :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-else class="lesson-item" :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-skip"></div>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 2)">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(topic.id, 2)">
                 <div class="lesson-wrapper" 
-                    :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 2, 
-                                current: currentPageUser == lesson.id && currentLessonUser == 2 ,
-                                mr_100 : lesson.id % 2 == 0, ml_100 : lesson.id % 2 == 1 }"
-                    :style="{backgroundColor: currentPageUser == lesson.id && currentLessonUser == 2 ? lesson.colors[1] :
-                        currentPageUser == lesson.id && currentLessonUser > 2 ? '#C19B11' :
-                        currentPageUser > lesson.id ? '#C19B11' : '#bdbdbd'}"
+                    :class="{ disabled: currentPageUser < topic.id || currentPageUser == topic.id && currentLessonUser < 2, 
+                                current: currentPageUser == topic.id && currentLessonUser == 2 ,
+                                mr_100 : topic.id % 2 == 0, ml_100 : topic.id % 2 == 1 }"
+                    :style="{backgroundColor: currentPageUser == topic.id && currentLessonUser == 2 ? topic.colors[1] :
+                        currentPageUser == topic.id && currentLessonUser > 2 ? '#C19B11' :
+                        currentPageUser > topic.id ? '#C19B11' : '#bdbdbd'}"
                 >
-                    <div v-if="currentPageUser == lesson.id && currentLessonUser == 2" class="lesson-item"
-                        :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-if="currentPageUser == topic.id && currentLessonUser == 2" class="lesson-item"
+                        :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-current-lesson"></div>
                     </div>
-                    <div v-else-if="(currentPageUser == lesson.id && currentLessonUser > 2) || (currentPageUser > lesson.id)"
+                    <div v-else-if="(currentPageUser == topic.id && currentLessonUser > 2) || (currentPageUser > topic.id)"
                         class="lesson-item" style="background-color: #FFC800;">
                         <div class="img-yellow-slash d-flex align-items-center justify-content-center">
                             <div class="img-done-tick"></div>
@@ -55,20 +55,20 @@
                 </div>
                 
             </div>
-            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 3)">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(topic.id, 3)">
                 <div class="lesson-wrapper"
-                    :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 3, 
-                              current: currentPageUser == lesson.id && currentLessonUser == 3,
-                              mr_175 : lesson.id % 2 == 0, ml_175 : lesson.id % 2 == 1}" 
-                    :style="{backgroundColor: currentPageUser == lesson.id && currentLessonUser == 3 ? lesson.colors[1] :
-                        currentPageUser == lesson.id && currentLessonUser > 3 ? '#C19B11' :
-                        currentPageUser > lesson.id ? '#C19B11' : '#bdbdbd'}"
+                    :class="{ disabled: currentPageUser < topic.id || currentPageUser == topic.id && currentLessonUser < 3, 
+                              current: currentPageUser == topic.id && currentLessonUser == 3,
+                              mr_175 : topic.id % 2 == 0, ml_175 : topic.id % 2 == 1}" 
+                    :style="{backgroundColor: currentPageUser == topic.id && currentLessonUser == 3 ? topic.colors[1] :
+                        currentPageUser == topic.id && currentLessonUser > 3 ? '#C19B11' :
+                        currentPageUser > topic.id ? '#C19B11' : '#bdbdbd'}"
                 >
-                    <div v-if="currentPageUser == lesson.id && currentLessonUser == 3" class="lesson-item"
-                        :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-if="currentPageUser == topic.id && currentLessonUser == 3" class="lesson-item"
+                        :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-current-lesson"></div>
                     </div>
-                    <div v-else-if="(currentPageUser == lesson.id && currentLessonUser > 3) || (currentPageUser > lesson.id)"
+                    <div v-else-if="(currentPageUser == topic.id && currentLessonUser > 3) || (currentPageUser > topic.id)"
                         class="lesson-item" style="background-color: #FFC800;">
                         <div class="img-yellow-slash d-flex align-items-center justify-content-center">
                             <div class="img-done-tick"></div>
@@ -79,20 +79,20 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 4)">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(topic.id, 4)">
                 <div class="lesson-wrapper"
-                    :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 4, 
-                              current: currentPageUser == lesson.id && currentLessonUser == 4,
-                              mr_100 : lesson.id % 2 == 0, ml_100 : lesson.id % 2 == 1 }" 
-                    :style="{backgroundColor: currentPageUser == lesson.id && currentLessonUser == 4 ? lesson.colors[1] :
-                        currentPageUser == lesson.id && currentLessonUser > 4 ? '#C19B11' :
-                        currentPageUser > lesson.id ? '#C19B11' : '#bdbdbd'}"
+                    :class="{ disabled: currentPageUser < topic.id || currentPageUser == topic.id && currentLessonUser < 4, 
+                              current: currentPageUser == topic.id && currentLessonUser == 4,
+                              mr_100 : topic.id % 2 == 0, ml_100 : topic.id % 2 == 1 }" 
+                    :style="{backgroundColor: currentPageUser == topic.id && currentLessonUser == 4 ? topic.colors[1] :
+                        currentPageUser == topic.id && currentLessonUser > 4 ? '#C19B11' :
+                        currentPageUser > topic.id ? '#C19B11' : '#bdbdbd'}"
                 >
-                    <div v-if="currentPageUser == lesson.id && currentLessonUser == 4" class="lesson-item"
-                        :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-if="currentPageUser == topic.id && currentLessonUser == 4" class="lesson-item"
+                        :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-current-lesson"></div>
                     </div>
-                    <div v-else-if="(currentPageUser == lesson.id && currentLessonUser > 4) || (currentPageUser > lesson.id)"
+                    <div v-else-if="(currentPageUser == topic.id && currentLessonUser > 4) || (currentPageUser > topic.id)"
                         class="lesson-item" style="background-color: #FFC800;">
                         <div class="img-yellow-slash d-flex align-items-center justify-content-center">
                             <div class="img-done-tick"></div>
@@ -105,26 +105,26 @@
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <div class="img-chest" 
-                    :class="{ opened : (currentPageUser == lesson.id && currentLessonUser > 4) || (currentPageUser > lesson.id),
-                            disabled : currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 5 
+                    :class="{ opened : (currentPageUser == topic.id && currentLessonUser > 4) || (currentPageUser > topic.id),
+                            disabled : currentPageUser < topic.id || currentPageUser == topic.id && currentLessonUser < 5 
                     }">
 
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(lesson.id, 5)">
+            <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(topic.id, 5)">
                 <div class="lesson-wrapper"
-                    :class="{ disabled: currentPageUser < lesson.id || currentPageUser == lesson.id && currentLessonUser < 5, 
-                              current: currentPageUser == lesson.id && currentLessonUser == 5,
-                              ml_100 : lesson.id % 2 == 0, mr_100 : lesson.id % 2 == 1 }" 
-                    :style="{ backgroundColor: currentPageUser == lesson.id && currentLessonUser == 5 ? lesson.colors[1] :
-                        currentPageUser == lesson.id && currentLessonUser > 5 ? '#C19B11' :
-                        currentPageUser > lesson.id ? '#C19B11' : '#bdbdbd'}"
+                    :class="{ disabled: currentPageUser < topic.id || currentPageUser == topic.id && currentLessonUser < 5, 
+                              current: currentPageUser == topic.id && currentLessonUser == 5,
+                              ml_100 : topic.id % 2 == 0, mr_100 : topic.id % 2 == 1 }" 
+                    :style="{ backgroundColor: currentPageUser == topic.id && currentLessonUser == 5 ? topic.colors[1] :
+                        currentPageUser == topic.id && currentLessonUser > 5 ? '#C19B11' :
+                        currentPageUser > topic.id ? '#C19B11' : '#bdbdbd'}"
                 >
-                    <div v-if="currentPageUser == lesson.id && currentLessonUser == 5" class="lesson-item"
-                        :style="{ backgroundColor: lesson.colors[0] }">
+                    <div v-if="currentPageUser == topic.id && currentLessonUser == 5" class="lesson-item"
+                        :style="{ backgroundColor: topic.colors[0] }">
                         <div class="img-current-lesson"></div>
                     </div>
-                    <div v-else-if="(currentPageUser == lesson.id && currentLessonUser > 5) || (currentPageUser > lesson.id)"
+                    <div v-else-if="(currentPageUser == topic.id && currentLessonUser > 5) || (currentPageUser > topic.id)"
                         class="lesson-item" style="background-color: #FFC800;">
                         <div class="img-yellow-slash d-flex align-items-center justify-content-center">
                             <div class="img-done-tick"></div>
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <div v-if="currentPageUser <= lesson.id" class="lesson-wrapper disabled">
+                <div v-if="currentPageUser <= topic.id" class="lesson-wrapper disabled">
                     <div class="lesson-item">
                         <div class="img-trophy disabled"></div>
                     </div>
@@ -145,14 +145,14 @@
                     <div class="img-trophy d-flex justify-content-center align-items-center"
                         style="color: #CD7900; font-weight: bolder; font-size: 20px;"
                     >
-                        {{ lesson.id }}
+                        {{ topic.id }}
                     </div>
                 </div>
             </div>
-            <div class="lesson-svg position-absolute" :class="{bottom_20 : lesson.id % 2 == 0, top_20 : lesson.id % 2 == 1}" style="left: 20px">
+            <div class="lesson-svg position-absolute" :class="{bottom_20 : topic.id % 2 == 0, top_20 : topic.id % 2 == 1}" style="left: 20px">
                 <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s4.svg" alt="">
             </div>
-            <div class="lesson-svg position-absolute" :class="{top_20 : lesson.id % 2 == 0, bottom_20 : lesson.id % 2 == 1}" style="right: 40px">
+            <div class="lesson-svg position-absolute" :class="{top_20 : topic.id % 2 == 0, bottom_20 : topic.id % 2 == 1}" style="right: 40px">
                 <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s6.svg" alt="">
             </div>
         </div>
@@ -167,7 +167,7 @@ export default {
         };
     },
     props: {
-        lesson: {
+        topic: {
             type: Object,
             required: true,
         },
@@ -181,7 +181,7 @@ export default {
         },
     },
     beforeMount() {
-        $('.current:before').css('color', this.lesson.colors[0]);
+        $('.current:before').css('color', this.topic.colors[0]);
     },
     methods: {
         goToLesson(lessonId, lessonPage) {
@@ -189,8 +189,8 @@ export default {
                 this.$router.push({
                     name: 'GamePlay',
                     params: {
-                        currentPageUser: this.currentPageUser,
-                        currentLessonUser: this.currentLessonUser,
+                        currentTopicId: this.currentPageUser,
+                        currentLessonName: this.currentLessonUser,
                         idLesson: lessonPage,
                     },
                 });
@@ -202,10 +202,10 @@ export default {
             return (this.currentPageUser % 6);
         },
         currentLesson() {
-            return (this.lesson.id);
+            return (this.topic.id);
         },
         isDisabled() {
-            return (this.currentPageUser < this.lesson.id);
+            return (this.currentPageUser < this.topic.id);
         },
     },
 };

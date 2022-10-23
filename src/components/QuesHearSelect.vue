@@ -34,7 +34,7 @@ export default {
     mounted() {
         setTimeout(() => {
             this.speakWord(this.question.answer, "EN");
-        }, 900);
+        }, 500);
     },
     data() {
         return {

@@ -5,7 +5,7 @@
         <div class="home container d-flex justify-content-between">
             <div class="col-8 lesson-map">
                 <div v-for="item in listTopic" :key="item.id">
-                    <Lesson :lesson="item" :currentPageUser="currentTopicUser" :currentLessonUser="currentLessonUser" />
+                    <Lesson :topic="item" :currentPageUser="currentTopicUser" :currentLessonUser="currentLessonUser" />
                 </div>
                 <a class="scroll-top" @click="scollToCurrent">
                     <div class="img-up-arrow"></div>
@@ -43,15 +43,17 @@ export default {
             toggleTab: true,
             currentTopicUser: 1,
             currentLessonUser: 1,
-            currentUser: [],
+            currentLessonIdUser: 1,
+            currentUser: {},
             listTopic: [],
             listUser: [],
-            dataStreakNew: []
+            dataStreakNew: [],
         };
     },
     beforeMount() {
         console.log("beforeMount");
         this.getList();
+        this.getCurrentUser();
         this.getListTopic();
         // this.getUserStreak();
     },
@@ -79,13 +81,26 @@ export default {
                 .then((response) => {
                     if(response && response.data) {
                         me.listUser = response.data;
-                        me.currentUser = response.data[0];
-                        console.log(me.currentUser);
+                        // me.currentUser = response.data[0];
                         me.listUser.forEach((user) => {
                             user.avatar = require(`../assets/images/${user.image}`);
                         });
                     }
                     
+                });
+        },
+        getCurrentUser() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Users/Id?id=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .then((response) => {
+                    if(response && response.data) {
+                        me.currentUser = response.data;
+                        me.currentTopicUser = me.currentUser.current_topic ? me.currentUser.current_topic.id : 1;
+                        me.currentLessonUser = me.currentUser.current_topic ? parseInt(me.currentUser.current_topic.list_lesson[0].name) : 1;
+                        console.log(me.currentTopicUser);
+                        console.log(me.currentLessonUser);
+                    }
                 });
         },
         getListTopic() {
@@ -123,6 +138,7 @@ export default {
                                     topic.image_R = "s10.svg";
                                     break;
                             }
+
                         });
                     }
                     

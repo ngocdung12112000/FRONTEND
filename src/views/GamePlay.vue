@@ -1,7 +1,7 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
     <Loading v-show="isShowLoading" />
-    <div style="height: calc(100vh - 17px)">
+    <div v-if="$route.params.idLesson != null" style="height: calc(100vh - 17px)">
         <div class="container position-relative">
             <div class="process mt-3">
                 <div class="icon icon-cancel me-3" @click="backAction"></div>
@@ -124,18 +124,7 @@ export default {
         Loading
     },
     beforeMount(){
-        console.log(this.$route.params.idLesson);
         this.getLessonQuestions(this.$route.params.idLesson);
-    },
-    props: {
-        currentPageUser: {
-            type: Number,
-            required: true
-        },
-        currentLessonUser: {
-            type: Number,
-            required: true
-        },
     },
     data() {
         return {
@@ -213,13 +202,9 @@ export default {
             else {
                 if(!this.isShowFinish) {
                     if(this.indexQues == 5) {
-                    // Thực hiện lưu dữ liệu
                     this.resetFooter();
                     $(".check-btn .my-btn").text("Tiếp tục");
                     this.isShowFinish = true;
-                    // this.indexQues++;
-                    // this.correctAll = false;
-                    // Thực hiện trở về home
                     }
                     else {
                         this.indexQues++;
@@ -231,17 +216,15 @@ export default {
                 else {
                     this.isShowFinish = false;
                     this.isShowLoading = true;
-                    setTimeout(() => {
-                        this.isShowLoading = false;
-                        this.$router.push({name: "Home"});
-                    }, 1000);
-                    
+                    this.updateData();
                 }
             }
         },
+        // Hàm thực hiện xử lý bỏ qua câu hỏi
         skipClick() {
             this.checkAnswer(null);
         },
+        // Hàm reset footer
         resetFooter() {
             $(".selected-words").empty();
             $(".answer-area textarea").val("");
@@ -253,6 +236,7 @@ export default {
             $(".skip-btn").removeClass("d-none");
             $(".check-btn .my-btn").text("Kiểm tra");
         },
+        // Hàm hiển thị footer -> đúng
         correctFooter() {
             $(".footer").removeClass("incorrect");
             $(".footer").addClass("correct");
@@ -260,6 +244,7 @@ export default {
             $(".check-btn").css("background", "#3d8d00");
             $(".check-btn > .my-btn").css("background", "#58CC02");
         },
+        // Hàm hiển thị footer -> sai
         inCorrectFooter() {
             $(".skip-btn").addClass("d-none");
             $(".check-btn").css("background", "#a10e0a");
@@ -267,6 +252,7 @@ export default {
             $(".footer").removeClass("correct");
             $(".footer").addClass("incorrect"); 
         },
+        // Hàm kiểm tra đáp án
         checkAnswer(userAnswer) {
             if (userAnswer == true) {
                 this.correctAll = true;
@@ -282,21 +268,20 @@ export default {
             $(".result").removeClass("d-none");
             $(".check-btn .my-btn").text("Tiếp tục");
         },
+        // Hàm thực hiện quay lại home
         backAction() {
             this.$router.push("/home");
         },
-        getLessonQuestions(idLesson) {
-            let me = this;
-            this.axios.get(`https://localhost:44366/api/Lesson/Id?lessonId=${idLesson}`)
+        // Hàm lấy ra câu hỏi của bài học
+        getLessonQuestions() {
+            let me = this,
+                topicId = this.$route.params.currentTopicId,
+                lessonName = this.$route.params.currentLessonName;
+                
+            this.axios.get(`https://localhost:44366/api/Lesson/Question?topicId=${topicId}&lessonName=${lessonName}`)
             .then(res => {
                 if(res.data) {
                     let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
-                    // console.log(JSON.parse(arrQuestions[0]));
-                    // console.log(JSON.parse(arrQuestions[1]));
-                    // console.log(JSON.parse(arrQuestions[2]));
-                    // console.log(JSON.parse(arrQuestions[3]));
-                    // console.log(JSON.parse(arrQuestions[4]));
-                    // console.log(JSON.parse(arrQuestions[5]));
                     arrQuestions = arrQuestions.sort((a,b) => a.id - b.id);
                     me.questions = arrQuestions;
                     setTimeout(() => {
@@ -307,6 +292,23 @@ export default {
             .catch(err => {
                 console.log(err);
             })
+        },
+        // Hàm thực hiện update thông tin sau khi hoàn thành
+        updateData() {
+            let me = this;
+            this.axios
+                .put(`https://localhost:44366/api/Users/UpdateUserLesson?userId=4760d71f-6e2f-5b32-19cb-66948daf6128`)
+                .then((response) => {
+                    if (response.data) {
+                        // Thực hiện chuyển về trang home
+                        setTimeout(() => {
+                            me.isShowLoading = false;
+                            this.$router.push({name: "Home",params: {isFinish: true}});
+                        }, 1000);
+                    }
+                });
+            
+            
         }
     },
     watch: {
@@ -505,6 +507,9 @@ export default {
     width: 100%;
     background-color: #fff;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .finish-content img{
