@@ -47,57 +47,46 @@ export default {
             toggleTab: true,
             currentPageUser: 3,
             currentLessonUser: 3,
-            currentUser: {
-                id: 4,
-                name: "Nguyễn Văn D",
-                avatar: require("../assets/images/user.jpg"),
-                score: 80,
-            },
-            listUser: [
-                {
-                    id: 1,
-                    name: "Nguyễn Văn A",
-                    score: 100,
-                    avatar: "user.jpg"
-                },
-                {
-                    id: 2,
-                    name: "Nguyễn Văn B",
-                    score: 90,
-                    avatar: "user.jpg"
-                },
-                {
-                    id: 3,
-                    name: "Nguyễn Văn C",
-                    score: 85,
-                    avatar: "user.jpg"
-                },
-                {
-                    id: 4,
-                    name: "Nguyễn Văn D",
-                    score: 80,
-                    avatar: "user.jpg"
-                },
-                {
-                    id: 5,
-                    name: "Nguyễn Văn E",
-                    score: 70,
-                    avatar: "user.jpg"
-                },
-                {
-                    id: 6,
-                    name: "Nguyễn Văn F",
-                    score: 70,
-                    avatar: "user.jpg"
-                }
-            ]
+            currentUser: {},
+            listUser: []
         };
     },
     beforeMount() {
-        this.listUser.forEach((user) => {
-            user.avatar = require(`../assets/images/${user.avatar}`);
-        });
+        this.getList();
+        this.getCurrentUser();
     },
+    methods: {
+        getList() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Users/All")
+                .then((response) => {
+                    if(response && response.data) {
+                        me.listUser = response.data;
+                        // me.currentUser = response.data[0];
+                        me.listUser.forEach((user) => {
+                            user.avatar = require(`../assets/images/${user.image}`);
+                        });
+                    }
+                    
+                });
+        },
+        getCurrentUser() {
+            let me = this;
+            this.axios
+                .get("https://localhost:44366/api/Users/Id?id=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .then((response) => {
+                    if(response && response.data) {
+                        me.currentUser = response.data;
+                        me.currentTopicUser = me.currentUser.current_topic ? me.currentUser.current_topic.id : 1;
+                        me.currentLessonUser = me.currentUser.current_topic ? parseInt(me.currentUser.current_topic.list_lesson[0].name) : 1;
+                        console.log(me.currentTopicUser);
+                        console.log(me.currentLessonUser);
+                    }
+                });
+        },
+    }
+    
 }
 </script>
 <!-- eslint-disable prettier/prettier -->

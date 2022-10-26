@@ -150,10 +150,18 @@
                 </div>
             </div>
             <div class="lesson-svg position-absolute" :class="{bottom_20 : topic.id % 2 == 0, top_20 : topic.id % 2 == 1}" style="left: 20px">
-                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s4.svg" alt="">
+                <img v-if="topic.id == 1" style="width: 180px; height: 180px;" src="../assets/images/HOME/s1.svg" alt="">
+                <img v-else-if="topic.id == 2" style="width: 180px; height: 180px;" src="../assets/images/HOME/s3.svg" alt="">
+                <img v-else-if="topic.id == 3" style="width: 180px; height: 180px;" src="../assets/images/HOME/s5.svg" alt="">
+                <img v-else-if="topic.id == 4" style="width: 180px; height: 180px;" src="../assets/images/HOME/s7.svg" alt="">
+                <img v-else-if="topic.id == 5" style="width: 180px; height: 180px;" src="../assets/images/HOME/s9.svg" alt="">
             </div>
             <div class="lesson-svg position-absolute" :class="{top_20 : topic.id % 2 == 0, bottom_20 : topic.id % 2 == 1}" style="right: 40px">
-                <img  style="width: 180px; height: 180px;" src="../assets/images/HOME/s6.svg" alt="">
+                <img v-if="topic.id == 1" style="width: 180px; height: 180px;" src="../assets/images/HOME/s2.svg" alt="">
+                <img v-else-if="topic.id == 2" style="width: 180px; height: 180px;" src="../assets/images/HOME/s4.svg" alt="">
+                <img v-else-if="topic.id == 3" style="width: 180px; height: 180px;" src="../assets/images/HOME/s6.svg" alt="">
+                <img v-else-if="topic.id == 4" style="width: 180px; height: 180px;" src="../assets/images/HOME/s8.svg" alt="">
+                <img v-else-if="topic.id == 5" style="width: 180px; height: 180px;" src="../assets/images/HOME/s10.svg" alt="">
             </div>
         </div>
     </div>

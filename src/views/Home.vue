@@ -22,6 +22,7 @@
 // import Header from "./layouts/Header.vue";
 import Lesson from "../components/Lesson.vue";
 import Personal from "../components/Personal.vue";
+// import { mapGetters } from "vuex";
 // import listLesson from "../assets/js/lessons.js"
 // import dataUser from "../assets/js/users.js";
 
@@ -40,7 +41,9 @@ export default {
     },
     data() {
         return {
+            test: "",
             toggleTab: true,
+            loginUserId: "",
             currentTopicUser: 1,
             currentLessonUser: 1,
             currentLessonIdUser: 1,
@@ -51,11 +54,12 @@ export default {
         };
     },
     beforeMount() {
-        console.log("beforeMount");
-        this.getList();
-        this.getCurrentUser();
-        this.getListTopic();
-        // this.getUserStreak();
+        this.loginUserId = this.$store.getters['AUTH/userId'];
+        if(this.loginUserId) {
+            this.getCurrentUser();
+            this.getList();
+            this.getListTopic();
+        }
     },
     methods: {
         handleScroll() {
@@ -71,7 +75,6 @@ export default {
         scollToCurrent() {
             var currentLesson = document.getElementsByClassName("current")[0];
             currentLesson = currentLesson.parentElement.parentElement.parentElement;
-            console.log(currentLesson.offsetTop);
             currentLesson.scrollIntoView({ behavior: "smooth" });
         },
         getList() {
@@ -92,14 +95,12 @@ export default {
         getCurrentUser() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Users/Id?id=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .get(`https://localhost:44366/api/Users/Id?id=${me.loginUserId}`)
                 .then((response) => {
                     if(response && response.data) {
                         me.currentUser = response.data;
                         me.currentTopicUser = me.currentUser.current_topic ? me.currentUser.current_topic.id : 1;
                         me.currentLessonUser = me.currentUser.current_topic ? parseInt(me.currentUser.current_topic.list_lesson[0].name) : 1;
-                        console.log(me.currentTopicUser);
-                        console.log(me.currentLessonUser);
                     }
                 });
         },
@@ -138,26 +139,10 @@ export default {
                                     topic.image_R = "s10.svg";
                                     break;
                             }
-
                         });
                     }
-                    
                 });
         },
-        // getUserStreak() {
-        //     let me = this;
-        //     this.axios
-        //         .get("https://localhost:44366/api/v1/Users/UserId?UserId=4760d71f-6e2f-5b32-19cb-66948daf6128")
-        //         .then((response) => {
-        //             const res = response.data;
-        //             res.forEach(function(item) {
-        //                 me.dataStreakNew.push({
-        //                     name: item.week_day,
-        //                     pl: item.score
-        //                 })
-        //             });
-        //         });
-        // }
     },
 };
 </script>

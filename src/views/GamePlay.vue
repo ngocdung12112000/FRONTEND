@@ -307,8 +307,6 @@ export default {
                         }, 1000);
                     }
                 });
-            
-            
         }
     },
     watch: {

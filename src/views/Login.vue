@@ -59,6 +59,7 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+// import { mapActions } from "vuex";
 export default {
     data() {
         return {
@@ -69,12 +70,15 @@ export default {
         }
     },
     methods: {
-        onSubmitFormLogin(e) {
-            // console.log(this.userLogin);
+        async onSubmitFormLogin(e) {
             e.preventDefault();
-            // console.log(this.$store);
-            this.$store.dispatch('AUTH/login', this.userLogin);
-            // this.$router.push('/');
+            let response = await this.$store.dispatch('AUTH/login', this.userLogin);
+            if(response.status == 200){
+                this.$router.push('/home');
+            }
+            else {
+                alert('Đăng nhập thất bại');
+            }
         },
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Api from '../../apis';
 import request from "axios"
 

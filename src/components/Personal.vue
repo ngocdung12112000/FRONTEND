@@ -62,13 +62,15 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="data && data.length > 0" class="total-exp-chart ">
-                        <Chart :size="{ width: 400, height: 230 }"  :data="data" :margin="margin" :direction="direction">
-                            <template #layers>
-                                <Grid strokeDasharray="2,2" />
-                                <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
-                            </template>
-                        </Chart>
+                    <div class="total-exp-chart">
+                        <div v-if="data && data.length > 0">
+                            <Chart :size="sizeChart"  :data="data" :margin="margin" :direction="direction">
+                                <template #layers>
+                                    <Grid strokeDasharray="2,2" />
+                                    <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
+                                </template>
+                            </Chart>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,19 +85,27 @@ import { Chart, Grid, Line } from 'vue3-charts'
 export default {
     components: { Chart, Grid, Line },
     beforeMount() {
-        this.getUserStreak();
+        this.loginUserId = this.$store.getters['AUTH/userId'];
+        if (this.loginUserId) {
+            this.getUserStreak();
+        }
     },
     data() {
         return {
             images: this.listUser,
+            loginUserId: "",
             dataStreak: [],
+            sizeChart: {
+                width: 400,
+                height: 230
+            },
             dataStreakNew: [],
             data: [],
             direction : 'horizontal',
             margin: {
                 left: 20,
-                top: 0,
-                right: 0,
+                top: 10,
+                right: 20,
                 bottom: 0
             },
         }
@@ -122,7 +132,7 @@ export default {
         getUserStreak() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Users/UserStreak?UserId=4760d71f-6e2f-5b32-19cb-66948daf6128")
+                .get("https://localhost:44366/api/Users/UserStreak?UserId=" + this.loginUserId)
                 .then((response) => {
                     const res = response.data;
                     res.forEach(function(item) {

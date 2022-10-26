@@ -15,7 +15,8 @@
     "vue-router": "^4.0.0-0",
     "vue3-charts": "^1.1.31",
     "vuejs-paginate-next": "^1.0.2",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",

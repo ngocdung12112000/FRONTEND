@@ -58,7 +58,7 @@
                             <div @click="toProfile" class="help user-profile text-start">Giỏ hàng</div>
                         </router-link>
                         <!-- <div class="help text-start">Giỏ hàng</div> -->
-                        <div class="logout text-start">Đăng xuất</div>
+                        <div class="logout text-start" @click="logoutClick">Đăng xuất</div>
                     </div>
                 </div>
             </div>
@@ -75,6 +75,10 @@ export default {
         };
     },
     methods: {
+        logoutClick() {
+            this.$store.dispatch("AUTH/logout");
+            this.$router.push("/");
+        },
         sectionClick(name) {
             $(".section-item").removeClass("selected");
             $(`.${name}`).addClass("selected");
