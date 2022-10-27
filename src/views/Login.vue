@@ -74,7 +74,11 @@ export default {
             e.preventDefault();
             let response = await this.$store.dispatch('AUTH/login', this.userLogin);
             if(response.status == 200){
-                this.$router.push('/home');
+                if(response.data.role == 'admin'){
+                    this.$router.push('/admin');
+                }else{
+                    this.$router.push('/home');
+                }
             }
             else {
                 alert('Đăng nhập thất bại');

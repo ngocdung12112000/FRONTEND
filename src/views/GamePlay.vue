@@ -295,9 +295,11 @@ export default {
         },
         // Hàm thực hiện update thông tin sau khi hoàn thành
         updateData() {
-            let me = this;
+            let me = this,
+            loginUserId = this.$store.getters['AUTH/userId'];
+
             this.axios
-                .put(`https://localhost:44366/api/Users/UpdateUserLesson?userId=4760d71f-6e2f-5b32-19cb-66948daf6128`)
+                .put(`https://localhost:44366/api/Users/UpdateUserLesson?userId=${loginUserId}`)
                 .then((response) => {
                     if (response.data) {
                         // Thực hiện chuyển về trang home

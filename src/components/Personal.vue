@@ -54,10 +54,10 @@
                             </div>
                             <div class="exp-target-process">
                                 <div class="exp-target-bar">
-                                    <div class="exp-target-bar-done"></div>
+                                    <div id="barDone" class="exp-target-bar-done"></div>
                                 </div>
                                 <div class="exp-target-process-value">
-                                    <div> 0/30 KN</div>
+                                    <div> {{ currentUser.point }}/{{ currentUser.target}} KN</div>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
 <script>
 // import { ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
-// import $ from "jquery";
+import $ from "jquery";
 export default {
     components: { Chart, Grid, Line },
     beforeMount() {
@@ -89,6 +89,9 @@ export default {
         if (this.loginUserId) {
             this.getUserStreak();
         }
+    },
+    mounted() {
+        $('#barDone').width(this.currentUser.point / this.currentUser.target * 100 + '%');
     },
     data() {
         return {
@@ -99,6 +102,8 @@ export default {
                 width: 400,
                 height: 230
             },
+            pointToday: 0,
+            target: 0,
             dataStreakNew: [],
             data: [],
             direction : 'horizontal',
