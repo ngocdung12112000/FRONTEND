@@ -91,7 +91,14 @@ export default {
         }
     },
     mounted() {
-        $('#barDone').width(this.currentUser.point / this.currentUser.target * 100 + '%');
+        let rate = (this.currentUser.point / this.currentUser.target)*100;
+        rate = rate > 100 ? 100 : rate;
+        $('#barDone').width(rate + '%');
+    },
+    updated() {
+        let rate = (this.currentUser.point / this.currentUser.target)*100;
+        rate = rate > 100 ? 100 : rate;
+        $('#barDone').width(rate + '%');
     },
     data() {
         return {
