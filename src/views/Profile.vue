@@ -3,22 +3,22 @@
     <div class="container profile">
         <div class="profile-info">
             <div class="info-section">
-                <div class="profile-avatar">
-                    {{ userId }}
+                <div v-if="currentUser" class="profile-avatar">
+                    {{ currentUser.user_name ? currentUser.user_name.charAt(0).toUpperCase() : '' }}
                     <div class="icon-edit d-flex align-items-center justify-content-center">
                         <div class="img-icon-edit"></div>
                     </div>
                 </div>
                 <div class="profile-detail">
-                    <div class="profile-name fw-bold fs-2 text-dark">{{ userId }}</div>
-                    <div class="profile-username text-black-50 my-2">Zaxua</div>
+                    <div v-if="currentUser" class="profile-name fw-bold fs-2 text-dark">{{ currentUser.user_name }}</div>
+                    <div v-if="currentUser" class="profile-username text-black-50 my-2">{{ currentUser.full_name }}</div>
                     <div class="joined-date text-black-50 my-2 d-flex align-items-center">
                         <div class="img-clock me-2"></div>
                         Đã tham gia Tháng Bảy 2018
                     </div>
                     <div class="follow-section text-black-50 my-2 d-flex align-items-center">
                         <div class="img-followers me-2"></div>
-                        Đang theo dõi 0 / 0 Người theo dõi
+                        Đang theo dõi {{currentUser.following ? currentUser.following.length : 0}} / {{currentUser.followers ? currentUser.followers.length : 0}} Người theo dõi
                     </div>
                     <svg viewBox="0 0 82 66" data-test="flag-en"
                         style="height: 37.0244px; width: 46px; margin-top: 10px;">
@@ -46,8 +46,8 @@
                                 <img style="transform: scale(1.5);" src="../assets/images/flame-icon.svg" alt="">
                             </div>
                             <div class="statistic-item-text">
-                                <div class="fw-bolder fs-4">3</div>
-                                <div class="text-black-50">Ngày streak</div>
+                                <div v-if="currentUser" class="fw-bolder fs-4"> {{currentUser.target}} </div>
+                                <div class="text-black-50">Mục tiêu ngày</div>
                             </div>
                         </div>
                         <div class="statistic-item">
@@ -55,7 +55,7 @@
                                 <img style="transform: scale(1.5);" src="../assets/images/kn.svg" alt="">
                             </div>
                             <div class="statistic-item-text">
-                                <div class="fw-bolder fs-4">561</div>
+                                <div v-if="currentUser" class="fw-bolder fs-4">{{currentUser.point}}</div>
                                 <div class="text-black-50">Tổng điểm KN</div>
                             </div>
                         </div>
@@ -70,10 +70,10 @@
                         </div>
                         <div class="statistic-item">
                             <div class="statistic-item-img me-4 ms-3" style="width: 45px;">
-                                <img style="transform: scale(0.8);" src="../assets/images/silver-rank.svg" alt="">
+                                <img style="transform: scale(0.8);" :src=" require(`../assets/images/${rankImg}.svg`)" alt="">
                             </div>
                             <div class="statistic-item-text">
-                                <div class="fw-bolder fs-4">Bạc</div>
+                                <div class="fw-bolder fs-4">{{ userRank }}</div>
                                 <div class="text-black-50">Bậc rank</div>
                             </div>
                         </div>
@@ -106,19 +106,19 @@
                             <div class="achievement-item-img mx-4 position-relative">
                                 <img src="../assets/images/achievement-sage.svg" alt="">
                                 <div class="achievement-item-level">
-                                    Cấp 4
+                                    Cấp 1
                                 </div>
                             </div>
                             <div class="achievement-item-content flex-grow-1 me-4">
                                 <div class="achievement-item-text d-flex align-items-center justify-content-between">
                                     <div class="fw-bold fs-5">Cao nhân</div>
-                                    <div class="text-black-50">561/1000</div>
+                                    <div v-if="currentUser" class="text-black-50">{{ currentUser.point }}/200</div>
                                 </div>
                                 <div class="achievement-item-process my-3">
-                                    <div class="achievement-item-process-done" :style="{width: `${(561/1000)*100}%` }"></div>
+                                    <div v-if="currentUser" class="achievement-item-process-done" :style="{width: `${(currentUser.point/250)*100}%` }"></div>
                                 </div>
                                 <div class="achievement-item-description text-black-50">
-                                    Đạt được 1000 KN
+                                    Đạt được 200 KN
                                 </div>
                             </div>
                         </div>
@@ -126,13 +126,13 @@
                             <div class="achievement-item-img mx-4 position-relative">
                                 <img src="../assets/images/achievement-scholar.svg" alt="">
                                 <div class="achievement-item-level">
-                                    Cấp 4
+                                    Cấp 1
                                 </div>
                             </div>
                             <div class="achievement-item-content flex-grow-1 me-4">
                                 <div class="achievement-item-text d-flex align-items-center justify-content-between">
                                     <div class="fw-bold fs-5">Học giả</div>
-                                    <div class="text-black-50">213/250</div>
+                                    <div class="text-black-50">213/100</div>
                                 </div>
                                 <div class="achievement-item-process my-3">
                                     <div class="achievement-item-process-done" :style="{width: `${(213/250)*100}%` }"></div>
@@ -165,39 +165,42 @@
                     </div>
                     <div class="friend-list">
                         <div class="following-list" v-show="!toggleTab">
-                            <div class="following-item my-2 py-2">
+                            <div v-for="following in currentUser.following" :key="following.user_id" 
+                                class="following-item my-2 py-2"
+                            >
                                 <div class="d-flex">
                                     <div class="following-avatar mx-2">
                                         <img class="rounded-circle" src="../assets/images/user.jpg" alt="pic">
                                     </div>
                                     <div class="following-name mx-2">
-                                        <div class="fw-bold"> HIii </div>
-                                        <div class="following-score text-black-50"> 100 KN</div>
+                                        <div class="fw-bold"> {{ following.full_name }} </div>
+                                        <div class="following-score text-black-50"> {{ following.point }} KN</div>
                                     </div>
                                 </div>
-                                <div class="btn-follow">
+                                <div v-show="false" class="btn-follow">
                                     <img src="../assets/images/add-follow.svg" alt="">
                                 </div>
                             </div>
-                            <div class="following-item my-2 py-2 border-0">
-                                <div class="d-flex">
-                                    <div class="following-avatar mx-2">
-                                        <img class="rounded-circle" src="../assets/images/user.jpg" alt="pic">
-                                    </div>
-                                    <div class="following-name mx-2">
-                                        <div class="fw-bold"> HIii </div>
-                                        <div class="following-score text-black-50"> 100 KN</div>
-                                    </div>
-                                </div>
-                                <div class="btn-follow">
-                                    <img src="../assets/images/add-follow.svg" alt="">
-                                </div>
-                            </div>
-                            
-                            <span v-show="false">Kết nối bạn bè giúp học vui và hiệu quả hơn.</span>
+                            <span v-show="currentUser.following && currentUser.following.length == 0">Kết nối bạn bè giúp học vui và hiệu quả hơn.</span>
                         </div>
                         <div class="follower-list" v-show="toggleTab">
-                            Chưa có người theo dõi
+                            <div v-for="follower in currentUser.followers" :key="follower.user_id" 
+                                class="following-item my-2 py-2"
+                            >
+                                <div class="d-flex">
+                                    <div class="following-avatar mx-2">
+                                        <img class="rounded-circle" src="../assets/images/user.jpg" alt="pic">
+                                    </div>
+                                    <div class="following-name mx-2">
+                                        <div class="fw-bold"> {{ follower.full_name }} </div>
+                                        <div class="following-score text-black-50"> {{ follower.point }} KN</div>
+                                    </div>
+                                </div>
+                                <div  class="btn-follow">
+                                    <img src="../assets/images/add-follow.svg" alt="">
+                                </div>
+                            </div>
+                            <span v-show="currentUser.following && currentUser.following.length == 0">Chưa có người theo dõi</span>
                         </div>
                     </div>
                 </div>
@@ -210,22 +213,54 @@
 import $ from "jquery";
 import { useRoute } from "vue-router";
 export default {
-    mounted() {
-        $("svg").attr("viewBox", `1 ${this.countryCode} 82 66`);
+    beforeMount(){
         const route = useRoute();
         this.userId = route.params.id;
-
+        // this.userId = this.$store.getters['AUTH/userId'];
+        if(this.userId != "") {
+            this.getProfile(this.userId);
+        }
+    },
+    mounted() {
+        $("svg").attr("viewBox", `1 ${this.countryCode} 82 66`);
     },
     data() {
         return {
             countryCode: 1190, // Vietnam,
             toggleTab: false,
             userId: "",
+            currentUser: {},
+            userRank: "Đồng",
+            rankImg: "bronze-rank"
         };
     },
     methods: {
-
+        getProfile(userId) {
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Users/Id?id=${userId}`)
+                .then((response) => {
+                    if(response && response.data) {
+                        me.currentUser = response.data;
+                        me.getRanking(this.currentUser.point);
+                    }
+                });
+        },
+        getRanking(point){
+            switch(point) {
+                case point < 100:
+                    this.userRank = "Đồng";
+                    break;
+                case point < 500:
+                    this.userRank = "Bạc"; 
+                    break;
+                case point < 1000:
+                    this.userRank = "Vàng"; 
+                    break;        
+            }
+        }
     },
+    
 
 }
 </script>
@@ -412,12 +447,22 @@ export default {
     font-weight: bold;
 }
 
-.following-list .following-item {
+.following-list .following-item, .follower-list .following-item {
     width: 100%;
     display: flex;
     border-bottom: 2px solid #e6e6e6;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+}
+
+.following-list .following-item:last-child {
+    border-bottom: none;
+}
+
+.follower-list, .following-list {
+    min-height: 200px;
+    /* display: flex; */
 }
 
 .btn-follow {

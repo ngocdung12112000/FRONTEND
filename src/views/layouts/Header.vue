@@ -48,14 +48,12 @@
                     <div class="user-img section-item-img"></div>
                     <div v-show="isHoverUserImg" class="user-info">
                         <div class="user-account text-start">Tài khoản</div>
-                        <router-link to="/profile/1">
-                            <div @click="toProfile" class="user-profile text-start">Hồ sơ</div>
-                        </router-link>
+                        <div @click="goToProfile" class="user-profile text-start">Hồ sơ</div>
                         <router-link to="/my-courses">
-                            <div @click="toProfile" class="help user-profile text-start">Khóa học của tôi</div>
+                            <div @click="clearSelected" class="help user-profile text-start">Khóa học của tôi</div>
                         </router-link>
                         <router-link to="/cart">
-                            <div @click="toProfile" class="help user-profile text-start">Giỏ hàng</div>
+                            <div @click="clearSelected" class="help user-profile text-start">Giỏ hàng</div>
                         </router-link>
                         <!-- <div class="help text-start">Giỏ hàng</div> -->
                         <div class="logout text-start" @click="logoutClick">Đăng xuất</div>
@@ -83,8 +81,12 @@ export default {
             $(".section-item").removeClass("selected");
             $(`.${name}`).addClass("selected");
         },
-        toProfile() {
+        clearSelected() {
             $('.section-item').removeClass("selected");
+        },
+        goToProfile(){
+            this.loginUserId = this.$store.getters['AUTH/userId'];
+            this.$router.push(`/profile/${this.loginUserId}`, {params: {id: this.loginUserId}});
         }
     },
 

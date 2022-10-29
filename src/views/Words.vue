@@ -14,13 +14,13 @@
                         <th>Lần luyện tập cuối</th>
                         <th>Độ mạnh</th>
                     </thead>
-                    <tbody>
+                    <tbody v-if="words">
                         <tr v-for="word in words" :key="word.id">
-                            <td>{{ word.name }}</td>
+                            <td>{{ word.en_meaning }}</td>
                             <td>{{ word.type }}</td>
-                            <td>5 tiếng trước</td>
+                            <td>{{ word.time }}</td>
                             <td>
-                                <div :class="`img-skill-strength-sprite_${word.strength}`"> </div>
+                                <div :class="`img-skill-strength-sprite_${word.strong}`"> </div>
                             </td>
                         </tr>
                     </tbody>
@@ -62,45 +62,28 @@ export default {
     components: {
         Loading,
     },
+    beforeMount() {
+        this.getWords();
+    },
     data() {
         return {
-            words: [
-                {
-                    id: 1,
-                    name: "new",
-                    type: "Adjective",
-                    lastTimeValue: new Date(2022,8,28,10,0,0),
-                    strength: 1
-                },
-                {
-                    id: 2,
-                    name: "yours",
-                    type: "Pronoun",
-                    lastTimeValue: new Date(2022,8,28,8,0,0),
-                    strength: 2
-                },
-                {
-                    id: 3,
-                    name: "women",
-                    type: "Noun",
-                    lastTimeValue: new Date(2022,8,28,7,0,0),
-                    strength: 3
-                },
-                {
-                    id: 4,
-                    name: "wine",
-                    type: "Noun",
-                    lastTimeValue: new Date(2022,8,27,5,0,0),
-                    strength: 4
-                },
-                {
-                    id: 5,
-                    name: "water",
-                    type: "Noun",
-                    lastTimeValue: new Date(2022,8,26,10,0,0),
-                    strength: 2
-                }
-            ]
+            words: []
+        }
+    },
+    methods: {
+        getWords() {
+            let me = this,
+                userId = this.$store.getters['AUTH/userId'];
+
+            if(userId) {
+                this.axios
+                .get(`https://localhost:44366/api/Users/Word?UserId=${userId}`)
+                .then((response) => {
+                    if(response && response.data) {
+                        me.words = response.data;
+                    }
+                });
+            }
         }
     }
 }
