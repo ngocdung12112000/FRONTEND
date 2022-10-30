@@ -115,27 +115,26 @@
                         <div class="course-card-content">
                             <div class="courseImg">
                                 <div>
-                                    <!-- <img src="../assets/images/COURSES/c1.png" alt=""> -->
                                     <img :src="dataCourseDetail.image" alt="">
                                 </div>
                             </div>
                             <div class="courseDetails">
                                 <div class="priceInfo">
-                                    <div v-if="dataCourseDetail.price" class="actualPrice">{{formatPrice(dataCourseDetail.price)}} đ</div>
-                                    <div v-if="dataCourseDetail.discount" class="sellingPrice">{{ formatPrice(dataCourseDetail.price*(1 - (dataCourseDetail.discount/100))) }} đ</div>
+                                    <div v-if="dataCourseDetail.price && dataCourseDetail.is_bought == false" class="actualPrice">{{formatPrice(dataCourseDetail.price)}} đ</div>
+                                    <div v-if="dataCourseDetail.discount && dataCourseDetail.is_bought == false" class="sellingPrice">{{ formatPrice(dataCourseDetail.price*(1 - (dataCourseDetail.discount/100))) }} đ</div>
                                 </div>
-                                <div v-if="dataCourseDetail.is_bought == true" class="buy-now my-2" @click="() =>startLearning()">
+                                <div v-if="dataCourseDetail.is_bought == true" class="buy-now my-2" @click="() => startLearning()">
                                     <div class="label">
                                         Học ngay
                                     </div>
                                 </div>
-                                <div v-if="dataCourseDetail.is_bought == false" class="add-to-cart my-2">
+                                <div v-if="dataCourseDetail.is_bought == false" class="add-to-cart my-2" @click="addToCart">
                                     <div class="label">
                                         <i class="fas fa-cart-plus"></i>
                                         Thêm vào giỏ hàng
                                     </div>
                                 </div>
-                                <div v-if="dataCourseDetail.is_bought == false" class="buy-now my-2" >
+                                <div v-if="dataCourseDetail.is_bought == false" class="buy-now my-2" @click="buyNowClick">
                                     <div class="label">
                                         Mua ngay
                                     </div>
@@ -160,15 +159,20 @@
                         <div v-if="dataCourseDetail.price" class="actualPrice">{{formatPrice(dataCourseDetail.price)}} đ</div>
                         <div v-if="dataCourseDetail.discount" class="sellingPrice">{{ formatPrice(dataCourseDetail.price*(1 - (dataCourseDetail.discount/100))) }} đ</div>
                     </div>
-                    <div class="add-to-cart my-2">
+                    <div v-if="dataCourseDetail.is_bought == false"  class="add-to-cart my-2" @click="addToCart">
                         <div class="label">
                             <i class="fas fa-cart-plus"></i>
                             Thêm vào giỏ hàng
                         </div>
                     </div>
-                    <div class="buy-now my-2" @click="() =>startLearning()">
+                    <div v-if="dataCourseDetail.is_bought == false"  class="buy-now my-2">
                         <div class="label">
                             Mua ngay
+                        </div>
+                    </div>
+                    <div v-if="dataCourseDetail.is_bought == true"  class="buy-now my-2" @click="() => startLearning()">
+                        <div class="label">
+                            Học ngay
                         </div>
                     </div>
                     <div class="courseAdAction">
@@ -185,21 +189,28 @@
             </div>
             </div>
         </div>
+        <ToastMessage :isShow="isShowToast" :message="toastContent" @closeToast="isShowToast = false"/>
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
+import ToastMessage from "./ADMIN/Components/ToastMessage.vue";
 export default {
     beforeMount() {
         console.log(this.$route.params.id);
         this.getDataDetailCourse();
+    },
+    components: {
+        ToastMessage
     },
     data() {
         return {
             dataCourseDetail: {},
             id: this.$route.params.id,
             slug: this.$route.params.slug,
+            isShowToast: false,
+            toastContent: 'Hello',
             dataVideos: [
                 {
                     id: 1,
@@ -275,15 +286,43 @@ export default {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         },
         getDataDetailCourse() {
-            let me = this;
-            console.log(this.$route.params.id);
+            let me = this,
+                userId = this.$store.getters['AUTH/userId'];
             this.axios
-                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=4760d71f-6e2f-5b32-19cb-66948daf6128`)
+                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
                 .then((response) => {
                     if(response.data != null) {
                         me.dataCourseDetail = response.data;
                     }
                 });
+        },
+        addToCart() {
+            let me = this,
+                userId = this.$store.getters['AUTH/userId'];
+            this.axios
+                .post(`https://localhost:44366/api/Course/AddToCart?userId=${userId}&courseId=${me.dataCourseDetail.id}`)
+                .then((response) => {
+                    if(response && response.data) {
+                        if(response.data != 999999) {
+                            me.toastContent = 'Thêm vào giỏ hàng thành công';
+                        }
+                        else {
+                            me.toastContent = 'Khóa học đã có trong giỏ hàng';
+                        }
+                        me.isShowToast = true;
+                    }
+                    else {
+                        me.isShowToast = true;
+                        me.toastContent = 'Thêm vào giỏ hàng thất bại';
+                    }
+                    setTimeout(() => {
+                        me.isShowToast = false;
+                    }, 2000);
+                });
+        },
+        buyNowClick() {
+            this.addToCart();
+            this.$router.push('/cart');
         }
     }
 }

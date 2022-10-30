@@ -33,9 +33,6 @@
                             <div class="course-item-price">
                                 <div class="me-1">{{ formatPrice(item.price*(1 - (item.discount/100))) }}đ</div>
                                 <div class="lineThrough">{{ formatPrice(item.price) }}đ</div>
-                                <div style="text-align: right;">
-                                    Thêm vào giỏ
-                                </div>
                             </div>
                         </div>
                     </div>

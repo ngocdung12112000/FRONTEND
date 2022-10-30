@@ -23,37 +23,31 @@ const routes = [
     {
         path: "/prepare",
         name: "Prepare",
-        component: () =>
-            import(/* webpackChunkName: "prepare" */ "../components/Prepare.vue"),
+        component: () =>import("../components/Prepare.vue"),
     },
     {
         path: "/shop",
         name: "Shop",
         component: () => import("../views/Shop.vue"),
-        // component: Shop,
     },
     {
         path: "/words",
         name: "Words",
         component: () => import("../views/Words.vue"),
-        // component: Words,
     },
     {
         path: "/profile/:id",
         name: "Profile",
         component: () => import("../views/Profile.vue"),
-        // component: Profile,
     },
     {
         path: "/achievements",
         name: "Achievements",
         component: () => import("../views/Achievements.vue"),
-        // component: Achievements,
     },
     {
         path: "/lesson",
         name: "GamePlay",
-        // component: GamePlay
         component: () => import("../views/GamePlay.vue"),
     },
     {
@@ -91,12 +85,6 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "prepare" */ "../views/Cart.vue"),
     },
-    // {
-    //     path: "/admin",
-    //     name: "Admin",
-    //     component: () =>
-    //         import(/* webpackChunkName: "prepare" */ "../views/ADMIN/Admin.vue"),
-    // },
     {
         path: "/admin",
         name: "Dashboard",
@@ -118,6 +106,7 @@ const routes = [
 ];
 
 const router = createRouter({
+    mode: "history",
     history: createWebHistory(process.env.BASE_URL),
     routes,
 });

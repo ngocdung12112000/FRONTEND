@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="course-list-container py-3 px-4">
         <h3 class="fw-bolder mb-4">Danh sách khóa học</h3>
@@ -49,21 +50,21 @@
             </div>
         </div>
         <CourseDetail v-show="isShowDetail" @cancel-click="isShowDetail = false" />
-        <ToastMessage />
+        <ToastMessage :isShow="isShowToast" :message="toastContent" />
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import CourseDetail from './CourseDetail.vue';
 import ToastMessage from '../Components/ToastMessage.vue';
-import Paginate from "vuejs-paginate-next";
+// import Paginate from "vuejs-paginate-next";
 import dataCourses from '../../../assets/js/courses.js';
-import $ from "jquery";
+// import $ from "jquery";
 export default {
     name: "UserList",
     components: {
         CourseDetail,
-        Paginate,
+        // Paginate,
         ToastMessage
     },
     mounted() {
@@ -75,6 +76,8 @@ export default {
             isShowDetail: false,
             userList: [],
             courses: dataCourses,
+            isShowToast: false,
+            toastContent: ''
         };
     },
     methods: {
@@ -94,7 +97,7 @@ export default {
     },
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .course-control {
     width: 100%;

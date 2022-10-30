@@ -60,6 +60,9 @@ export default {
             this.getList();
             this.getListTopic();
         }
+        else {
+            this.$router.push('/login');
+        }
     },
     methods: {
         handleScroll() {

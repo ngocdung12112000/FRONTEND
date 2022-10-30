@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="container">
         <h1 class="fw-bolder mt-5">Khóa học của tôi</h1>
@@ -23,7 +24,7 @@
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import dataCourses from '../assets/js/courses.js';
 export default {
@@ -39,7 +40,7 @@ export default {
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .course-item {
     position: relative;
