@@ -65,30 +65,9 @@
                                         <div class="roadmap-item-number" style="margin-left: -25px;"> {{index + 1}} </div>
                                         <div class="roadmap-item-text ms-3 fs-5 fw-bolder" style="color: #C89F65">{{ item.title }}</div>
                                     </div>
-                                    <div class="roadmap-item-time" style="color: #C89F65">{{ item.totalTime }}</div>
+                                    <div class="roadmap-item-time" style="color: #C89F65">{{ formatTime(item.time) }}</div>
                                 </div>
                                 <div class="roadmap-item-content ">
-                                    <div class="total-video py-2">
-                                        <div class="d-flex justify-content-between align-items-center" @click="expandVideos" style="cursor: pointer;">
-                                            <div class="d-flex">
-                                                <i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i>
-                                                <div>{{ item.listVideos.length }} videos</div>
-                                                <i class="fas fa-caret-down ms-2 mt-1"></i>
-                                            </div>
-                                            <div>{{ item.totalTime }}</div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-left: 12px;" class="d-none">
-                                        <div v-for="video in item.listVideos" :key="video.id" 
-                                            class="d-flex justify-content-between align-items-center py-2" 
-                                        >
-                                            <div class="d-flex">
-                                                <i class="fas fa-play-circle me-2" style="margin-top: 3px;"></i>
-                                                <div>{{ video.title }}</div>
-                                            </div>
-                                            <div >{{ video.time }}</div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +177,6 @@ import $ from "jquery";
 import ToastMessage from "./ADMIN/Components/ToastMessage.vue";
 export default {
     beforeMount() {
-        console.log(this.$route.params.id);
         this.getDataDetailCourse();
     },
     components: {
@@ -211,52 +189,7 @@ export default {
             slug: this.$route.params.slug,
             isShowToast: false,
             toastContent: 'Hello',
-            dataVideos: [
-                {
-                    id: 1,
-                    title: "Giới thiệu",
-                    listVideos: [
-                        {
-                            id: 1,
-                            title: "Giới thiệu",
-                            time: "00:04:05",
-                        },
-                        {
-                            id: 2,
-                            title: "Nhập môn",
-                            time: "00:05:49",
-                        },
-                        {
-                            id: 3,
-                            title: "Tài liệu học tập",
-                            time: "00:00:22",
-                        }
-                    ],
-                    totalTime: "00:10:42",
-                },
-                {
-                    id: 2,
-                    title: "Ngữ âm cơ bản",
-                    listVideos: [
-                        {
-                            id: 1,
-                            title: "Giới thiệu",
-                            time: "00:04:05",
-                        },
-                        {
-                            id: 2,
-                            title: "Nhập môn",
-                            time: "00:05:49",
-                        },
-                        {
-                            id: 3,
-                            title: "Tài liệu học tập",
-                            time: "00:00:22",
-                        }
-                    ],
-                    totalTime: "00:10:42",
-                }
-            ]
+            dataVideos: []
         }
     },
     methods: {
@@ -278,12 +211,16 @@ export default {
                 name: 'LearnCourse',
                 params: {
                     id: this.id,
-                    slug: this.slug
+                    slug: this.slug,
+                    dataVideos: this.dataVideos
                 }
             });
         },
         formatPrice(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        },
+        formatTime(value) {
+            return new Date(value * 1000).toISOString().substring(11,19)
         },
         getDataDetailCourse() {
             let me = this,
@@ -293,6 +230,7 @@ export default {
                 .then((response) => {
                     if(response.data != null) {
                         me.dataCourseDetail = response.data;
+                        me.dataVideos = response.data.list_video;
                     }
                 });
         },
@@ -594,6 +532,7 @@ export default {
     margin-bottom: 5px;
     padding-left: 30px;
     border-left: 1px solid #C89F65;
+    height: 25px;
 }
 
 .course-detail-footer {

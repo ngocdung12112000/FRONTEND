@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="header-container">
         <div class="header-content d-flex align-items-center">
@@ -49,7 +50,7 @@
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 export default {
     data() {
@@ -75,7 +76,7 @@ export default {
     
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .header-container {
     width: 100%;

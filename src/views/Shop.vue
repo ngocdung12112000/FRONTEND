@@ -6,66 +6,121 @@
                 Hình ảnh nhân vật
             </div>
             <div class="shop-list-items">
+                <div class="shop-item" v-for="item in listItems" :key="item.id">
+                    <div class="shop-item-image">
+                        <img :src="require(`../assets/images/AVAS/${item.image}`)" alt="">
+                    </div>
+                    <div class="shop-item-content d-flex align-items-center justify-content-center px-3 mt-3">
+                        <div class="shop-item-price fs-5 fw-bold" :id="`text${item.id}`" @click="setAvarClick">
+                            Mở khóa ở topic {{item.price}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import $ from "jquery";
 export default {
     components: {
+    },
+    beforeMount() {
+        this.currentLessonId = this.$store.getters['AUTH/currentLessonId'];
+        this.userImg = this.$store.getters['AUTH/userImg'];
+    },
+    mounted() {
+        this.changeItemsTitle();
+    },
+    updated() {
+        this.currentLessonId = this.$store.getters['AUTH/currentLessonId'];
+        this.userImg = this.$store.getters['AUTH/userImg'];
     },
     data() {
         return {
             toggleTab: true,
-            currentPageUser: 3,
-            currentLessonUser: 3,
-            currentUser: {},
+            currentLessonId: 1,
+            userImg: '',
             listUser: [],
-            loaded: false,
-            paidFor: false,
-            product: {
-                price: 777.77,
-                description: "leg lamp from that one movie",
-                img: "../assets/images/book-cartoon.png"
-            }
+            listItems: [
+                {
+                    id:1,
+                    name: 'Hình ảnh 1',
+                    image: 'ava1.png',
+                    price: 2
+                },
+                {
+                    id:2,
+                    name: 'Hình ảnh 2',
+                    image: 'ava2.png',
+                    price: 3
+                },
+                {
+                    id:3,
+                    name: 'Hình ảnh 3',
+                    image: 'ava3.png',
+                    price: 4
+                },
+                {
+                    id:4,
+                    name: 'Hình ảnh 4',
+                    image: 'ava4.png',
+                    price: 5
+                },
+                {
+                    id:5,
+                    name: 'Hình ảnh 5',
+                    image: 'ava5.png',
+                    price: 6
+                },
+                {
+                    id:6,
+                    name: 'Hình ảnh 6',
+                    image: 'ava6.png',
+                    price: 7
+                },
+                {
+                    id:7,
+                    name: 'Hình ảnh 7',
+                    image: 'ava7.png',
+                    price: 8
+                },
+                {
+                    id:8,
+                    name: 'Hình ảnh 8',
+                    image: 'ava8.png',
+                    price: 9
+                }
+            ]
         };
     },
-    mounted: function () {
-        const script = document.createElement("script");
-        script.src =
-            "https://www.paypal.com/sdk/js?client-id=AT1kTrZeE44q5J5CrQQ13ku15MF_b-i26O1GLupVMSlScz6SzE777BLaX1cW-QotXV-ui7OW4EsL3jvf";
-        script.addEventListener("load", this.setLoaded);
-        document.body.appendChild(script);
-    },
     methods: {
-        setLoaded: function () {
-            this.loaded = true;
-            window.paypal
-                .Buttons({
-                    createOrder: (data, actions) => {
-                        return actions.order.create({
-                            purchase_units: [
-                                {
-                                    description: this.product.description,
-                                    amount: {
-                                        currency_code: "USD",
-                                        value: this.product.price
-                                    }
-                                }
-                            ]
-                        });
-                    },
-                    onApprove: async (data, actions) => {
-                        const order = await actions.order.capture();
-                        this.paidFor = true;
-                        console.log(order);
-                    },
-                    onError: err => {
-                        console.log(err);
-                    }
-                })
-                .render(this.$refs.paypal);
+        changeItemsTitle() {
+            let me = this,
+                topic = Math.floor(me.currentLessonId / 5) + 1,
+                tempItem = [];
+
+            tempItem = me.listItems.filter(item => item.id < topic);
+            tempItem.forEach(item => {
+                if(me.userImg == item.image) {
+                    $(`#text${item.id}`).text(`Đã đặt làm avatar`);
+                    $(`#text${item.id}`).css("color", "#1dd1a1");
+                }
+                else {
+                    $(`#text${item.id}`).css("color", "#54a0ff");
+                    $(`#text${item.id}`).text(`Đặt làm avatar`);
+                }
+            });
+        },
+        setAvarClick(e) {
+            let me = this;
+            if(e.currentTarget.innerText == 'Đặt làm avatar') {
+                let img = me.listItems.filter(item => item.id == e.currentTarget.id.replace('text', ''))[0].image;
+                this.$store.dispatch('AUTH/setavatar', img);
+                this.changeItemsTitle();
+                window.location.reload();
+            }
         }
     }
 
@@ -87,49 +142,45 @@ export default {
     padding: 20px 0px;
 }
 
-.freeze-streak {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0px;
-    border-bottom: 2px solid #ebebeb;
-    border-top: 2px solid #ebebeb;
+.shop-list-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 70px;
 }
 
-.item-content {
-    padding: 0 20px;
-    width: 530px;
-}
-
-.item-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.item-price {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 150px;
-    border: 2px solid #c4c4c4;
-    border-radius: 10px;
-    font-size: 20px;
-    color: #1dd1a1;
-    font-weight: bold;
-    padding: 8px 10px;
+.shop-item {
+    position: relative;
+    width: 90%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(84 84 84 / 20%);
+    overflow: hidden;
     cursor: pointer;
+    padding: 0 0 20px 0;
 }
 
-.item-price:hover {
-    background-color: #ebebeb;
+.shop-item-image {
+    text-align: center;
 }
 
-.betting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0px;
-    border-bottom: 2px solid #ebebeb;
+.shop-item-price {
+    color: #b3b3b3;
+}
+
+@media screen and (max-width: 1200px) {
+    .shop-list-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .shop-list-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shop-list-items {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 </style>

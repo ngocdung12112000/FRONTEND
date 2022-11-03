@@ -296,7 +296,16 @@ export default {
         // Hàm thực hiện update thông tin sau khi hoàn thành
         updateData() {
             let me = this,
-            loginUserId = this.$store.getters['AUTH/userId'];
+                loginUserId = this.$store.getters['AUTH/userId'],
+                lessonId = this.$route.params.idLesson;
+
+            this.axios
+                .post(`https://localhost:44366/api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}`)
+                .then((response) => {
+                    if (response.data) {
+                        console.log(response.data);
+                    }
+                });
 
             this.axios
                 .put(`https://localhost:44366/api/Users/UpdateUserLesson?userId=${loginUserId}`)

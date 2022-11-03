@@ -57,7 +57,7 @@
                                     <div id="barDone" class="exp-target-bar-done"></div>
                                 </div>
                                 <div class="exp-target-process-value">
-                                    <div> {{ currentUser.point }}/{{ currentUser.target}} KN</div>
+                                    <div> {{ currentPoint }}/{{ currentUser.target}} KN</div>
                                 </div>
                             </div>
                         </div>
@@ -91,12 +91,12 @@ export default {
         }
     },
     mounted() {
-        let rate = (this.currentUser.point / this.currentUser.target)*100;
+        let rate = (this.currentPoint / this.currentUser.target)*100;
         rate = rate > 100 ? 100 : rate;
         $('#barDone').width(rate + '%');
     },
     updated() {
-        let rate = (this.currentUser.point / this.currentUser.target)*100;
+        let rate = (this.currentPoint / this.currentUser.target)*100;
         rate = rate > 100 ? 100 : rate;
         $('#barDone').width(rate + '%');
     },
@@ -105,6 +105,7 @@ export default {
             images: this.listUser,
             loginUserId: "",
             dataStreak: [],
+            currentPoint: 0,
             sizeChart: {
                 width: 400,
                 height: 230
@@ -153,6 +154,7 @@ export default {
                             pl: item.score
                         })
                     });
+                    this.currentPoint = res[res.length - 1].score;
                 });
         }
     }

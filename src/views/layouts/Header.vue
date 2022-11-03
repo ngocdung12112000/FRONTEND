@@ -45,7 +45,10 @@
                 </div>
                 <div class="user  d-flex align-items-center" @mouseover="isHoverUserImg = true"
                     @mouseleave="isHoverUserImg = false">
-                    <div class="user-img section-item-img"></div>
+                    <div class="user-img section-item-img">
+                        <img v-if="userImg != 'user.jpg'" :src="require(`../../assets/images/AVAS/${userImg}`)" alt="">
+                        <img v-else :src="require(`../../assets/images/${userImg}`)" alt="">
+                    </div>
                     <div v-show="isHoverUserImg" class="user-info">
                         <div class="user-account text-start">Tài khoản</div>
                         <div @click="goToProfile" class="user-profile text-start">Hồ sơ</div>
@@ -67,9 +70,15 @@
 <script>
 import $ from "jquery";
 export default {
+    beforeMount() {
+        this.userId = this.$store.getters['AUTH/userId'];
+        this.userImg = this.$store.getters['AUTH/userImg'];
+    },
     data() {
         return {
             isHoverUserImg: false,
+            userId: "",
+            userImg: "user.jpg",
         };
     },
     methods: {
@@ -87,7 +96,7 @@ export default {
         goToProfile(){
             this.loginUserId = this.$store.getters['AUTH/userId'];
             this.$router.push(`/profile/${this.loginUserId}`, {params: {id: this.loginUserId}});
-        }
+        },
     },
 
 }
@@ -180,11 +189,9 @@ export default {
 }
 
 .user-img {
-    background-image: url(../../assets/images/user.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
     transform: scale(1.3);
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .user-info {

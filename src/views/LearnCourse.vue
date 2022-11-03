@@ -1,22 +1,20 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="learning-wrapper">
         <div class="left-section">
             <div class="video-wrapper">
                 <div class="video-section">
                     <div class="video-container" style="width: 100%; height: 100%;">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/y4rVYbfbhcE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        <!-- <video id="video" controls style="width: 100%; height: 100%;">
-                            <source src="https://www.youtube.com/embed/JHSRTU31T14" type="video/mp4">
-                        </video> -->
+                        <iframe v-if="currentData" width="100%" height="100%" :src="currentData.link" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
-            <h1 class="mt-3">Chủ đề: Travelling</h1>
+            <h1 v-if="currentData" class="mt-3">{{ currentData.title }}</h1>
             <div class="time-wrapper d-flex my-3">
                 <div class="time d-flex me-5">
-                    <div class="me-4">
+                    <div v-if="totalTime" class="me-4">
                         <i class="fas fa-clock me-1"></i>
-                        01:02:38
+                        {{formatTime(totalTime)}}
                     </div>
                     <div>
                         <i class="fas fa-users me-1"></i>
@@ -24,8 +22,8 @@
                     </div>
                 </div>
                 <div class="date d-flex">
-                    <div class="me-4">Thời gian tạo: 29/07/2017</div>
-                    <div>Thời gian cập nhật: 04/04/2022</div>
+                    <div class="me-4">Thời gian tạo: {{createdDate}}</div>
+                    <div>Thời gian cập nhật: {{modifiedDate}}</div>
                 </div>
             </div>
             <div class="course-detail-area">
@@ -77,7 +75,7 @@
                                     <img class="rounded-circle" style="width: 100px; height: 100px;" src="../assets/images/user.jpg" alt="">
                                 </div>
                                 <div class="teacher-info ms-5">
-                                    <div class="teacher-name fs-5 fw-bolder">Nguyễn Văn A</div>
+                                    <div v-if="teacher" class="teacher-name fs-5 fw-bolder">{{teacher.name}}</div>
                                     <div class="teacher-job">Giảng viên</div>
                                 </div>
                             </div>
@@ -86,12 +84,12 @@
                 </div>
                 <div class="list-lesson-tab" v-show="switchToggle == 3">
                     <div class="list-lesson">
-                        <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="item.link" @click="itemLessonClick">
+                        <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="index" @click="itemLessonClick">
                             <div class="item-title">
                                 <span>Video {{ index + 1 }}: {{ item.title }}</span>
                             </div>
                             <div class="item-quantity d-flex align-items-center">
-                                {{ item.time }}
+                                {{ formatTime(item.time) }}
                             </div>
                         </div>
                     </div>
@@ -116,48 +114,58 @@
         </div>
         <div class="right-section">
             <div class="list-lesson">
-                <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="item.link" @click="itemLessonClick">
+                <div v-for="(item,index) in data" :key="item.id" class="item-lesson d-flex" :data="index" @click="itemLessonClick">
                     <div class="item-title">
                         <span>Video {{ index + 1 }}: {{ item.title }}</span>
                     </div>
                     <div class="item-quantity d-flex align-items-center">
-                        {{ item.time }}
+                        {{ formatTime(item.time) }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
 export default {
     data() {
         return {
             switchToggle: 1,
-            data: [
-                {
-                    id: 1,
-                    title: "Going to a hotel",
-                    time: "00:04:05",
-                    link: "y4rVYbfbhcE",
-                },
-                {
-                    id: 2,
-                    title: "In the Airport",
-                    time: "00:04:05",
-                    link: "61Pgo-puryk",
-                },
-                {
-                    id: 3,
-                    title: "Using Transportation",
-                    time: "00:04:05",
-                    link: "y4rVYbfbhcE",
-                }
-            ]
+            data: [],
+            totalTime: 0,
+            teacher: {},
+            currentData: {},
+            createdDate: "",
+            modifiedDate: "",
         }
     },
+    beforeMount() {
+        this.getData();
+    },
+    mounted() {
+    },
     methods: {
+        getData() {
+            let me = this,
+                userId = this.$store.getters['AUTH/userId'];
+            this.axios
+                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
+                .then((response) => {
+                    if(response.data != null) {
+                        me.data = response.data.list_video;
+                        me.teacher = response.data.teacher;
+                        me.data.forEach((item) => {
+                            me.totalTime += item.time;
+                            item.link = item.link.replace("watch?v=", "embed/");
+                        });
+                        me.currentData = me.data[0];
+                        me.createdDate = me.formatDate(response.data.created_date);
+                        me.modifiedDate = me.formatDate(response.data.modified_date);
+                    }
+                });
+        },
         switchTab(index) {
             const thisBtn = event.currentTarget;
             const left = thisBtn.offsetLeft;
@@ -171,13 +179,20 @@ export default {
         itemLessonClick(e) {
             $('.item-lesson').removeClass('active');
             const itemLesson = e.currentTarget;
+            const index = $(itemLesson).attr('data');
             $(itemLesson).addClass('active');
-            $('iframe').attr('src', 'https://www.youtube.com/embed/' + $(itemLesson).attr('data'));
+            this.currentData = this.data[index];
+        },
+        formatTime(value) {
+            return new Date(value * 1000).toISOString().substring(11,19)
+        },
+        formatDate(value) {
+            return new Date(value).toLocaleDateString('en-GB');
         }
     }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .learning-wrapper {
     display: flex;

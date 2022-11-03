@@ -77,8 +77,10 @@ export default {
         },
         scollToCurrent() {
             var currentLesson = document.getElementsByClassName("current")[0];
-            currentLesson = currentLesson.parentElement.parentElement.parentElement;
-            currentLesson.scrollIntoView({ behavior: "smooth" });
+            if(currentLesson) {
+                currentLesson = currentLesson.parentElement.parentElement.parentElement;
+                currentLesson.scrollIntoView({ behavior: "smooth" });
+            }
         },
         getList() {
             let me = this;
@@ -89,7 +91,12 @@ export default {
                         me.listUser = response.data;
                         // me.currentUser = response.data[0];
                         me.listUser.forEach((user) => {
-                            user.avatar = require(`../assets/images/${user.image}`);
+                            if(user.image != "user.jpg") {
+                                user.avatar = require(`../assets/images/AVAS/${user.image}`);
+                            }
+                            else {
+                                user.avatar = require(`../assets/images/${user.image}`);
+                            }
                         });
                     }
                     

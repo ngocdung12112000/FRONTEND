@@ -146,7 +146,6 @@ export default {
                     userId: userId,
                     listCourseId: this.listCourse.map(course => course.id)
                 };
-            console.log("purchase success");
             this.listCourse = [];
             this.totalPrice = 0;
             this.totalSalePrice = 0;
