@@ -6,6 +6,8 @@ const state = {
     userId: '123',
     userImg: '',
     currentLessonId: 1,
+    userLogin: {},
+    userRank: 0,
 }
 
 const getters = {
@@ -13,7 +15,9 @@ const getters = {
     userId: state => state.userId,
     userImg: state => state.userImg,
     isAuthenticated: state => !!state.userId, 
-    currentLessonId: state => state.currentLessonId
+    currentLessonId: state => state.currentLessonId,
+    userLogin: state => state.userLogin,
+    userRank: state => state.userRank,
 }
 
 const mutations = {
@@ -23,6 +27,9 @@ const mutations = {
     setUserImg(state, img){
         state.userImg = img;
     },
+    setUserRank(state, rank){
+        state.userRank = rank;
+    },
     setUserLessonId(state, lessonId){
         state.currentLessonId = lessonId;
     },
@@ -31,6 +38,9 @@ const mutations = {
         state.userImg = '';
         state.currentLessonId = 1
     },
+    setUserLogin(state, userLogin){
+        state.userLogin = userLogin;
+    }
 }
 
 const actions = {
@@ -40,6 +50,7 @@ const actions = {
             commit('setUser', response.data.user_id);
             commit('setUserImg', response.data.image);
             commit('setUserLessonId', response.data.current_lesson_id);
+            commit('setUserLogin', response.data);
             return response;
         } catch (error) {
             console.log(error.response);
@@ -47,6 +58,9 @@ const actions = {
     },
     setavatar ({commit}, img) {
         commit('setUserImg', img);
+    },
+    setranking ({commit}, rank) {
+        commit('setUserRank', rank);
     },
     logout ({commit}) {
         commit('LogOut')

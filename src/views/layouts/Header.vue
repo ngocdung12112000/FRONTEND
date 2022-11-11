@@ -37,11 +37,11 @@
             <div class="col-3 col-md-3 right-section d-flex justify-content-center">
                 <div class="streak section-item d-flex align-items-center">
                     <div class="streak-img"></div>
-                    <div class="section-item-text" style="color: #FF9600;">2</div>
+                    <div v-if="userLogin" class="section-item-text" style="color: #FF9600;">{{userLogin.target}}</div>
                 </div>
                 <div class="gem section-item d-flex align-items-center">
                     <div class="gem-img"></div>
-                    <div class="section-item-text" style="color: #1dd1a1;">10</div>
+                    <div v-if="userLogin" class="section-item-text" style="color: #1dd1a1;">{{userLogin.gem}}</div>
                 </div>
                 <div class="user  d-flex align-items-center" @mouseover="isHoverUserImg = true"
                     @mouseleave="isHoverUserImg = false">
@@ -73,12 +73,14 @@ export default {
     beforeMount() {
         this.userId = this.$store.getters['AUTH/userId'];
         this.userImg = this.$store.getters['AUTH/userImg'];
+        this.userLogin = this.$store.getters['AUTH/userLogin'];
     },
     data() {
         return {
             isHoverUserImg: false,
             userId: "",
             userImg: "user.jpg",
+            userLogin: {}
         };
     },
     methods: {

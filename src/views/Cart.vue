@@ -25,9 +25,9 @@
                                 </div>
                                 <div class="text-black-50">{{ course.teacher }}</div>
                                 <div style="font-size: 13px;"
-                                    class="sell-price text-end mt-3 text-decoration-line-through text-black-50">{{ course.price }}đ
+                                    class="sell-price text-end mt-3 text-decoration-line-through text-black-50">{{ formatCurrency(course.price) }}đ
                                 </div>
-                                <div style="color:#74b9ff; font-size: 24px;" class="sale-price text-end fw-bold">{{course.price*(1 - course.discount/100) }}đ
+                                <div style="color:#3282d3; font-size: 24px;" class="sale-price text-end fw-bold">{{ formatCurrency(course.price*(1 - course.discount/100)) }}đ
                                 </div>
                             </div>
                         </div>
@@ -72,6 +72,7 @@ export default {
         return {
             isCheckAll: false,
             listCourse: [],
+            selectedCourse: [],
             totalPrice: 0,
             totalSalePrice: 0,
             loaded: false,
@@ -116,6 +117,7 @@ export default {
                     onApprove: async (data, actions) => {
                         const order = await actions.order.capture();
                         this.paidFor = true;
+                        console.log(order);
                         if(order.status === "COMPLETED"){
                             this.purchaseSuccess();
                         }
@@ -144,11 +146,23 @@ export default {
             let userId = this.$store.getters['AUTH/userId'],
                 param = {
                     userId: userId,
-                    listCourseId: this.listCourse.map(course => course.id)
+                    listCourseId: this.selectedCourse.map(course => course.id)
+                },
+                paramOrder = {
+                    payment_method: "paypal",
+                    total_price: this.totalSalePrice,
+                    user_id: userId,
+                    created_date: new Date(),
+                    listItem: this.selectedCourse.map(course => course.id)
                 };
-            this.listCourse = [];
-            this.totalPrice = 0;
-            this.totalSalePrice = 0;
+            
+            this.axios
+                .post(`https://localhost:44366/api/Course/InsertOrder`,paramOrder)
+                .then((response) => {
+                    if(response && response.data) {
+                        console.log(response.data);
+                    }
+                });
 
             this.axios
                 .post(`https://localhost:44366/api/Users/AddBoughtCourse`,param)
@@ -157,6 +171,11 @@ export default {
                         console.log(response.data);
                     }
                 });
+
+            this.listCourse = this.listCourse.filter(course => !this.selectedCourse.includes(course));
+            this.selectedCourse = [];
+            this.totalPrice = 0;
+            this.totalSalePrice = 0;
         },
         clickCheckAll() {
             if(this.isCheckAll) {
@@ -168,12 +187,14 @@ export default {
                     return total + (course.price*(1 - course.discount/100));
                 }, 0);
                 this.product.price = Math.round(this.totalSalePrice / 24000);
+                this.selectedCourse = this.listCourse;
             }
             else {
                 $('.course-item input[type="checkbox"]').prop('checked', false);
                 this.totalPrice = 0;
                 this.totalSalePrice = 0;
                 this.product.price = Math.round(this.totalSalePrice / 24000);
+                this.selectedCourse = [];
             }
         },
         clickSelectCourse(course) {
@@ -181,11 +202,13 @@ export default {
                 this.totalPrice += course.price;
                 this.totalSalePrice += (course.price*(1 - course.discount/100));
                 this.product.price = Math.round(this.totalSalePrice / 24000);
+                this.selectedCourse.push(course);
             }
             else {
                 this.totalPrice -= course.price;
                 this.totalSalePrice -= (course.price*(1 - course.discount/100));
                 this.product.price = Math.round(this.totalSalePrice / 24000);
+                this.selectedCourse = this.selectedCourse.filter(item => item.id !== course.id);
             }
             this.totalPrice = this.totalPrice > 0 ? this.totalPrice : 0;
             this.totalSalePrice = this.totalSalePrice > 0 ? this.totalSalePrice : 0;

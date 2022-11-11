@@ -29,6 +29,7 @@ export default {
     beforeMount() {
         this.currentLessonId = this.$store.getters['AUTH/currentLessonId'];
         this.userImg = this.$store.getters['AUTH/userImg'];
+        this.userLogin = this.$store.getters['AUTH/userLogin'];
     },
     mounted() {
         this.changeItemsTitle();
@@ -36,12 +37,14 @@ export default {
     updated() {
         this.currentLessonId = this.$store.getters['AUTH/currentLessonId'];
         this.userImg = this.$store.getters['AUTH/userImg'];
+        this.userLogin = this.$store.getters['AUTH/userLogin'];
     },
     data() {
         return {
             toggleTab: true,
             currentLessonId: 1,
             userImg: '',
+            userLogin: {},
             listUser: [],
             listItems: [
                 {
@@ -119,7 +122,18 @@ export default {
                 let img = me.listItems.filter(item => item.id == e.currentTarget.id.replace('text', ''))[0].image;
                 this.$store.dispatch('AUTH/setavatar', img);
                 this.changeItemsTitle();
-                window.location.reload();
+                if(me.userLogin) {
+                    me.userLogin.image = img;
+                }
+                this.axios
+                .put(`https://localhost:44366/api/Users/Update`,this.userLogin)
+                    .then((response) => {
+                        if(response && response.data) {
+                            window.location.reload();
+                        }
+                    });
+                console.log(this.userLogin);
+                // window.location.reload();
             }
         }
     }

@@ -3,10 +3,10 @@
     <div class="personal col-4">
         <div class="rank">
             <div class="rank-title">
-                <h2>Xếp hạng Bạc</h2>
+                <h2>Xếp hạng {{userRank}}</h2>
                 <div class="rank-images">
-                    <div class="bronze-rank"></div>
-                    <div class="silver-rank"></div>
+                    <div :class="userRankPoint > 0  ? 'bronze-rank' : 'lock-rank'"></div>
+                    <div :class="userRankPoint > 100  ? 'silver-rank' : 'lock-rank'"></div>
                     <div class="lock-rank"></div>
                     <div class="lock-rank"></div>
                     <div class="lock-rank"></div>
@@ -86,6 +86,7 @@ export default {
     components: { Chart, Grid, Line },
     beforeMount() {
         this.loginUserId = this.$store.getters['AUTH/userId'];
+        console.log(this.currentUser);
         if (this.loginUserId) {
             this.getUserStreak();
         }
@@ -110,6 +111,9 @@ export default {
                 width: 400,
                 height: 230
             },
+            userRank: "Đồng",
+            rankImg: "bronze-rank",
+            userRankPoint: 0,
             pointToday: 0,
             target: 0,
             dataStreakNew: [],
@@ -156,6 +160,31 @@ export default {
                     });
                     this.currentPoint = res[res.length - 1].score;
                 });
+        },
+        getRanking(point){
+            let me = this;
+            if(point < 100) {
+                me.userRank = "Đồng";
+                me.rankImg = "bronze-rank";
+            } else if(point < 200) {
+                me.userRank = "Bạc";
+                me.rankImg = "silver-rank";
+            } else if(point < 300) {
+                me.userRank = "Vàng";
+                me.rankImg = "gold-rank";
+            }else if(point < 400) {
+                me.userRank = "Bạch Kim";
+                me.rankImg = "gold-rank";
+            }else if(point < 500) {
+                me.userRank = "Kim Cương";
+                me.rankImg = "gold-rank";
+            }
+        }
+    },
+    watch: {
+        currentUser: function(newVal) {
+            this.getRanking(newVal.point);
+            this.userRankPoint = newVal.point;
         }
     }
 }

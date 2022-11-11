@@ -6,7 +6,7 @@
             <div class="d-flex flex-wrap my-3 mt-5">
                 <div v-for="item in courses" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.slug)">
                     <div class="course-item-img">
-                        <img :src="require(`../assets/images/COURSES/${item.image}`)" alt="">
+                        <img :src="item.image" alt="">
                     </div>
                     <div class="course-item-content">
                         <div class="course-item-title">
@@ -16,7 +16,7 @@
                             {{ item.description }}
                         </p>
                         <div class="course-item-teacher">
-                            {{ item.teacher }}
+                            {{ item.teacher_name }}
                         </div>
                     </div>
                 </div>
@@ -26,16 +26,29 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import dataCourses from '../assets/js/courses.js';
+// import dataCourses from '../assets/js/courses.js';
 export default {
     data() {
         return {
-            courses: dataCourses
+            courses: [],
+            userId: ""
         }
+    },
+    beforeMount() {
+        this.userId = this.$store.getters['AUTH/userId'];
+        this.getMyCourse();
     },
     methods: {
         courseClick(courseId, courseName){
             this.$router.push({ name: 'CourseDetail', params: { slug: courseName, id: courseId } });
+        },
+        getMyCourse(){
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Course/UserId?userId=${me.userId}`)
+                .then((response) => {
+                    me.courses = response.data;
+                });
         }
     }
 }

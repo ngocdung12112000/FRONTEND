@@ -83,19 +83,23 @@ export default {
             }
         },
         getList() {
-            let me = this;
+            let me = this, rank = 0;
             this.axios
                 .get("https://localhost:44366/api/Users/All")
                 .then((response) => {
                     if(response && response.data) {
                         me.listUser = response.data;
-                        // me.currentUser = response.data[0];
-                        me.listUser.forEach((user) => {
+                        me.listUser.forEach((user,index) => {
                             if(user.image != "user.jpg") {
                                 user.avatar = require(`../assets/images/AVAS/${user.image}`);
                             }
                             else {
                                 user.avatar = require(`../assets/images/${user.image}`);
+                            }
+
+                            if(user.user_id == me.loginUserId) {
+                                rank = index + 1;
+                                this.$store.dispatch('AUTH/setranking', rank);
                             }
                         });
                     }

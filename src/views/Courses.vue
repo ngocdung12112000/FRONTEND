@@ -76,7 +76,6 @@ export default {
     },
     methods: {
         clickCallback(page) {
-            console.log(page);
             this.page = page;
             this.coursesDisplay = this.courses.slice((page - 1) * 10, page * 10);
         },

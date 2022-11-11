@@ -4,17 +4,18 @@
         <div class="profile-info">
             <div class="info-section">
                 <div v-if="currentUser" class="profile-avatar">
-                    {{ currentUser.user_name ? currentUser.user_name.charAt(0).toUpperCase() : '' }}
-                    <div class="icon-edit d-flex align-items-center justify-content-center">
+                    <img v-if="userImg && userImg != 'user.jpg'" :src="require(`../assets/images/AVAS/${userImg}`)" alt="">
+                    <span v-else>{{ currentUser.user_name ? currentUser.user_name.charAt(0).toUpperCase() : '' }}</span>
+                    <!-- <div class="icon-edit d-flex align-items-center justify-content-center">
                         <div class="img-icon-edit"></div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="profile-detail">
                     <div v-if="currentUser" class="profile-name fw-bold fs-2 text-dark">{{ currentUser.user_name }}</div>
                     <div v-if="currentUser" class="profile-username text-black-50 my-2">{{ currentUser.full_name }}</div>
                     <div class="joined-date text-black-50 my-2 d-flex align-items-center">
                         <div class="img-clock me-2"></div>
-                        Đã tham gia Tháng Bảy 2018
+                        Đã tham gia Tháng Chín 2022
                     </div>
                     <div class="follow-section text-black-50 my-2 d-flex align-items-center">
                         <div class="img-followers me-2"></div>
@@ -64,7 +65,7 @@
                                 <img style="transform: scale(1.5);" src="../assets/images/crown.svg" alt="">
                             </div>
                             <div class="statistic-item-text">
-                                <div class="fw-bolder fs-4">3</div>
+                                <div class="fw-bolder fs-4">{{userIndex}}</div>
                                 <div class="text-black-50">Thứ hạng hiện tại</div>
                             </div>
                         </div>
@@ -181,7 +182,11 @@
                                     <img src="../assets/images/add-follow.svg" alt="">
                                 </div>
                             </div>
-                            <span v-show="currentUser.following && currentUser.following.length == 0">Kết nối bạn bè giúp học vui và hiệu quả hơn.</span>
+                            <div v-show="currentUser.following && currentUser.following.length == 0"
+                                class="p-4 text-center"
+                            >
+                                Kết nối bạn bè giúp học vui và hiệu quả hơn.
+                            </div>
                         </div>
                         <div class="follower-list" v-show="toggleTab">
                             <div v-for="follower in currentUser.followers" :key="follower.user_id" 
@@ -200,7 +205,11 @@
                                     <img src="../assets/images/add-follow.svg" alt="">
                                 </div>
                             </div>
-                            <span v-show="currentUser.following && currentUser.following.length == 0">Chưa có người theo dõi</span>
+                            <div v-show="currentUser.following && currentUser.following.length == 0"
+                                class="p-4 text-center"
+                            >
+                                Chưa có người theo dõi
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -216,7 +225,8 @@ export default {
     beforeMount(){
         const route = useRoute();
         this.userId = route.params.id;
-        // this.userId = this.$store.getters['AUTH/userId'];
+        this.userImg = this.$store.getters['AUTH/userImg'];
+        this.userIndex = this.$store.getters['AUTH/userRank'];
         if(this.userId != "") {
             this.getProfile(this.userId);
         }
@@ -231,7 +241,9 @@ export default {
             userId: "",
             currentUser: {},
             userRank: "Đồng",
-            rankImg: "bronze-rank"
+            rankImg: "bronze-rank",
+            userImg: "",
+            userIndex: 1,
         };
     },
     methods: {
@@ -247,16 +259,22 @@ export default {
                 });
         },
         getRanking(point){
-            switch(point) {
-                case point < 100:
-                    this.userRank = "Đồng";
-                    break;
-                case point < 500:
-                    this.userRank = "Bạc"; 
-                    break;
-                case point < 1000:
-                    this.userRank = "Vàng"; 
-                    break;        
+            let me = this;
+            if(point < 100) {
+                me.userRank = "Đồng";
+                me.rankImg = "bronze-rank";
+            } else if(point < 200) {
+                me.userRank = "Bạc";
+                me.rankImg = "silver-rank";
+            } else if(point < 300) {
+                me.userRank = "Vàng";
+                me.rankImg = "gold-rank";
+            }else if(point < 400) {
+                me.userRank = "Bạch Kim";
+                me.rankImg = "gold-rank";
+            }else if(point < 500) {
+                me.userRank = "Kim Cương";
+                me.rankImg = "gold-rank";
             }
         }
     },

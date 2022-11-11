@@ -1,9 +1,10 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="nav-container" :class="{collapsed : isCollapse}">
         <router-link to="/admin">
             <div class="nav-item d-flex align-items-center active mt-3">
                 <i class="fas fa-home me-2"></i>
-                <span>Tổng quan</span>
+                <span>Thống kê</span>
             </div>
         </router-link>
         <router-link to="/admin/user-management">
@@ -18,13 +19,13 @@
                 <span>Quản lý khóa học</span>
             </div>
         </router-link>
-        <div class="nav-item">
+        <!-- <div class="nav-item">
             <i class="fas fa-chart-pie me-2"></i>
             <span>Thống kê</span>
-        </div>
+        </div> -->
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
 export default {
@@ -48,7 +49,7 @@ export default {
     },
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style>
 .nav-container {
     width: 275px;
