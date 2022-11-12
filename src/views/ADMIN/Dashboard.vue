@@ -8,11 +8,13 @@
                 </div>
                 <div class="info-content">
                     <div style="font-size: 16px;">Số lượng người dùng</div>
-                    <div class="fs-4 fw-bolder">100</div>
+                    <div class="fs-4 fw-bolder">{{dataOverView.totalUser}}</div>
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 80% trong 30 ngày</div>
+                    <div style="font-size: 12px;">
+                        Tăng {{ userRate }}% trong 30 ngày
+                    </div>
                 </div>
             </div>
             <div class="total-course d-flex align-items-center ">
@@ -25,7 +27,7 @@
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
+                    <div style="font-size: 12px;">Tăng {{ courseRate }}% trong 30 ngày</div>
                 </div>
             </div>
             <div class="total-proceed d-flex align-items-center">
@@ -34,11 +36,11 @@
                 </div>
                 <div class="info-content">
                     <div style="font-size: 16px;">Số lượng người dùng mới</div>
-                    <div class="fs-4 fw-bolder">50</div>
+                    <div class="fs-4 fw-bolder">{{dataOverView.totalNewUser}}</div>
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
+                    <!-- <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div> -->
                 </div>
             </div>
             <div class="total-new-user d-flex align-items-center">
@@ -47,51 +49,52 @@
                 </div>
                 <div class="info-content">
                     <div style="font-size: 16px;">Tổng doanh thu</div>
-                    <div class="fs-4 fw-bolder">50M đ</div>
+                    <div class="fs-4 fw-bolder">{{dataOverView.totalMoney}} đ</div>
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng 50% trong 30 ngày</div>
+                    <div style="font-size: 12px;">Tăng {{ revenueRate }}% trong 30 ngày</div>
                 </div>
             </div>
         </div>
         <div class="d-flex ps-3">
             <select style="width: 300px; height: 40px;" v-model="timeSelect"
             class="form-select mb-3 me-3" aria-label=".form-select-lg example">
-                <option value="3">3 Tháng</option>
-                <option value="6">6 Tháng</option>
-                <option value="12">1 Năm</option>
+                <!-- <option value="30">30 Ngày</option> -->
+                <option value="3">3 tháng</option>
+                <option value="6">6 tháng</option>
+                <option value="12">1 năm</option>
             </select>
             <button @click="changeDataChart" style="height: 40px;" class="btn btn-danger">Thay đổi</button>
         </div>
         <div class="chart-info d-flex justify-content-between flex-wrap">
             <div class="line-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
                 <h4 class="py-3 ms-3">Số lượng người dùng trong 6 tháng</h4>
-                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction">
+                <Chart v-if="dataUserChart.length > 0" :size="sizeChart" :data="dataUserChart" :margin="margin" :direction="direction">
                     <template #layers>
                         <Grid strokeDasharray="2,2" />
-                        <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
-                        <LabelsLayer :dataKeys="['name', 'pl']" />
+                        <Line :dataKeys="['time', 'quantity']" :lineStyle="{ stroke: '#ffc800' }" />
+                        <LabelsLayer :dataKeys="['time', 'quantity']" />
                     </template>
                 </Chart>
             </div>
             <div class="line-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
                 <h4 class="py-3 ms-3">Số lượng khóa học trong 6 tháng</h4>
-                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction">
+                <Chart v-if="dataUserChart.length > 0" :size="sizeChart" :data="dataCourseChart" :margin="margin" :direction="direction">
                     <template #layers>
                         <Grid strokeDasharray="2,2" />
-                        <Line :dataKeys="['name', 'pl']" :lineStyle="{ stroke: '#ffc800' }" />
-                        <LabelsLayer :dataKeys="['name', 'pl']" />
+                        <Line :dataKeys="['time', 'quantity']" :lineStyle="{ stroke: '#ffc800' }" />
+                        <LabelsLayer :dataKeys="['time', 'quantity']" />
                     </template>
                 </Chart>
             </div>
             <div class="bar-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
                 <h4 class="py-3 ms-3">Doanh thu trong 6 tháng</h4>
-                <Chart :size="sizeChart" :data="dataBarChart" :margin="margin" :direction="direction" >
+                <Chart v-if="dataProceedChart" :size="sizeChart" :data="dataProceedChart" :margin="margin" :direction="direction" >
                     <template #layers>
                         <Grid strokeDasharray="2,2" />
-                        <Bar :dataKeys="['name', 'pl']" :barStyle="{ fill: '#90e0ef', }" />
-                        <LabelsLayer :dataKeys="['name', 'pl']" />
+                        <Bar :dataKeys="['time', 'quantity']" :barStyle="{ fill: '#90e0ef', }" />
+                        <LabelsLayer :dataKeys="['time', 'quantity']" />
                     </template>
                 </Chart>
             </div>
@@ -148,6 +151,15 @@ export default {
                 width: 0,
                 height: 420
             },
+            dataOverView: {},
+            userRate: 0,
+            courseRate: 0,
+            revenueRate: 0,
+            newUser: 0,
+            dataAllChart:{},
+            dataUserChart: [],
+            dataCourseChart: [],
+            dataProceedChart: [],
             dataBarChart: [
                 { name: 'T1', pl: 1000, },
                 { name: 'T2', pl: 2000, },
@@ -196,6 +208,9 @@ export default {
             }
         }
         $(".pie-chart .axis").hide();
+
+        this.getDataOverView();
+        this.getDataUserChart();
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.onResize);
@@ -221,6 +236,30 @@ export default {
                 width: value + 0.0001,
                 height: 420
             }
+        },
+        getDataOverView() {
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Users/OverView?time=30`)
+                .then((response) => {
+                    me.dataOverView = response.data;
+                    me.userRate = Math.round(((me.dataOverView.totalUser - me.dataOverView.totalUserLast)/ me.dataOverView.totalUserLast)*100);
+                    me.courseRate = Math.round(((me.dataOverView.totalCourse - me.dataOverView.totalCourseLast)/ me.dataOverView.totalCourseLast)*100);
+                    me.revenueRate = Math.round(((me.dataOverView.totalMoney - me.dataOverView.totalMoneyLast)/ me.dataOverView.totalMoneyLast)*100);
+                });
+        },
+        getDataUserChart() {
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Users/AllChart?time=${this.timeSelect}`)
+                .then((response) => {
+                    me.dataAllChart= response.data;
+                    me.dataUserChart = me.dataAllChart.dataUserChart;
+                    me.dataCourseChart = me.dataAllChart.dataCourseChart;
+                    me.dataProceedChart = me.dataAllChart.dataProceedChart;
+
+                    console.log(me.dataProceedChart);
+                });
         }
     },
     watch: {

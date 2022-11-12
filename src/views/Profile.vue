@@ -85,26 +85,6 @@
                     <div class="achievement-list">
                         <div class="achievement-item d-flex">
                             <div class="achievement-item-img mx-4 position-relative">
-                                <img src="../assets/images/achievement-wildfire.svg" alt="">
-                                <div class="achievement-item-level">
-                                    Cấp 4
-                                </div>
-                            </div>
-                            <div class="achievement-item-content flex-grow-1 me-4">
-                                <div class="achievement-item-text d-flex align-items-center justify-content-between">
-                                    <div class="fw-bold fs-5">Lửa rừng</div>
-                                    <div class="text-black-50">3/7</div>
-                                </div>
-                                <div class="achievement-item-process my-3">
-                                    <div class="achievement-item-process-done" :style="{width: `${(3/7)*100}%` }"></div>
-                                </div>
-                                <div class="achievement-item-description text-black-50">
-                                    Đạt chuỗi 7 ngày streak
-                                </div>
-                            </div>
-                        </div>
-                        <div class="achievement-item d-flex">
-                            <div class="achievement-item-img mx-4 position-relative">
                                 <img src="../assets/images/achievement-sage.svg" alt="">
                                 <div class="achievement-item-level">
                                     Cấp 1
@@ -140,6 +120,26 @@
                                 </div>
                                 <div class="achievement-item-description text-black-50">
                                     Học 250 từ mới
+                                </div>
+                            </div>
+                        </div>
+                        <div class="achievement-item d-flex">
+                            <div class="achievement-item-img mx-4 position-relative">
+                                <img src="../assets/images/achievement-wildfire.svg" alt="">
+                                <div class="achievement-item-level">
+                                    Cấp 4
+                                </div>
+                            </div>
+                            <div class="achievement-item-content flex-grow-1 me-4">
+                                <div class="achievement-item-text d-flex align-items-center justify-content-between">
+                                    <div class="fw-bold fs-5">Lửa rừng</div>
+                                    <div class="text-black-50">3/7</div>
+                                </div>
+                                <div class="achievement-item-process my-3">
+                                    <div class="achievement-item-process-done" :style="{width: `${(3/7)*100}%` }"></div>
+                                </div>
+                                <div class="achievement-item-description text-black-50">
+                                    Đạt chuỗi 7 ngày streak
                                 </div>
                             </div>
                         </div>

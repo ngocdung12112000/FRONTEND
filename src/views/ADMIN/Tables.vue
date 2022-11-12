@@ -32,7 +32,7 @@
                 </table>
             </div>
         </div>
-        <div class="new-user">
+        <!-- <div class="new-user">
             <div class="d-flex justify-content-between py-3 ms-3">
                 <h4 class="">Danh sách <span class="fw-bold">{{newUserQuantity}}</span> người dùng mới nhất</h4>
                 <select style="width: 70px; height: 35px;" v-model="newUserQuantity"
@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
@@ -185,7 +185,7 @@ export default {
     position: relative;
 }    
 .top-course, .new-user {
-    width: 48%;
+    width: 100%;
     background-color: #fff;
     border-radius: 10px;
 }    
