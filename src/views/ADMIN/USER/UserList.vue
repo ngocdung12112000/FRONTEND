@@ -24,29 +24,29 @@
                             </th>
                             <th scope="col" class="text-center" style="width: 60px;">STT</th>
                             <th scope="col" style="width: 200px;">Tên</th>
-                            <th scope="col" class="text-center" style="width: 60px;">Tuổi</th>
                             <th scope="col" style="width: 150px;">SĐT</th>
                             <th scope="col" style="width: 250px;">Email</th>
-                            <th scope="col" style="width: 120px;">Ngày tham gia</th>
+                            <th scope="col" class="text-center" style="width: 120px;">Số KN</th>
+                            <th scope="col" class="text-center" style="width: 120px;">Mục tiêu</th>
                             <th scope="col" class="text-center" style="width: 200px;">Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user,index) in userList" :key="user.id">
+                        <tr v-for="(user,index) in userListDisplay" :key="user.user_id">
                             <td class="text-center">
                                 <input type="checkbox" class="check-item">
                             </td>
-                            <th scope="row" class="text-center">{{index+1}}</th>
-                            <td>{{ user.name }}</td>
-                            <td class="text-center">{{ user.age }}</td>
-                            <td>{{ user.phone }}</td>
+                            <th scope="row" class="text-center">{{index+1 + (pageSize*(page-1))}}</th>
+                            <td>{{ user.full_name }}</td>
+                            <td>{{ user.phone_number }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.date }}</td>
+                            <td class="text-center">{{ user.point }}</td>
+                            <td class="text-center">{{ user.target }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-primary me-2" @click="() => editClick(user.id)">
+                                <button type="button" class="btn btn-primary me-2" @click="() => editClick(user.user_id)">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-danger" @click="() => deleteClick(user.id)">
+                                <button type="button" class="btn btn-danger" @click="() => deleteClick(user.user_id)">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -57,7 +57,7 @@
 
             <div class="table-summary d-flex align-items-center justify-content-between">
                 <div>
-                    Tổng số: <span class="text-dark fw-bold">100</span> bản ghi
+                    Tổng số: <span v-if="userList" class="text-dark fw-bold">{{ userList.length }}</span> bản ghi
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="page-size d-flex align-items-center me-2">
@@ -73,14 +73,18 @@
                         </div>
                     </div>
                     <div class="paging d-flex align-items-center">
-                        <paginate v-model="page" :page-count="5" :page-range="3" :margin-pages="2"
+                        <paginate v-model="page" :page-count="pageCount" :page-range="3" :margin-pages="2"
                             :click-handler="clickCallback" :prev-text="'<'" :next-text="'>'"
                             :container-class="'pagination'" :page-class="'page-item'" />
                     </div>
                 </div>
             </div>
         </div>
-        <UserDetail v-show="isShowDetail" @cancel-click="isShowDetail = false" />
+        <UserDetail 
+            v-show="isShowDetail" 
+            @cancel-click="isShowDetail = false" 
+            v-model:full_name="userSelected.full_name"
+        />
         <ToastMessage />
     </div>
 </template>
@@ -97,6 +101,9 @@ export default {
         Paginate,
         ToastMessage
     },
+    beforeMount() {
+        this.getUserList();
+    },
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);
@@ -107,101 +114,26 @@ export default {
         return {
             page: 1,
             pageSize: 20,
+            pageCount: 0,
             isShowDetail: false,
-            userList: [
-                {
-                    id: 1,
-                    name: "Mark",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark@gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 2,
-                    name: "Airi Satou",
-                    age: 20,
-                    phone: "09876543210",
-                    email: "Airi@gmail.com",
-                    date: "02/01/2022",
-                },
-                {
-                    id: 3,
-                    name: "Ashton Cox",
-                    age: 10,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-                {
-                    id: 4,
-                    name: "Colleen Hurst",
-                    age: 18,
-                    phone: "0985432135",
-                    email: "Mark#gmail.com",
-                    date: "01/01/2022",
-                },
-
-            ]
+            userList: [],
+            userListDisplay: [],
+            userSelected: {
+                full_name: ''
+            },
         };
     },
     methods: {
+        getUserList() {
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Users/All`)
+                .then((response) => {
+                    me.userList = response.data;
+                    me.userListDisplay = me.userList.slice(0, me.pageSize);
+                    me.pageCount = Math.ceil(me.userList.length / me.pageSize);
+                });
+        },
         onResize() {
             $('.table-wrapper').height($('.user-list-table').height() - 60);
         },
@@ -209,16 +141,24 @@ export default {
             this.isShowDetail = true;
         },
         clickCallback(pageNum) {
-            console.log(pageNum)
+            console.log(pageNum);
+            this.page = pageNum;
+            this.userListDisplay = this.userList.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize);
         },
         editClick(id) {
             this.isShowDetail = true;
-            console.log(id)
+            this.userSelected = this.userList.find((user) => user.user_id === id);
         },
         deleteClick(id) {
             console.log(id)
         }
     },
+    watch: {
+        pageSize() {
+            this.userListDisplay = this.userList.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+            this.pageCount = Math.ceil(this.userList.length / this.pageSize);
+        }
+    }
 }
 </script>
 <!-- eslint-disable prettier/prettier -->

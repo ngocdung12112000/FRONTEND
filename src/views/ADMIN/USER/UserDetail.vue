@@ -10,7 +10,8 @@
                 <form class="d-flex form-info align-items-center justify-content-between flex-wrap">
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nhập tên">
+                        <input type="text" class="form-control" id="name" placeholder="Nhập tên" 
+                        :value="full_name"  @input="$emit('update:full_name', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="age" class="form-label">Tuổi</label>
@@ -47,6 +48,16 @@ export default {
     data() {
         return {
 
+        }
+    },
+    props: {
+        full_name: { 
+            type: String,
+            default: '' 
+        },
+        mode: {
+            type: String,
+            default: 'add'
         }
     },
     methods: {

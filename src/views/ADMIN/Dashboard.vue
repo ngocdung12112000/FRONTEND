@@ -49,11 +49,11 @@
                 </div>
                 <div class="info-content">
                     <div style="font-size: 16px;">Tổng doanh thu</div>
-                    <div class="fs-4 fw-bolder">{{dataOverView.totalMoney}} đ</div>
+                    <div v-if="dataOverView" class="fs-4 fw-bolder">{{formatPrice(dataOverView.totalMoney)}} đ</div>
                     <div class="process-bar">
                         <div style="width: 0%;" class="done"></div>
                     </div>
-                    <div style="font-size: 12px;">Tăng {{ revenueRate }}% trong 30 ngày</div>
+                    <div style="font-size: 12px;">Tăng {{ revenueRate}}% trong 30 ngày</div>
                 </div>
             </div>
         </div>
@@ -210,7 +210,7 @@ export default {
         $(".pie-chart .axis").hide();
 
         this.getDataOverView();
-        this.getDataUserChart();
+        this.getDataAllChart();
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.onResize);
@@ -220,7 +220,9 @@ export default {
             let containerWith = $('.dashboard').width();
             this.windowWidth = containerWith;
         },
-        changeDataChart() {
+        async changeDataChart() {
+            await this.getDataAllChart();
+
             this.dataBarChart= [
                 { name: 'T1', pl: 800, },
                 { name: 'T2', pl: 1500, },
@@ -248,7 +250,7 @@ export default {
                     me.revenueRate = Math.round(((me.dataOverView.totalMoney - me.dataOverView.totalMoneyLast)/ me.dataOverView.totalMoneyLast)*100);
                 });
         },
-        getDataUserChart() {
+        getDataAllChart() {
             let me = this;
             this.axios
                 .get(`https://localhost:44366/api/Users/AllChart?time=${this.timeSelect}`)
@@ -257,10 +259,13 @@ export default {
                     me.dataUserChart = me.dataAllChart.dataUserChart;
                     me.dataCourseChart = me.dataAllChart.dataCourseChart;
                     me.dataProceedChart = me.dataAllChart.dataProceedChart;
-
-                    console.log(me.dataProceedChart);
                 });
-        }
+        },
+        formatPrice(value) {
+            if(value) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+        },
     },
     watch: {
         windowWidth: function (value) {
