@@ -3,31 +3,35 @@
     <div class="my-modal">
         <div class="popup">
             <div class="popup-header d-flex align-items-center justify-content-between">
-                <h3>Thêm mới người dùng</h3>
+                <h3>{{ mode == 'add' ? 'Thêm mới người dùng' : 'Sửa thông tin người dùng' }} </h3>
                 <i class="fas fa-times fs-3 icon-close" @click="cancelClick"></i>
             </div>
-            <div class="popup-body">
+            <div class="popup-body mt-3">
                 <form class="d-flex form-info align-items-center justify-content-between flex-wrap">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="name" placeholder="Nhập tên" 
+                        :value="user_name"  @input="$emit('update:user_name', $event.target.value)">
+                    </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên</label>
                         <input type="text" class="form-control" id="name" placeholder="Nhập tên" 
                         :value="full_name"  @input="$emit('update:full_name', $event.target.value)">
                     </div>
                     <div class="mb-3">
-                        <label for="age" class="form-label">Tuổi</label>
-                        <input type="number" class="form-control" id="age" placeholder="Nhập tuổi">
-                    </div>
-                    <div class="mb-3">
                         <label for="phone" class="form-label">SĐT</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập SĐT">
+                        <input type="text" class="form-control" id="phone" placeholder="Nhập SĐT"
+                        :value="phone_number"  @input="$emit('update:phone_number', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Nhập email">
+                        <input type="email" class="form-control" id="email" placeholder="Nhập email"
+                        :value="email"  @input="$emit('update:email', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Ngày đăng kí</label>
-                        <input type="date" class="form-control" id="date">
+                        <input type="date" class="form-control" id="date"
+                        :value="created_date"  @input="$emit('update:created_date', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="avatar" class="form-label">Ảnh đại diện</label>
@@ -52,6 +56,26 @@ export default {
     },
     props: {
         full_name: { 
+            type: String,
+            default: '' 
+        },
+        user_name: { 
+            type: String,
+            default: '' 
+        },
+        email: { 
+            type: String,
+            default: '' 
+        },
+        phone_number: { 
+            type: String,
+            default: '' 
+        },
+        created_date: { 
+            type: Date,
+            default: null
+        },
+        image: { 
             type: String,
             default: '' 
         },

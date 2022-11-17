@@ -84,6 +84,12 @@
             v-show="isShowDetail" 
             @cancel-click="isShowDetail = false" 
             v-model:full_name="userSelected.full_name"
+            v-model:user_name="userSelected.user_name"
+            v-model:phone_number="userSelected.phone_number"
+            v-model:email="userSelected.email"
+            v-model:image="userSelected.image"
+            v-model:created_date="userSelected.created_date"
+            v-model:mode="formMode"
         />
         <ToastMessage />
     </div>
@@ -118,9 +124,8 @@ export default {
             isShowDetail: false,
             userList: [],
             userListDisplay: [],
-            userSelected: {
-                full_name: ''
-            },
+            userSelected: {},
+            formMode: 'add'
         };
     },
     methods: {
@@ -139,6 +144,8 @@ export default {
         },
         addClick() {
             this.isShowDetail = true;
+            this.formMode = 'add';
+            this.userSelected = {};
         },
         clickCallback(pageNum) {
             console.log(pageNum);
@@ -146,11 +153,27 @@ export default {
             this.userListDisplay = this.userList.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize);
         },
         editClick(id) {
+            this.formMode = 'edit';
             this.isShowDetail = true;
             this.userSelected = this.userList.find((user) => user.user_id === id);
+            this.userSelected.created_date = this.formatDate(this.userSelected.created_date);
+            console.log(this.userSelected.created_date);
         },
         deleteClick(id) {
             console.log(id)
+        },
+        formatDate(date) {
+            let d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+
+            return [year, month, day].join('-');
         }
     },
     watch: {
