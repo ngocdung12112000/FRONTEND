@@ -23,6 +23,7 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
+import baseURL from "../assets/enum";
 export default {
     components: {
     },
@@ -126,7 +127,7 @@ export default {
                     me.userLogin.image = img;
                 }
                 this.axios
-                .put(`https://localhost:44366/api/Users/Update`,this.userLogin)
+                .put(`${baseURL}api/Users/Update`,this.userLogin)
                     .then((response) => {
                         if(response && response.data) {
                             window.location.reload();

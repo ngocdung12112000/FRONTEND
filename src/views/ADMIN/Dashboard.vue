@@ -131,7 +131,8 @@
 import $ from "jquery";
 import { Chart, Grid, Line, Bar,Pie, Tooltip } from 'vue3-charts';
 import LabelsLayer from './Components/LabelsLayer.vue';
-import TableInfo from './Tables.vue'
+import TableInfo from './Tables.vue';
+import baseURL from "../../assets/enum";
 export default {
     components: {
         Chart,
@@ -242,7 +243,7 @@ export default {
         getDataOverView() {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Users/OverView?time=30`)
+                .get(`${baseURL}api/Users/OverView?time=30`)
                 .then((response) => {
                     me.dataOverView = response.data;
                     me.userRate = Math.round(((me.dataOverView.totalUser - me.dataOverView.totalUserLast)/ me.dataOverView.totalUserLast)*100);
@@ -253,7 +254,7 @@ export default {
         getDataAllChart() {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Users/AllChart?time=${this.timeSelect}`)
+                .get(`${baseURL}api/Users/AllChart?time=${this.timeSelect}`)
                 .then((response) => {
                     me.dataAllChart= response.data;
                     me.dataUserChart = me.dataAllChart.dataUserChart;

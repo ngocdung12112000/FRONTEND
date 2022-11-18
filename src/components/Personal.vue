@@ -82,6 +82,7 @@
 // import { ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
 import $ from "jquery";
+import baseURL from '../assets/enum';
 export default {
     components: { Chart, Grid, Line },
     beforeMount() {
@@ -149,7 +150,7 @@ export default {
         getUserStreak() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Users/UserStreak?UserId=" + this.loginUserId)
+                .get(`${baseURL}api/Users/UserStreak?UserId=` + this.loginUserId)
                 .then((response) => {
                     const res = response.data;
                     res.forEach(function(item) {

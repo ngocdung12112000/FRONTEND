@@ -57,6 +57,7 @@
 <script>
 import dataCourses from '../assets/js/courses.js';
 import Paginate from "vuejs-paginate-next";
+import baseURL from '../assets/enum';
 export default {
     components: {
       paginate: Paginate,
@@ -86,7 +87,7 @@ export default {
             let me = this;
             let categoryId = parseInt(event.target.getAttribute('data'));
             this.axios
-                .get(`https://localhost:44366/api/Course/CategoryId?categoryId=${categoryId}`)
+                .get(`${baseURL}api/Course/CategoryId?categoryId=${categoryId}`)
                 .then((response) => {
                     me.courses = response.data;
                     me.coursesDisplay = me.courses.slice(0, 10);
@@ -96,7 +97,7 @@ export default {
         getAllDataCourse() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Course/All")
+                .get("${baseURL}api/Course/All")
                 .then((response) => {
                     me.courses = response.data;
                     me.coursesDisplay = me.courses.slice(0, 10);
@@ -105,7 +106,7 @@ export default {
         getAllDataCategory() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Course/Categories")
+                .get("${baseURL}api/Course/Categories")
                 .then((response) => {
                     me.category = response.data;
                 });

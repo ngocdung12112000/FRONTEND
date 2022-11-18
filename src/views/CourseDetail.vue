@@ -175,6 +175,7 @@
 <script>
 import $ from "jquery";
 import ToastMessage from "./ADMIN/Components/ToastMessage.vue";
+import baseURL from "../assets/enum";
 export default {
     beforeMount() {
         this.getDataDetailCourse();
@@ -226,7 +227,7 @@ export default {
             let me = this,
                 userId = this.$store.getters['AUTH/userId'];
             this.axios
-                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
+                .get(`${baseURL}api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
                 .then((response) => {
                     if(response.data != null) {
                         me.dataCourseDetail = response.data;
@@ -238,7 +239,7 @@ export default {
             let me = this,
                 userId = this.$store.getters['AUTH/userId'];
             this.axios
-                .post(`https://localhost:44366/api/Course/AddToCart?userId=${userId}&courseId=${me.dataCourseDetail.id}`)
+                .post(`${baseURL}api/Course/AddToCart?userId=${userId}&courseId=${me.dataCourseDetail.id}`)
                 .then((response) => {
                     if(response && response.data) {
                         if(response.data != 999999) {

@@ -58,6 +58,7 @@
 
 <script>
 import Loading from "../components/Loading.vue";
+import baseURL from "../assets/enum";
 export default {
     components: {
         Loading,
@@ -77,7 +78,7 @@ export default {
 
             if(userId) {
                 this.axios
-                .get(`https://localhost:44366/api/Users/Word?UserId=${userId}`)
+                .get(`${baseURL}api/Users/Word?UserId=${userId}`)
                 .then((response) => {
                     if(response && response.data) {
                         me.words = response.data;

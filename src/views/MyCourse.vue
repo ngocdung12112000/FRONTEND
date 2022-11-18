@@ -26,6 +26,7 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import baseURL from '../assets/enum';
 // import dataCourses from '../assets/js/courses.js';
 export default {
     data() {
@@ -45,7 +46,7 @@ export default {
         getMyCourse(){
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Course/UserId?userId=${me.userId}`)
+                .get(`${baseURL}api/Course/UserId?userId=${me.userId}`)
                 .then((response) => {
                     me.courses = response.data;
                 });

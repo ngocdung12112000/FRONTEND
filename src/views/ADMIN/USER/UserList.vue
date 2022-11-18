@@ -101,6 +101,7 @@ import UserDetail from './UserDetail.vue';
 import ToastMessage from '../Components/ToastMessage.vue';
 import Paginate from "vuejs-paginate-next";
 import $ from "jquery";
+import baseURL from '../../../assets/enum';
 export default {
     name: "UserList",
     components: {
@@ -134,7 +135,7 @@ export default {
         getUserList() {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Users/All`)
+                .get(`${baseURL}api/Users/All`)
                 .then((response) => {
                     me.userList = response.data;
                     me.userListDisplay = me.userList.slice(0, me.pageSize);
@@ -178,13 +179,13 @@ export default {
         deleteClick(id) {
             let me = this;
             this.axios
-                .delete(`https://localhost:44366/api/Users/Delete?userId=${id}`)
-                .then((response) => {
+                .delete(`${baseURL}api/Users/Delete?userId=${id}`)
+                .then(() => {
                     me.getUserList();
                     // me.$toast.success('Xóa thành công');
                 })
                 .catch((error) => {
-                    // me.$toast.error('Xóa thất bại');
+                    console.log(error);
                 });
         },
         formatDate(date) {

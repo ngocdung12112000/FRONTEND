@@ -221,6 +221,7 @@
 <script>
 import $ from "jquery";
 import { useRoute } from "vue-router";
+import baseURL from "../assets/enum";
 export default {
     beforeMount(){
         const route = useRoute();
@@ -250,7 +251,7 @@ export default {
         getProfile(userId) {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Users/Id?id=${userId}`)
+                .get(`${baseURL}api/Users/Id?id=${userId}`)
                 .then((response) => {
                     if(response && response.data) {
                         me.currentUser = response.data;

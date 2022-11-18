@@ -57,8 +57,9 @@
 <script>
 import CourseDetail from './CourseDetail.vue';
 import ToastMessage from '../Components/ToastMessage.vue';
+import baseURL from '../../../assets/enum';
 // import Paginate from "vuejs-paginate-next";
-import dataCourses from '../../../assets/js/courses.js';
+// import dataCourses from '../../../assets/js/courses.js';
 // import $ from "jquery";
 export default {
     name: "CourseList",
@@ -100,7 +101,7 @@ export default {
         getCourseList() {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Course/All`)
+                .get(`${baseURL}api/Course/All`)
                 .then((response) => {
                     me.courses = response.data;
                 });

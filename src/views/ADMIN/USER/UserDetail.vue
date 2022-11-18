@@ -56,6 +56,7 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import ToastMessage from "../Components/ToastMessage.vue";
+import baseURL from '../../../assets/enum';
 export default {
     components: {
         ToastMessage
@@ -122,7 +123,7 @@ export default {
 
             if (me.mode == 'edit') {
                 this.axios
-                    .put(`https://localhost:44366/api/Users/Update`, saveUser)
+                    .put(`${baseURL}api/Users/Update`, saveUser)
                     .then((response) => {
                         if(response && response.status == 200) {
                             me.isShowToast = true

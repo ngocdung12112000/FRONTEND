@@ -22,6 +22,7 @@
 // import Header from "./layouts/Header.vue";
 import Lesson from "../components/Lesson.vue";
 import Personal from "../components/Personal.vue";
+import baseURL from "../assets/enum";
 // import { mapGetters } from "vuex";
 // import listLesson from "../assets/js/lessons.js"
 // import dataUser from "../assets/js/users.js";
@@ -85,7 +86,7 @@ export default {
         getList() {
             let me = this, rank = 0;
             this.axios
-                .get("https://localhost:44366/api/Users/All")
+                .get("${baseURL}api/Users/All")
                 .then((response) => {
                     if(response && response.data) {
                         me.listUser = response.data;
@@ -109,7 +110,7 @@ export default {
         getCurrentUser() {
             let me = this;
             this.axios
-                .get(`https://localhost:44366/api/Users/Id?id=${me.loginUserId}`)
+                .get(`${baseURL}api/Users/Id?id=${me.loginUserId}`)
                 .then((response) => {
                     if(response && response.data) {
                         me.currentUser = response.data;
@@ -121,7 +122,7 @@ export default {
         getListTopic() {
             let me = this;
             this.axios
-                .get("https://localhost:44366/api/Users/AllTopic")
+                .get("${baseURL}api/Users/AllTopic")
                 .then((response) => {
                     if(response && response.data) {
                         me.listTopic = response.data;

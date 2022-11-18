@@ -129,6 +129,7 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
+import baseURL from "../assets/enum";
 export default {
     data() {
         return {
@@ -151,7 +152,7 @@ export default {
             let me = this,
                 userId = this.$store.getters['AUTH/userId'];
             this.axios
-                .get(`https://localhost:44366/api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
+                .get(`${baseURL}api/Course/Id?courseId=${this.$route.params.id}&userId=${userId}`)
                 .then((response) => {
                     if(response.data != null) {
                         me.data = response.data.list_video;

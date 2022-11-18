@@ -106,6 +106,7 @@
 <script>
 // import allQuestions from '../assets/js/data.js';
 import $ from "jquery";
+import baseURL from "../assets/enum";
 import QuesMultiWords from "../components/QuesMultiWords.vue";
 import QuesSelectHorizon from "../components/QuesSelectHorizon.vue";
 import QuesSelectPair from "../components/QuesSelectPair.vue";
@@ -278,7 +279,7 @@ export default {
                 topicId = this.$route.params.currentTopicId,
                 lessonName = this.$route.params.currentLessonName;
                 
-            this.axios.get(`https://localhost:44366/api/Lesson/Question?topicId=${topicId}&lessonName=${lessonName}`)
+            this.axios.get(`${baseURL}api/Lesson/Question?topicId=${topicId}&lessonName=${lessonName}`)
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
@@ -300,7 +301,7 @@ export default {
                 lessonId = this.$route.params.idLesson;
 
             this.axios
-                .post(`https://localhost:44366/api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}`)
+                .post(`${baseURL}api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}`)
                 .then((response) => {
                     if (response.data) {
                         console.log(response.data);
@@ -308,7 +309,7 @@ export default {
                 });
 
             this.axios
-                .put(`https://localhost:44366/api/Users/UpdateUserLesson?userId=${loginUserId}`)
+                .put(`${baseURL}api/Users/UpdateUserLesson?userId=${loginUserId}`)
                 .then((response) => {
                     if (response.data) {
                         // Thực hiện chuyển về trang home

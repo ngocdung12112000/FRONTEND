@@ -66,6 +66,7 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
+import baseURL from "../assets/enum";
 // import dataCourses from '../assets/js/courses.js';
 export default {
     data(){
@@ -134,7 +135,7 @@ export default {
 
             if(userId) {
                 this.axios
-                .get(`https://localhost:44366/api/Users/Cart?UserId=${userId}`)
+                .get(`${baseURL}api/Users/Cart?UserId=${userId}`)
                 .then((response) => {
                     if(response && response.data) {
                         me.listCourse = response.data;
@@ -157,7 +158,7 @@ export default {
                 };
             
             this.axios
-                .post(`https://localhost:44366/api/Course/InsertOrder`,paramOrder)
+                .post(`${baseURL}api/Course/InsertOrder`,paramOrder)
                 .then((response) => {
                     if(response && response.data) {
                         console.log(response.data);
@@ -165,7 +166,7 @@ export default {
                 });
 
             this.axios
-                .post(`https://localhost:44366/api/Users/AddBoughtCourse`,param)
+                .post(`${baseURL}api/Users/AddBoughtCourse`,param)
                 .then((response) => {
                     if(response && response.data) {
                         console.log(response.data);
@@ -219,7 +220,7 @@ export default {
             this.listCourse = this.listCourse.filter(item => item.id !== course.id);
             this.clickSelectCourse(course);
             this.axios
-                .delete(`https://localhost:44366/api/Course/RemoveFromCart?userId=${userId}&courseId=${course.id}`)
+                .delete(`${baseURL}api/Course/RemoveFromCart?userId=${userId}&courseId=${course.id}`)
                 .then((response) => {
                     if(response && response.data) {
                         // console.log(response.data);
