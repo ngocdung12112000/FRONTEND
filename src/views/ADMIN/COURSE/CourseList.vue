@@ -19,7 +19,7 @@
                 <div v-for="item in courses" :key="item.id" class="course-item"
                     @click="() =>courseClick(item.id)">
                     <div class="course-item-img">
-                        <img :src="require(`../../../assets/images/COURSES/${item.image}`)" alt="">
+                        <img :src="item.image" alt="">
                     </div>
                     <div class="course-item-content">
                         <div class="course-item-title">
@@ -27,7 +27,7 @@
                         </div>
                         <div class="course-item-teacher d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666; font-size: 15px;">Giáo viên:</span>  
-                            <span style="font-size: 16px;" class="fw-bold">{{ item.teacher }}</span>
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.teacher_name }}</span>
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Giá gốc:</span> 
@@ -35,7 +35,7 @@
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Giá khuyến mãi:</span> 
-                            <span style="font-size: 16px;" class="fw-bold">{{ item.salePrice }} đ</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.price - (item.price*item.discount/100)  }} đ</span> 
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Thời lượng:</span> 
@@ -61,11 +61,14 @@ import ToastMessage from '../Components/ToastMessage.vue';
 import dataCourses from '../../../assets/js/courses.js';
 // import $ from "jquery";
 export default {
-    name: "UserList",
+    name: "CourseList",
     components: {
         CourseDetail,
         // Paginate,
         ToastMessage
+    },
+    beforeMount() {
+        this.getCourseList();
     },
     mounted() {
 
@@ -75,7 +78,7 @@ export default {
             page: 1,
             isShowDetail: false,
             userList: [],
-            courses: dataCourses,
+            courses: [],
             isShowToast: false,
             toastContent: ''
         };
@@ -93,6 +96,14 @@ export default {
         },
         deleteClick(id) {
             console.log(id)
+        },
+        getCourseList() {
+            let me = this;
+            this.axios
+                .get(`https://localhost:44366/api/Course/All`)
+                .then((response) => {
+                    me.courses = response.data;
+                });
         }
     },
 }

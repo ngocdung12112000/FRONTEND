@@ -19,7 +19,7 @@
                         :value="full_name"  @input="$emit('update:full_name', $event.target.value)">
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">SĐT</label>
+                        <label for="phone" class="form-label">Số điện thoại</label>
                         <input type="text" class="form-control" id="phone" placeholder="Nhập SĐT"
                         :value="phone_number"  @input="$emit('update:phone_number', $event.target.value)">
                     </div>
@@ -34,27 +34,43 @@
                         :value="created_date"  @input="$emit('update:created_date', $event.target.value)">
                     </div>
                     <div class="mb-3">
-                        <label for="avatar" class="form-label">Ảnh đại diện</label>
-                        <input type="file" class="form-control" id="avatar">
+                        <label for="point" class="form-label">Số KN</label>
+                        <input type="point" class="form-control" id="point" placeholder="Nhập số KN"
+                        :value="point"  @input="$emit('update:point', $event.target.value)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="target" class="form-label">Mục tiêu</label>
+                        <input type="target" class="form-control" id="target" placeholder="Nhập mục tiêu"
+                        :value="target"  @input="$emit('update:target', $event.target.value)">
                     </div>
                 </form>
             </div>
             <div class="popup-footer text-end">
                 <button type="button" class="btn btn-secondary px-4 me-2" @click="cancelClick">Hủy</button>
-                <button type="button" class="btn btn-primary px-4">Lưu</button>
+                <button type="button" class="btn btn-primary px-4" @click="saveClick">Lưu</button>
             </div>
         </div>
+        <ToastMessage :isShow="isShowToast" :message="toastContent" @closeToast="isShowToast = false"/>
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import ToastMessage from "../Components/ToastMessage.vue";
 export default {
+    components: {
+        ToastMessage
+    },
     data() {
         return {
-
+            isShowToast: false,
+            toastContent: ""
         }
     },
     props: {
+        user_id: { 
+            type: String,
+            default: '' 
+        },
         full_name: { 
             type: String,
             default: '' 
@@ -71,13 +87,17 @@ export default {
             type: String,
             default: '' 
         },
+        point: { 
+            type: Number,
+            default: 0 
+        },
+        target: { 
+            type: Number,
+            default: 0 
+        },
         created_date: { 
             type: Date,
             default: null
-        },
-        image: { 
-            type: String,
-            default: '' 
         },
         mode: {
             type: String,
@@ -87,6 +107,34 @@ export default {
     methods: {
         cancelClick() {
             this.$emit('cancel-click')
+        },
+        saveClick() {
+            let me = this,
+                saveUser = {
+                    user_id: me.user_id,
+                    full_name: me.full_name,
+                    user_name: me.user_name,
+                    email: me.email,
+                    phone_number: me.phone_number,
+                    point: me.point,
+                    target: me.target
+                }
+
+            if (me.mode == 'edit') {
+                this.axios
+                    .put(`https://localhost:44366/api/Users/Update`, saveUser)
+                    .then((response) => {
+                        if(response && response.status == 200) {
+                            me.isShowToast = true
+                            me.toastContent = "Lưu thành công";
+                            setTimeout(() => {
+                                me.cancelClick();
+                                me.isShowToast = false;
+                            }, 2000);
+                        }
+                    });
+            }
+            
         }
     }
 }

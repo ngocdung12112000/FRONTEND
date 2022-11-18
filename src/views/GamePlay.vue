@@ -280,7 +280,7 @@ export default {
                 
             this.axios.get(`https://localhost:44366/api/Lesson/Question?topicId=${topicId}&lessonName=${lessonName}`)
             .then(res => {
-                if(res.data) {
+                if(res.data && res.data.length > 0) {
                     let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
                     arrQuestions = arrQuestions.sort((a,b) => a.id - b.id);
                     me.questions = arrQuestions;

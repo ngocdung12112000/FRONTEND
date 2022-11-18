@@ -6,7 +6,7 @@
             <div class="user-search">
                 <div class="search d-flex align-items-center">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search">
+                    <input type="text" placeholder="Search" @change="onSearchUser">
                 </div>
             </div>
             <button type="button" class="btn btn-primary me-3" @click="addClick">
@@ -57,12 +57,11 @@
 
             <div class="table-summary d-flex align-items-center justify-content-between">
                 <div>
-                    Tổng số: <span v-if="userList" class="text-dark fw-bold">{{ userList.length }}</span> bản ghi
+                    Tổng số: <span class="text-dark fw-bold">{{ totalRecord }}</span> bản ghi
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="page-size d-flex align-items-center me-2">
                         Số bản ghi trên trang:
-                        
                         <div class="page-dropdown me-2 ms-2">
                             <select style="width: 70px; height: 35px;" v-model="pageSize"
                             class="form-select " aria-label=".form-select-lg example">
@@ -83,11 +82,13 @@
         <UserDetail 
             v-show="isShowDetail" 
             @cancel-click="isShowDetail = false" 
+            v-model:user_id="userSelected.user_id"
             v-model:full_name="userSelected.full_name"
             v-model:user_name="userSelected.user_name"
             v-model:phone_number="userSelected.phone_number"
             v-model:email="userSelected.email"
-            v-model:image="userSelected.image"
+            v-model:point="userSelected.point"
+            v-model:target="userSelected.target"
             v-model:created_date="userSelected.created_date"
             v-model:mode="formMode"
         />
@@ -125,7 +126,8 @@ export default {
             userList: [],
             userListDisplay: [],
             userSelected: {},
-            formMode: 'add'
+            formMode: 'add',
+            totalRecord: 0,
         };
     },
     methods: {
@@ -137,6 +139,7 @@ export default {
                     me.userList = response.data;
                     me.userListDisplay = me.userList.slice(0, me.pageSize);
                     me.pageCount = Math.ceil(me.userList.length / me.pageSize);
+                    me.totalRecord = me.userList.length;
                 });
         },
         onResize() {
@@ -152,6 +155,19 @@ export default {
             this.page = pageNum;
             this.userListDisplay = this.userList.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize);
         },
+        onSearchUser(e){
+            let me = this;
+            if(e.target.value == ''){
+                me.userListDisplay = me.userList.slice(0, me.pageSize);
+                me.pageCount = Math.ceil(me.userList.length / me.pageSize);
+                me.totalRecord = me.userList.length;
+            }
+            else{
+                me.userListDisplay = me.userList.filter(x => x.full_name.toLowerCase().includes(e.target.value.toLowerCase()));
+                me.pageCount = Math.ceil(me.userListDisplay.length / me.pageSize);
+                me.totalRecord = me.userListDisplay.length;
+            }
+        },
         editClick(id) {
             this.formMode = 'edit';
             this.isShowDetail = true;
@@ -160,7 +176,16 @@ export default {
             console.log(this.userSelected.created_date);
         },
         deleteClick(id) {
-            console.log(id)
+            let me = this;
+            this.axios
+                .delete(`https://localhost:44366/api/Users/Delete?userId=${id}`)
+                .then((response) => {
+                    me.getUserList();
+                    // me.$toast.success('Xóa thành công');
+                })
+                .catch((error) => {
+                    // me.$toast.error('Xóa thất bại');
+                });
         },
         formatDate(date) {
             let d = new Date(date),
