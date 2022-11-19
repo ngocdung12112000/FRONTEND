@@ -2,8 +2,8 @@
 import AuthServices from '../../apis/modules/auth';
 
 const state = {
-    appName: 'ALO',
-    userId: '123',
+    appName: '',
+    userId: '',
     userImg: '',
     currentLessonId: 1,
     userLogin: {},
