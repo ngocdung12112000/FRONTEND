@@ -97,7 +97,7 @@ export default {
         getAllDataCourse() {
             let me = this;
             this.axios
-                .get("${baseURL}api/Course/All")
+                .get(`${baseURL}api/Course/All`)
                 .then((response) => {
                     me.courses = response.data;
                     me.coursesDisplay = me.courses.slice(0, 10);
@@ -106,7 +106,7 @@ export default {
         getAllDataCategory() {
             let me = this;
             this.axios
-                .get("${baseURL}api/Course/Categories")
+                .get(`${baseURL}api/Course/Categories`)
                 .then((response) => {
                     me.category = response.data;
                 });

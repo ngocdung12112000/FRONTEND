@@ -86,7 +86,7 @@ export default {
         getList() {
             let me = this, rank = 0;
             this.axios
-                .get("${baseURL}api/Users/All")
+                .get(`${baseURL}api/Users/All`)
                 .then((response) => {
                     if(response && response.data) {
                         me.listUser = response.data;
@@ -122,7 +122,7 @@ export default {
         getListTopic() {
             let me = this;
             this.axios
-                .get("${baseURL}api/Users/AllTopic")
+                .get(`${baseURL}api/Users/AllTopic`)
                 .then((response) => {
                     if(response && response.data) {
                         me.listTopic = response.data;
