@@ -100,7 +100,7 @@
             </div>
             <div class="pie-chart mb-3" style="background-color: #fff; padding-bottom: 20px;">
                 <h4 class="py-3 ms-3">Chủ đề khóa học</h4>
-                <Chart direction="circular" :size="sizeChart" :data="dataBarChart" 
+                <Chart direction="circular" :size="sizeChart" :data="dataCourseCategoryChart" 
                     :margin="{
                         left: Math.round((sizeChart.width - 360)/2),
                         top: 50,
@@ -109,21 +109,20 @@
                     }" 
                      :config="{ controlHover: false }">
                     <template #layers>
-                        <Pie :dataKeys="['name', 'pl']" :pie-style="{ innerRadius: 100, padAngle: 0.05, 
+                        <Pie :dataKeys="['time', 'quantity']" :pie-style="{ innerRadius: 100, padAngle: 0.05, 
                             colors : ['#4daf4a', '#377eb8','#ffeaa7','#ff7675','#6c5ce7','#30336b','#130f40','#95afc0'] }" />
                     </template>
                     <template #widgets>
                         <Tooltip :config="{
-                          name: { },
+                          name: { label: 'Tên chủ đề' },
                           avg: { hide: true},
-                          pl: { label: 'value' },
+                          pl: { label: 'Số lượng' },
                           inc: { hide: true }
                         }" hideLine />
                     </template>
                 </Chart>
             </div>
         </div>
-        <TableInfo />
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
@@ -131,7 +130,6 @@
 import $ from "jquery";
 import { Chart, Grid, Line, Bar,Pie, Tooltip } from 'vue3-charts';
 import LabelsLayer from './Components/LabelsLayer.vue';
-import TableInfo from './Tables.vue';
 import baseURL from "../../assets/enum";
 export default {
     components: {
@@ -142,7 +140,6 @@ export default {
         LabelsLayer,
         Pie, 
         Tooltip,
-        TableInfo
     },
     data() {
         return {
@@ -161,6 +158,7 @@ export default {
             dataUserChart: [],
             dataCourseChart: [],
             dataProceedChart: [],
+            dataCourseCategoryChart: [],
             dataBarChart: [
                 { name: 'T1', pl: 1000, },
                 { name: 'T2', pl: 2000, },
@@ -260,6 +258,7 @@ export default {
                     me.dataUserChart = me.dataAllChart.dataUserChart;
                     me.dataCourseChart = me.dataAllChart.dataCourseChart;
                     me.dataProceedChart = me.dataAllChart.dataProceedChart;
+                    me.dataCourseCategoryChart = me.dataAllChart.dataCourseCategoryChart;
                 });
         },
         formatPrice(value) {

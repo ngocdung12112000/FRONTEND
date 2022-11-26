@@ -9,39 +9,48 @@
             <div class="popup-body">
                 <form class="d-flex form-info align-items-center justify-content-between flex-wrap">
                     <div style="width: 100%" class="mb-3">
-                        <label for="avatar" class="form-label">Ảnh đại diện</label>
-                        <input @change="onChangeAvar" type="file" class="form-control mb-1" id="avatar">
+                        <label for="avatar" class="form-label">Ảnh khóa học</label>
+                        <input @change="onChangeAvar" type="file" class="form-control mb-1 d-none" id="avatar">
                         <div class="preview d-none">
-                            <img src="../../../assets/images/COURSES/c1.png" alt="">
+                            <img src="" alt="">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="name" class="form-label">Tên khóa học</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nhập tên">
+                        <label for="age" class="form-label">Mã khóa học</label>
+                        <input type="text" class="form-control" id="age" placeholder="Nhập mã khóa học"
+                        :value="'KH000'+id"  @input="$emit('update:id', $event.target.value)"
+                        >
                     </div>
                     <div class="mb-2">
-                        <label for="age" class="form-label">Mã khóa học</label>
-                        <input type="number" class="form-control" id="age" placeholder="Nhập mã khóa học">
+                        <label for="name" class="form-label">Tên khóa học</label>
+                        <input type="text" class="form-control" id="name" placeholder="Nhập tên"
+                        :value="name"  @input="$emit('update:name', $event.target.value)">
                     </div>
                     <div style="width: 100%" class="mb-3 mt-1">
                         <label for="description" class="form-label">Mô tả</label>
-                        <textarea name="" id="description" style="width: 100%"  rows="5"></textarea>
+                        <textarea name="" id="description" style="width: 100%"  rows="5"
+                        :value="description"  @input="$emit('update:description', $event.target.value)"
+                        ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Giá khóa học</label>
+                        <input type="text" class="form-control" id="price" placeholder="Nhập giá"
+                        :value="price"  @input="$emit('update:price', $event.target.value)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Khuyến mãi</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Nhập khuyến mãi"
+                        :value="discount"  @input="$emit('update:discount', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Thời lượng</label>
-                        <input type="email" class="form-control" id="email" placeholder="Nhập thời lượng">
-                    </div>
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Giá</label>
-                        <input type="text" class="form-control" id="price">
+                        <input disabled type="email" class="form-control" id="email" placeholder="Nhập thời lượng"
+                        :value="formatTime(time)">
                     </div>
                     <div class="mb-3">
                         <label for="teacher" class="form-label">Tên giáo viên</label>
-                        <input type="text" class="form-control" id="teacher">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">SĐT liên hệ</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập SĐT">
+                        <input type="text" class="form-control" id="teacher" placeholder="Nhập tên giáo viên"
+                        :value="teacher_name"  @input="$emit('update:teacher_name', $event.target.value)">
                     </div>
                 </form>
             </div>
@@ -60,9 +69,50 @@ export default {
 
         }
     },
+    props: {
+        id: { 
+            type: Number,
+            default: 0 
+        },
+        name: { 
+            type: String,
+            default: '' 
+        },
+        teacher_name: { 
+            type: String,
+            default: '' 
+        },
+        price: { 
+            type: Number,
+            default: 0 
+        },
+        discount: { 
+            type: Number,
+            default: 0 
+        },
+        description: { 
+            type: String,
+            default: '' 
+        },
+        image: { 
+            type: String,
+            default: '' 
+        },
+        time: { 
+            type: Number,
+            default: 0
+        },
+        mode: {
+            type: String,
+            default: 'add'
+        }
+    },
     methods: {
         cancelClick() {
             this.$emit('cancel-click')
+        },
+        formatTime(value) {
+            return new Date(value * 1000).toISOString().substring(11,19)
         },
         onChangeAvar() {
             let file = document.getElementById('avatar').files[0];
@@ -80,12 +130,11 @@ export default {
 </script>
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
-
 .my-modal {
     position: absolute;
-    top: -80px;
-    left: -400px;
-    right: -100px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 999;
@@ -100,10 +149,10 @@ export default {
     width: 90%;
     min-width: 700px;
     max-width: 1000px;
-    height: calc(100vh - 100px);
     background-color: white;
     border-radius: 5px;
     padding: 20px;
+    overflow: auto;
 }
 
 .form-info > div{

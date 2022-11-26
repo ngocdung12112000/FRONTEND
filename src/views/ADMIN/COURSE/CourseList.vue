@@ -5,7 +5,7 @@
         <div class="course-control d-flex justify-content-between">
             <div>
                 <div class="course-search-input me-3">
-                    <input type="text" placeholder="Tìm kiếm khóa học">
+                    <input type="text" placeholder="Tìm kiếm khóa học" @change="onSearchCourse">
                     <i class="fas fa-search"></i>
                 </div>
             </div>
@@ -16,8 +16,8 @@
         </div>
         <div class="course-list d-flex flex-wrap justify-content-center pt-3">
             <div class="d-flex flex-wrap mb-3">
-                <div v-for="item in courses" :key="item.id" class="course-item"
-                    @click="() =>courseClick(item.id)">
+                <div v-for="item in courseDisplay" :key="item.id" class="course-item"
+                    @click="() =>courseClick(item)">
                     <div class="course-item-img">
                         <img :src="item.image" alt="">
                     </div>
@@ -31,25 +31,37 @@
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Giá gốc:</span> 
-                            <span style="font-size: 16px;" class="fw-bold">{{ item.price }} đ</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ formatPrice(item.price) }} đ</span> 
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Giá khuyến mãi:</span> 
-                            <span style="font-size: 16px;" class="fw-bold">{{ item.price - (item.price*item.discount/100)  }} đ</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ formatPrice(item.price - (item.price*item.discount/100))  }} đ</span> 
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2 border-bottom">
                             <span style="color: #666666;font-size: 15px;">Thời lượng:</span> 
-                            <span style="font-size: 16px;" class="fw-bold">02:45:00</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ formatTime(item.total_time) }}</span> 
                         </div>
                         <div class="course-item-price d-flex justify-content-between py-2">
                             <span style="color: #666666;font-size: 15px;">Đã bán:</span> 
-                            <span style="font-size: 16px;" class="fw-bold">100</span> 
+                            <span style="font-size: 16px;" class="fw-bold">{{ item.sold_quantity }}</span> 
                         </div>
                     </div>
                 </div>
             </div>
+            <CourseDetail v-show="isShowDetail" 
+                @cancel-click="isShowDetail = false"
+                v-model:id="courseSelected.id"
+                v-model:name="courseSelected.name"
+                v-model:teacher_name="courseSelected.teacher_name"
+                v-model:image="courseSelected.image"
+                v-model:price="courseSelected.price"
+                v-model:discount="courseSelected.discount"
+                v-model:time="courseSelected.total_time"
+                v-model:description="courseSelected.description"
+                v-model:mode="formMode" 
+            />
         </div>
-        <CourseDetail v-show="isShowDetail" @cancel-click="isShowDetail = false" />
+        
         <ToastMessage :isShow="isShowToast" :message="toastContent" />
     </div>
 </template>
@@ -78,22 +90,42 @@ export default {
         return {
             page: 1,
             isShowDetail: false,
-            userList: [],
             courses: [],
+            courseDisplay: [],
             isShowToast: false,
-            toastContent: ''
+            toastContent: '',
+            formMode: 'add',
+            courseSelected: {}
         };
     },
     methods: {
+        formatPrice(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        formatTime(value) {
+            return new Date(value * 1000).toISOString().substring(11,19)
+        },
         addClick() {
             this.isShowDetail = true;
+            this.formMode = 'add';
+            this.courseSelected = {};
         },
         clickCallback(pageNum) {
             console.log(pageNum)
         },
-        courseClick(id) {
+        onSearchCourse(e) {
+            let me = this;
+            if(e.target.value == ''){
+                me.courseDisplay = me.courses;
+            }
+            else{
+                me.courseDisplay = me.courses.filter(x => x.name.toLowerCase().includes(e.target.value.toLowerCase()));
+            }
+        },
+        courseClick(course) {
             this.isShowDetail = true;
-            console.log(id)
+            this.formMode = 'edit';
+            this.courseSelected = course;
         },
         deleteClick(id) {
             console.log(id)
@@ -104,6 +136,7 @@ export default {
                 .get(`${baseURL}api/Course/All`)
                 .then((response) => {
                     me.courses = response.data;
+                    me.courseDisplay = me.courses;
                 });
         }
     },
@@ -111,6 +144,14 @@ export default {
 </script>
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
+.course-list-container {
+    overflow: scroll;
+}
+
+.course-list {
+    height: 700px;
+}
+
 .course-control {
     width: 100%;
 }
