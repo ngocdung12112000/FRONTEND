@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import Api from '../../apis';
+// import Api from '../../apis';
 import request from "axios";
-const baseURL = "https://localhost:44366/";
+const baseURL = "https://ndzttt.com/";
 // https://localhost:5001
 
 export default {

@@ -298,7 +298,10 @@ export default {
         updateData() {
             let me = this,
                 loginUserId = this.$store.getters['AUTH/userId'],
-                lessonId = this.$route.params.idLesson;
+                lessonId = this.$route.params.idLesson,
+                gem = lessonId == (this.$route.params.currentTopicId*5 -1) ? 5 : 0;
+
+            this.$store.dispatch('AUTH/setGem', gem);
 
             this.axios
                 .post(`${baseURL}api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}`)
@@ -309,7 +312,7 @@ export default {
                 });
 
             this.axios
-                .put(`${baseURL}api/Users/UpdateUserLesson?userId=${loginUserId}`)
+                .put(`${baseURL}api/Users/UpdateUserLesson?userId=${loginUserId}&point=${this.numberCorrect}&gem=${gem}`)
                 .then((response) => {
                     if (response.data) {
                         // Thực hiện chuyển về trang home

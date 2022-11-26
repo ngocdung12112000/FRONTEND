@@ -47,7 +47,9 @@
             <div class="content">
                 <div class="total-exp">
                     <div class="total-exp-header">
-                        <div class="img-chest me-3"></div>
+                        <div style="width: 45px; height: 100%;" class="d-flex justify-content-center me-3">
+                            <img style="transform: scale(1.5);" src="../assets/images/kn.svg" alt=""/>
+                        </div>
                         <div class="exp-target">
                             <div class="exp-target-title mb-2">
                                 <div>Mục tiêu mỗi ngày</div>
@@ -87,7 +89,6 @@ export default {
     components: { Chart, Grid, Line },
     beforeMount() {
         this.loginUserId = this.$store.getters['AUTH/userId'];
-        console.log(this.currentUser);
         if (this.loginUserId) {
             this.getUserStreak();
         }
@@ -136,11 +137,7 @@ export default {
         currentUser: {
             type: Object,
             required: true,
-        },
-        // dataStreakDemo :{
-        //     type: Array,
-        //     required: true,
-        // }
+        }
     },
 
     methods: {

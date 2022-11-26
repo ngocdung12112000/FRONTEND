@@ -19,13 +19,9 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 // import $ from "jquery";
-// import Header from "./layouts/Header.vue";
 import Lesson from "../components/Lesson.vue";
 import Personal from "../components/Personal.vue";
 import baseURL from "../assets/enum";
-// import { mapGetters } from "vuex";
-// import listLesson from "../assets/js/lessons.js"
-// import dataUser from "../assets/js/users.js";
 
 export default {
     name: "Home",

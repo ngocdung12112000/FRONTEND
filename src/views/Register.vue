@@ -20,6 +20,10 @@
                                     <input v-model="userRegister.email" type="email" class="form-control" id="email">
                                 </div>
                                 <div class="form-group first">
+                                    <label v-show="userRegister.full_name ==''" for="fullname">Họ tên</label>
+                                    <input v-model="userRegister.full_name" type="fullname" class="form-control" id="fullname">
+                                </div>
+                                <div class="form-group first">
                                     <label v-show="userRegister.user_name ==''" for="username">Tên đăng nhập</label>
                                     <input v-model="userRegister.user_name" type="text" class="form-control" id="username">
                                 </div>
@@ -56,6 +60,7 @@ export default {
             userRegister: {
                 email: '',
                 user_name: '',
+                full_name: '',
                 password: '',
                 password_confirmation: '',
                 phone_number: '',

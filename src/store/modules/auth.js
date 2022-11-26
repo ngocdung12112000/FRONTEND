@@ -40,7 +40,10 @@ const mutations = {
     },
     setUserLogin(state, userLogin){
         state.userLogin = userLogin;
-    }
+    },
+    setGem(state, gem){
+        state.userLogin.gem += gem;
+    },
 }
 
 const actions = {
@@ -56,6 +59,7 @@ const actions = {
             console.log(error.response);
         }
     },
+    // eslint-disable-next-line no-unused-vars
     async register({commit}, credentials) {
         try {
             console.log("RESGISTER");
@@ -71,9 +75,12 @@ const actions = {
     setranking ({commit}, rank) {
         commit('setUserRank', rank);
     },
+    setGem ({commit}, gem) {
+        commit('setGem', gem);
+    },
     logout ({commit}) {
         commit('LogOut')
-    }
+    },
 }
 
 export default {
