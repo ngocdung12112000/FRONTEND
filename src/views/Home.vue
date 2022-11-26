@@ -91,11 +91,11 @@ export default {
                     if(response && response.data) {
                         me.listUser = response.data;
                         me.listUser.forEach((user,index) => {
-                            if(user.image != "user.jpg") {
+                            if(user.image != "user.jpg" && user.image != null) {
                                 user.avatar = require(`../assets/images/AVAS/${user.image}`);
                             }
                             else {
-                                user.avatar = require(`../assets/images/${user.image}`);
+                                user.avatar = require(`../assets/images/user.jpg`);
                             }
 
                             if(user.user_id == me.loginUserId) {

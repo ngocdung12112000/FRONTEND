@@ -14,22 +14,22 @@
                                 <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
                                     adipisicing.</p> -->
                             </div>
-                            <form action="#" method="post">
+                            <form @submit.prevent="onSubmitFormRegister" action="#" method="post">
                                 <div class="form-group first">
-                                    <label for="username">Email</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <label v-show="userRegister.email ==''" for="email">Email</label>
+                                    <input v-model="userRegister.email" type="email" class="form-control" id="email">
                                 </div>
                                 <div class="form-group first">
-                                    <label for="username">Tên đăng nhập</label>
-                                    <input type="text" class="form-control" id="username">
+                                    <label v-show="userRegister.user_name ==''" for="username">Tên đăng nhập</label>
+                                    <input v-model="userRegister.user_name" type="text" class="form-control" id="username">
                                 </div>
                                 <div class="form-group last">
-                                    <label for="password">Mật khẩu</label>
-                                    <input type="password" class="form-control" id="password">
+                                    <label v-show="userRegister.password ==''" for="password">Mật khẩu</label>
+                                    <input v-model="userRegister.password" type="password" class="form-control" id="password">
                                 </div>
                                 <div class="form-group last mb-4">
-                                    <label for="password">Nhập lại mật khẩu</label>
-                                    <input type="password" class="form-control" id="password">
+                                    <label v-show="userRegister.password_confirmation ==''" for="password_confirmation">Nhập lại mật khẩu</label>
+                                    <input v-model="userRegister.password_confirmation" type="password" class="form-control" id="password_confirmation">
                                 </div>
 
                                 <div class="d-flex mb-5 align-items-center justify-content-between">
@@ -40,20 +40,6 @@
                                 </div>
 
                                 <input type="submit" value="Đăng ký" class="btn btn-block btn-primary">
-
-                                <!-- <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
-
-                                <div class="social-login">
-                                    <a href="#" class="facebook">
-                                        <span class="icon-facebook mr-3"></span>
-                                    </a>
-                                    <a href="#" class="twitter">
-                                        <span class="icon-twitter mr-3"></span>
-                                    </a>
-                                    <a href="#" class="google">
-                                        <span class="icon-google mr-3"></span>
-                                    </a>
-                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -65,7 +51,46 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 export default {
+    data() {
+        return {
+            userRegister: {
+                email: '',
+                user_name: '',
+                password: '',
+                password_confirmation: '',
+                phone_number: '',
+            }
+        }
+    },
+    methods: {
+        async onSubmitFormRegister(e) {
+            e.preventDefault();
 
+            console.log(this.userRegister);
+
+            if(this.userRegister.email == '' || this.userRegister.user_name == '' || this.userRegister.password == '' || this.userRegister.password_confirmation == '') {
+                alert('Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+            else {
+                if(this.userRegister.password != this.userRegister.password_confirmation) {
+                    alert('Mật khẩu không khớp');
+                    return;
+                }
+                else {
+                    let response = await this.$store.dispatch('AUTH/register', this.userRegister);
+                    if(response.status == 200){
+                        this.$router.push('/login');
+                    }
+                    else {
+                        alert('Đăng ký thất bại');
+                    }
+                }
+            }
+
+            
+        },
+    }
 }
 </script>
 <!-- eslint-disable prettier/prettier -->

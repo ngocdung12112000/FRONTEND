@@ -56,6 +56,15 @@ const actions = {
             console.log(error.response);
         }
     },
+    async register({commit}, credentials) {
+        try {
+            console.log("RESGISTER");
+            const response = await AuthServices.register(credentials);
+            return response;
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
     setavatar ({commit}, img) {
         commit('setUserImg', img);
     },
