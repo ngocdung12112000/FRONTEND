@@ -2,103 +2,144 @@
 <template>
     <div class="my-modal">
         <div class="popup">
-            <div class="popup-header d-flex align-items-center justify-content-between">
-                <h3>Thêm mới khóa học</h3>
-                <i class="fas fa-times fs-3 icon-close" @click="cancelClick"></i>
+            <div class="popup-header d-flex align-items-center justify-content-between mb-3">
+                <h3 style="color:#2e86de; font-weight: bolder;">Thêm mới khóa học</h3>
+                <!-- <i class="fas fa-times fs-3 icon-close" @click="cancelClick"></i> -->
             </div>
             <div class="popup-body">
-                <form class="d-flex form-info align-items-center justify-content-between flex-wrap">
+                <div class="d-flex form-info align-items-center justify-content-between flex-wrap">
                     <div style="width: 100%" class="mb-3">
                         <label for="avatar" class="form-label">Ảnh khóa học</label>
-                        <input @change="onChangeAvar" type="file" class="form-control mb-1 d-none" id="avatar">
+                        <input @change="onChangeAvar" type="text" class="form-control mb-1" id="avatar"
+                            placeholder="Nhập link ảnh">
                         <div class="preview d-none">
                             <img src="" alt="">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="age" class="form-label">Mã khóa học</label>
-                        <input type="text" class="form-control" id="age" placeholder="Nhập mã khóa học"
-                        :value="'KH000'+id"  @input="$emit('update:id', $event.target.value)"
-                        >
+                        <label for="course_code" class="form-label">Mã khóa học</label>
+                        <input type="text" class="form-control" id="course_code" placeholder="Nhập mã khóa học"
+                            :value="course_code" @input="$emit('update:course_code', $event.target.value)">
                     </div>
                     <div class="mb-2">
                         <label for="name" class="form-label">Tên khóa học</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nhập tên"
-                        :value="name"  @input="$emit('update:name', $event.target.value)">
-                    </div>
-                    <div style="width: 100%" class="mb-3 mt-1">
-                        <label for="description" class="form-label">Mô tả</label>
-                        <textarea name="" id="description" style="width: 100%"  rows="5"
-                        :value="description"  @input="$emit('update:description', $event.target.value)"
-                        ></textarea>
+                        <input type="text" class="form-control" id="name" placeholder="Nhập tên" :value="name"
+                            @input="$emit('update:name', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Giá khóa học</label>
                         <input type="text" class="form-control" id="price" placeholder="Nhập giá"
-                        :value="price"  @input="$emit('update:price', $event.target.value)">
+                            :value="formatPrice(price)" @input="$emit('update:price', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Khuyến mãi</label>
                         <input type="text" class="form-control" id="phone" placeholder="Nhập khuyến mãi"
-                        :value="discount"  @input="$emit('update:discount', $event.target.value)">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Thời lượng</label>
-                        <input disabled type="email" class="form-control" id="email" placeholder="Nhập thời lượng"
-                        :value="formatTime(time)">
+                            :value="discount" @input="$emit('update:discount', $event.target.value)">
                     </div>
                     <div class="mb-3">
                         <label for="teacher" class="form-label">Tên giáo viên</label>
                         <input type="text" class="form-control" id="teacher" placeholder="Nhập tên giáo viên"
-                        :value="teacher_name"  @input="$emit('update:teacher_name', $event.target.value)">
+                            :value="teacher_name" @input="$emit('update:teacher_name', $event.target.value)">
                     </div>
-                </form>
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">Thời lượng</label>
+                        <input disabled type="email" class="form-control" id="duration" placeholder="Nhập thời lượng"
+                            :value="formatTime(time)">
+                    </div>
+                    <div style="width: 100%" class="mb-3 mt-1 list-video-wrapper">
+                        <label for="videos" class="form-label">Danh sách video</label>
+                        <div class="video-item d-flex align-items-center mt-1 mb-1">
+                            <div class="video-item-title me-3">Tiêu đề</div>
+                            <div class="video-item-link me-3">Link video</div>
+                            <div class="video-item-duration">Thời lượng</div>
+                        </div>
+                        <div class="list-video" id="listVideo">
+                            <div v-for="item, index in listVideos" :key="item.id"
+                                class="video-item d-flex align-items-center mt-1 mb-3">
+                                <input  type="text" class="form-control video-item-title me-3" v-model="item.title"
+                                    placeholder="Nhập tiêu đề video">
+                                <input  type="text" class="form-control video-item-link me-3" v-model="item.link"
+                                    placeholder="Nhập link video">
+                                <input type="text" class="form-control video-item-duration me-3" :value="formatTime(item.time)"
+                                    placeholder="hh:mm:ss">
+                                <div class="add-btn me-3" @click="() => addVideo(index)">
+                                    <i style="color:#0984e3" class="fas fa-plus"></i>
+                                </div>
+                                <div v-if="(listVideos.length > 1 && index >= 1)" class="delete-btn" @click="() => deleteVideo(index)">
+                                    <i style="color: #d63031" class="fas fa-trash"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%" class="mb-3 mt-1 list-document">
+
+                    </div>
+                    <div style="width: 100%" class="mb-3 mt-1">
+                        <label for="description" class="form-label">Mô tả</label>
+                        <textarea name="" id="description" style="width: 100%" rows="5" :value="description"
+                            @input="$emit('update:description', $event.target.value)"></textarea>
+                    </div>
+                </div>
             </div>
             <div class="popup-footer text-end">
                 <button type="button" class="btn btn-secondary px-4 me-2" @click="cancelClick">Hủy</button>
-                <button type="button" class="btn btn-primary px-4">Lưu</button>
+                <button type="button" class="btn btn-primary px-4" @click="saveClick">Lưu</button>
             </div>
         </div>
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import baseURL from '../../../assets/enum';
+// import $ from 'jquery';
 export default {
     data() {
         return {
-
+            listVideos: [
+                {
+                    id: 0,
+                    title: "",
+                    time: 0,
+                    link: "",
+                    sort_order: 0,
+                }
+            ],
         }
     },
     props: {
-        id: { 
+        id: {
             type: Number,
-            default: 0 
+            default: 0
         },
-        name: { 
+        course_code: {
             type: String,
-            default: '' 
+            default: ''
         },
-        teacher_name: { 
+        name: {
             type: String,
-            default: '' 
+            default: ''
         },
-        price: { 
+        teacher_name: {
+            type: String,
+            default: ''
+        },
+        price: {
             type: Number,
-            default: 0 
+            default: 0
         },
-        discount: { 
+        discount: {
             type: Number,
-            default: 0 
+            default: 0
         },
-        description: { 
+        description: {
             type: String,
-            default: '' 
+            default: ''
         },
-        image: { 
+        image: {
             type: String,
-            default: '' 
+            default: ''
         },
-        time: { 
+        time: {
             type: Number,
             default: 0
         },
@@ -112,7 +153,10 @@ export default {
             this.$emit('cancel-click')
         },
         formatTime(value) {
-            return new Date(value * 1000).toISOString().substring(11,19)
+            return new Date(value * 1000).toISOString().substring(11, 19)
+        },
+        formatPrice(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
         onChangeAvar() {
             let file = document.getElementById('avatar').files[0];
@@ -123,6 +167,52 @@ export default {
                 preview.classList.remove('d-none');
                 let img = document.querySelector('.preview img');
                 img.src = reader.result;
+            }
+        },
+        getCourseDetail(courseId){
+            let me = this;
+            this.axios
+                .get(`${baseURL}api/Course/Id?courseId=${courseId}&userId=00000000-0000-0000-0000-000000000000`)
+                .then((response) => {
+                    if(response.data != null && response.data.list_video.length > 0) {
+                        me.listVideos = response.data.list_video;
+                    }
+                });
+        },
+        addVideo(index) {
+            let newVideo = {
+                id: 0,
+                title: "",
+                time: 0,
+                link: "",
+                sort_order: 0
+            }
+            this.listVideos.splice(index + 1, 0, newVideo);
+        },
+        deleteVideo(index) {
+            this.listVideos.splice(index, 1);
+        },
+        saveClick() {
+            let me = this,
+                listDuration = document.querySelectorAll('.list-video .video-item-duration');
+
+            for (let i = 0; i < listDuration.length; i++) {
+                let time = listDuration[i].value.split(':');
+                let duration = parseInt(time[0]) * 3600 + parseInt(time[1]) * 60 + parseInt(time[2]);
+                me.listVideos[i].time = duration;
+            }
+
+            me.listVideos.forEach((item, index) => {
+                item.sort_order = index+1;
+                item.time = parseInt(item.time);
+            });
+            console.log(me.listVideos);
+        },
+    },
+    watch: {
+        id: function (val) {
+            if(val != null && this.mode == 'edit') {
+                this.getCourseDetail(val);
             }
         }
     }
@@ -135,7 +225,7 @@ export default {
     top: 0px;
     left: 0px;
     right: 0px;
-    bottom: 0;
+    bottom: 0px;
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 999;
     color: #000;
@@ -143,19 +233,16 @@ export default {
 
 .my-modal .popup {
     position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    min-width: 700px;
-    max-width: 1000px;
-    background-color: white;
-    border-radius: 5px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #f5f5f5;
     padding: 20px;
     overflow: auto;
 }
 
-.form-info > div{
+.form-info>div {
     width: 49%;
 }
 
@@ -164,8 +251,16 @@ export default {
 }
 
 .popup-body {
-    height: 660px;
+    position: absolute;
+    top: 65px;
+    left: 20px;
+    right: 20px;
+    bottom: 75px;
     overflow: auto;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .preview {
@@ -186,21 +281,63 @@ textarea {
     border-radius: 5px;
 }
 
+.list-video {
+    width: 100%;
+    height: 250px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-item {
+    width: 100%;
+    height: 34px;
+}
+
+.video-item .video-item-link {
+    width: 35%;
+}
+
+.video-item .video-item-duration {
+    width: 15%;
+}
+
+.video-item .video-item-title {
+    width: 35%;
+}
+
+.video-item .add-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #0984e3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.video-item .delete-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 
 .popup-body::-webkit-scrollbar {
-  display: none;
+    /* display: none; */
+    width: 8px;
 }
 
-.popup-body {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
 
 .popup-footer {
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
-
-
 </style>

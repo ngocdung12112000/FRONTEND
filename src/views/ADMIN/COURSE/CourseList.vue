@@ -51,6 +51,7 @@
             <CourseDetail v-show="isShowDetail" 
                 @cancel-click="isShowDetail = false"
                 v-model:id="courseSelected.id"
+                v-model:course_code="courseSelected.course_code"
                 v-model:name="courseSelected.name"
                 v-model:teacher_name="courseSelected.teacher_name"
                 v-model:image="courseSelected.image"
@@ -70,8 +71,6 @@
 import CourseDetail from './CourseDetail.vue';
 import ToastMessage from '../Components/ToastMessage.vue';
 import baseURL from '../../../assets/enum';
-// import Paginate from "vuejs-paginate-next";
-// import dataCourses from '../../../assets/js/courses.js';
 // import $ from "jquery";
 export default {
     name: "CourseList",
