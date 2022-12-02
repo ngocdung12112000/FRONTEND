@@ -50,6 +50,8 @@
             </div>
             <CourseDetail v-show="isShowDetail" 
                 @cancel-click="isShowDetail = false"
+                @save-click="saveCourse"
+                v-model:isShow="isShowDetail"
                 v-model:id="courseSelected.id"
                 v-model:course_code="courseSelected.course_code"
                 v-model:name="courseSelected.name"
@@ -103,6 +105,10 @@ export default {
         },
         formatTime(value) {
             return new Date(value * 1000).toISOString().substring(11,19)
+        },
+        saveCourse() {
+            this.isShowDetail = false;
+            this.getCourseList();
         },
         addClick() {
             this.isShowDetail = true;

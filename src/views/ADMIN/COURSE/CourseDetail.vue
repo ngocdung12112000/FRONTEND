@@ -3,25 +3,24 @@
     <div class="my-modal">
         <div class="popup">
             <div class="popup-header d-flex align-items-center justify-content-between mb-3">
-                <h3 style="color:#2e86de; font-weight: bolder;">Thêm mới khóa học</h3>
-                <!-- <i class="fas fa-times fs-3 icon-close" @click="cancelClick"></i> -->
+                <h3 style="color:#2e86de; font-weight: bolder;">{{ mode == 'add' ? 'Thêm' : 'Sửa' }} khóa học</h3>
             </div>
             <div class="popup-body">
                 <div class="d-flex form-info align-items-center justify-content-between flex-wrap">
                     <div style="width: 100%" class="mb-3">
                         <label for="avatar" class="form-label">Ảnh khóa học</label>
-                        <input @change="onChangeAvar" type="text" class="form-control mb-1" id="avatar"
-                            placeholder="Nhập link ảnh">
-                        <div class="preview d-none">
-                            <img src="" alt="">
+                        <input @input="$emit('update:image', $event.target.value)" type="text" class="form-control mb-1" id="avatar"
+                            placeholder="Nhập link ảnh" :value="image">
+                        <div v-if="image" class="preview d-flex justify-content-center">
+                            <img style="width: 600px; height: 300px;" :src="image" alt="">
                         </div>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="course_code" class="form-label">Mã khóa học</label>
                         <input type="text" class="form-control" id="course_code" placeholder="Nhập mã khóa học"
                             :value="course_code" @input="$emit('update:course_code', $event.target.value)">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="name" class="form-label">Tên khóa học</label>
                         <input type="text" class="form-control" id="name" placeholder="Nhập tên" :value="name"
                             @input="$emit('update:name', $event.target.value)">
@@ -32,20 +31,29 @@
                             :value="formatPrice(price)" @input="$emit('update:price', $event.target.value)">
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">Khuyến mãi</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập khuyến mãi"
+                        <label for="discount" class="form-label">Khuyến mãi</label>
+                        <input type="text" class="form-control" id="discount" placeholder="Nhập khuyến mãi"
                             :value="discount" @input="$emit('update:discount', $event.target.value)">
                     </div>
                     <div class="mb-3">
-                        <label for="teacher" class="form-label">Tên giáo viên</label>
-                        <input type="text" class="form-control" id="teacher" placeholder="Nhập tên giáo viên"
-                            :value="teacher_name" @input="$emit('update:teacher_name', $event.target.value)">
+                        <label for="cbxTeacher" class="form-label">Giáo viên</label>
+                        <select v-if="listTeacher" class="form-select" aria-label=".form-select-lg example" id="cbxTeacher" 
+                        v-model="selectedTeacher">
+                            <option v-for="item in listTeacher" :key="item.id" :value="item.id">
+                                {{item.name}}
+                            </option>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="duration" class="form-label">Thời lượng</label>
-                        <input disabled type="email" class="form-control" id="duration" placeholder="Nhập thời lượng"
-                            :value="formatTime(time)">
+                        <label for="cbxCategory" class="form-label">Chủ đề</label>
+                        <select v-if="listCategory" class="form-select" aria-label=".form-select-lg example" id="cbxCategory" 
+                        v-model="selectedCategory">
+                            <option v-for="item in listCategory" :key="item.id" :value="item.id">
+                                {{item.name}}
+                            </option>
+                        </select>
                     </div>
+
                     <div style="width: 100%" class="mb-3 mt-1 list-video-wrapper">
                         <label for="videos" class="form-label">Danh sách video</label>
                         <div class="video-item d-flex align-items-center mt-1 mb-1">
@@ -91,7 +99,7 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 import baseURL from '../../../assets/enum';
-// import $ from 'jquery';
+import $ from 'jquery';
 export default {
     data() {
         return {
@@ -104,9 +112,17 @@ export default {
                     sort_order: 0,
                 }
             ],
+            listTeacher: [],
+            listCategory: [],
+            selectedTeacher: null,
+            selectedCategory: null,
         }
     },
     props: {
+        isShow: {
+            type: Boolean,
+            default: false
+        },
         id: {
             type: Number,
             default: 0
@@ -156,26 +172,58 @@ export default {
             return new Date(value * 1000).toISOString().substring(11, 19)
         },
         formatPrice(value) {
+            value = value.toString().replace(/\./g, '');
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
         onChangeAvar() {
-            let file = document.getElementById('avatar').files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                let preview = document.querySelector('.preview');
-                preview.classList.remove('d-none');
-                let img = document.querySelector('.preview img');
-                img.src = reader.result;
-            }
+            let link = $('#avatar').val();
+            $('.preview img').attr('src', link);
+        },
+        getListData() {
+            let me = this;
+            me.listTeacher = [];
+            me.listCategory = [];
+            // Lấy danh sách giáo viên
+            this.axios
+                .get(`${baseURL}api/Course/Teachers`)
+                .then((response) => {
+                    if(response.data != null && response.data.length > 0) {
+                        me.listTeacher = response.data;
+                    }
+                });
+            // Lấy danh sách chủ đề
+            this.axios
+                .get(`${baseURL}api/Course/Categories`)
+                .then((response) => {
+                    if(response.data != null && response.data.length > 0) {
+                        me.listCategory = response.data;
+                    }
+                });
         },
         getCourseDetail(courseId){
             let me = this;
+            me.listVideos = [];
+            
+            // Lấy danh sách video
             this.axios
                 .get(`${baseURL}api/Course/Id?courseId=${courseId}&userId=00000000-0000-0000-0000-000000000000`)
                 .then((response) => {
-                    if(response.data != null && response.data.list_video.length > 0) {
+                    if(response.data != null) {
                         me.listVideos = response.data.list_video;
+                        me.selectedTeacher = response.data.teacher.id;
+                        me.selectedCategory = response.data.category_id;
+
+                        if(me.listVideos.length == 0) {
+                            me.listVideos = [
+                                {
+                                    id: 0,
+                                    title: "",
+                                    time: 0,
+                                    link: "",
+                                    sort_order: 0,
+                                }
+                            ]
+                        }
                     }
                 });
         },
@@ -193,8 +241,22 @@ export default {
             this.listVideos.splice(index, 1);
         },
         saveClick() {
-            let me = this,
-                listDuration = document.querySelectorAll('.list-video .video-item-duration');
+            let me = this, type = 1,
+                listDuration = document.querySelectorAll('.list-video .video-item-duration'),
+                paramSave = {
+                    id: this.id,
+                    course_code: this.course_code,
+                    name: this.name,
+                    teacher_name: this.teacher_name,
+                    price: parseInt(this.price.toString().replace(/\./g, '')),
+                    discount: parseInt(this.discount),
+                    description: this.description,
+                    image: this.image,
+                    time: this.time,
+                    list_video: this.listVideos,
+                    teacher_id: this.selectedTeacher,
+                    category_id: this.selectedCategory
+                };
 
             for (let i = 0; i < listDuration.length; i++) {
                 let time = listDuration[i].value.split(':');
@@ -206,13 +268,46 @@ export default {
                 item.sort_order = index+1;
                 item.time = parseInt(item.time);
             });
-            console.log(me.listVideos);
+
+            if(this.mode == 'add') {
+                type = 1;
+            } else {
+                type = 2;
+            }
+
+            this.axios
+                .post(`${baseURL}api/Course/Save?type=${type}`, paramSave)
+                .then((response) => {
+                    if(response.data != null) {
+                        this.selectedTeacher = null;
+                        this.selectedCategory = null;
+                        me.$emit('save-click');
+                    }
+                });
         },
     },
     watch: {
-        id: function (val) {
-            if(val != null && this.mode == 'edit') {
-                this.getCourseDetail(val);
+        isShow: function (val) {
+            if(val == false) {
+                this.selectedTeacher = null;
+                this.selectedCategory = null;
+            }
+            else {
+                if(this.mode == 'add') {
+                    this.listVideos = [
+                        {
+                            id: 0,
+                            title: "",
+                            time: 0,
+                            link: "",
+                            sort_order: 0,
+                        }
+                    ];
+                    this.selectedTeacher = null;
+                    this.selectedCategory = null;
+                }
+                this.getListData();
+                this.getCourseDetail(this.id);
             }
         }
     }
