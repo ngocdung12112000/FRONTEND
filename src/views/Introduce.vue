@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <div class="intro-container">
         <div class="intro-header fixed-top">
@@ -61,19 +62,19 @@
                 </div>
             </div>
         </div>
-        <div class="intro-footer">
-            
+        <div class="intro-footer d-flex justify-content-center align-items-center">
+            <div class="text-white fs-5">Powered By Ngọc Dũng</div>
         </div>
     </div>
 </template>
-
+<!-- eslint-disable prettier/prettier -->
 <script>
 import $ from "jquery";
 export default {
     created () {
         window.addEventListener('scroll', this.handleScroll);
     },
-    destroyed () {
+    unmounted () {
         window.removeEventListener('scroll', this.handleScroll);
     },
     data() {
@@ -84,7 +85,7 @@ export default {
     methods: {
         handleScroll() {
             let y = window.scrollY;
-            const bannerheight = $('.intro-banner').height();
+            // const bannerheight = $('.intro-banner').height();
             if(y == 0) {
                 $('.intro-banner-title h1').addClass("run-animation");
             } else {
@@ -95,7 +96,7 @@ export default {
     
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <style scoped>
 .intro-header {
     background: #222f3e;
@@ -223,6 +224,12 @@ export default {
 .img {
     width: 234px;
     height: 200px;
+}
+
+.intro-footer {
+    background: #222f3e;
+    width: 100%;
+    height: 100px;
 }
 
 /* The typing effect */

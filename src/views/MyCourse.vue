@@ -4,7 +4,7 @@
         <h1 class="fw-bolder mt-5">Khóa học của tôi</h1>
         <div class="course-wrapper">
             <div class="d-flex flex-wrap my-3 mt-5">
-                <div v-for="item in courses" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.slug)">
+                <div v-for="item in courses" :key="item.id" class="course-item" @click="() =>courseClick(item.id, item.name)">
                     <div class="course-item-img">
                         <img :src="item.image" alt="">
                     </div>

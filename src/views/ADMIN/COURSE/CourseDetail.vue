@@ -4,6 +4,7 @@
         <div class="popup">
             <div class="popup-header d-flex align-items-center justify-content-between mb-3">
                 <h3 style="color:#2e86de; font-weight: bolder;">{{ mode == 'add' ? 'Thêm' : 'Sửa' }} khóa học</h3>
+                <button v-if="mode == 'edit'" @click="(isShowConfirm = true)" style="background-color: #ee5253; border: none" class="btn btn-primary">Xóa khóa học</button>
             </div>
             <div class="popup-body">
                 <div class="d-flex form-info align-items-center justify-content-between flex-wrap">
@@ -94,6 +95,18 @@
                 <button type="button" class="btn btn-primary px-4" @click="saveClick">Lưu</button>
             </div>
         </div>
+        <div class="popup-confirm" :class="isShowConfirm == true ? '' : 'd-none'">
+            <div class="popup-confirm-content">
+                <div class="popup-confirm-title fs-4 fw-bolder ">Thông báo</div>
+                <div class="popup-confirm-body my-3">
+                    <div class="popup-confirm-message fs-5">Bạn có chắc chắn muốn xóa khóa học này?</div>
+                </div>
+                <div class="popup-confirm-footer d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-secondary px-4 me-2" @click="cancelConfirm">Không</button>
+                    <button type="button" class="btn btn-primary px-4" @click="confirm">Đồng ý</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
@@ -116,6 +129,7 @@ export default {
             listCategory: [],
             selectedTeacher: null,
             selectedCategory: null,
+            isShowConfirm: false,
         }
     },
     props: {
@@ -240,6 +254,21 @@ export default {
         deleteVideo(index) {
             this.listVideos.splice(index, 1);
         },
+        cancelConfirm() {
+            this.isShowConfirm = false;
+        },
+        confirm() {
+            let me = this;
+            this.isShowConfirm = false;
+            this.axios
+                .delete(`${baseURL}api/Course/Delete?courseId=${this.id}`)
+                .then((response) => {
+                    if(response.data) {
+                        me.$emit('save-click');
+                    }
+                });
+
+        },
         saveClick() {
             let me = this, type = 1,
                 listDuration = document.querySelectorAll('.list-video .video-item-duration'),
@@ -306,8 +335,11 @@ export default {
                     this.selectedTeacher = null;
                     this.selectedCategory = null;
                 }
+                else {
+                    this.getCourseDetail(this.id);
+                }
                 this.getListData();
-                this.getCourseDetail(this.id);
+                
             }
         }
     }
@@ -435,4 +467,16 @@ textarea {
     bottom: 20px;
     right: 20px;
 }
+
+.popup-confirm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f5f5f5;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+}
+
 </style>
