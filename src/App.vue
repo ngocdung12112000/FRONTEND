@@ -34,7 +34,7 @@ export default {
             if(!this.$route.fullPath.startsWith("/admin")) {
                 if((this.$route.name === "Login" || this.$route.name === "Register" 
                     || this.$route.name === "GamePlay" || this.$route.name === "Introduce" 
-                    || this.$route.name === "Admin")) {
+                    || this.$route.name === "Admin" || this.$route.name === "Practise")) {
                     return false;
                 }
                 return true;

@@ -13,7 +13,7 @@
                               current: currentPageUser == topic.id && currentLessonUser == 1 }" 
                     :style="{backgroundColor: currentPageUser == topic.id && currentLessonUser == 1 ? topic.colors[1] :
                         currentPageUser == topic.id && currentLessonUser > 1 ? '#C19B11' :
-                        currentPageUser > topic.id ? '#C19B11' : topic.colors[1]
+                        currentPageUser > topic.id ? '#C19B11' : '#bdbdbd'
                 }">
                     <div v-if="currentPageUser == topic.id && currentLessonUser == 1" class="lesson-item"
                         :style="{ backgroundColor: topic.colors[0] }">
@@ -25,9 +25,12 @@
                             <div class="img-done-tick"></div>
                         </div>
                     </div>
-                    <div v-else class="lesson-item" :style="{ backgroundColor: topic.colors[0] }">
-                        <div class="img-skip"></div>
+                    <div v-else class="lesson-item">
+                        <div class="img-lock"></div>
                     </div>
+                    <!-- <div v-else class="lesson-item" :style="{ backgroundColor: topic.colors[0] }">
+                        <div class="img-skip"></div>
+                    </div> -->
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3" @click="() => goToLesson(topic.id, 2)">

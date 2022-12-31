@@ -33,7 +33,9 @@ export default {
     },
     mounted() {
         setTimeout(() => {
-            this.speakWord(this.question.answer, "EN");
+            if(this.question){
+                this.speakWord(this.question.answer, "EN");
+            }
         }, 500);
     },
     data() {

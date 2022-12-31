@@ -1,7 +1,7 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
     <Loading v-show="isShowLoading" />
-    <div v-if="$route.params.idLesson != null" style="height: calc(100vh - 17px)">
+    <div style="height: calc(100vh - 17px)">
         <div class="container position-relative">
             <div class="process mt-3">
                 <div class="icon icon-cancel me-3" @click="backAction"></div>
@@ -125,7 +125,7 @@ export default {
         Loading
     },
     beforeMount(){
-        this.getLessonQuestions(this.$route.params.idLesson);
+        this.getLessonQuestions(this.$store.getters['AUTH/currentLessonId']);
     },
     data() {
         return {
@@ -274,12 +274,10 @@ export default {
             this.$router.push("/home");
         },
         // Hàm lấy ra câu hỏi của bài học
-        getLessonQuestions() {
-            let me = this,
-                topicId = this.$route.params.currentTopicId,
-                lessonName = this.$route.params.currentLessonName;
+        getLessonQuestions(id) {
+            let me = this;
                 
-            this.axios.get(`${baseURL}api/Lesson/Question?topicId=${topicId}&lessonName=${lessonName}`)
+            this.axios.get(`${baseURL}api/Lesson/QuestionRand?lessonid=${id}`)
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
