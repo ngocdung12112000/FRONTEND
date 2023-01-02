@@ -7,9 +7,17 @@
                 <div v-for="item in listTopic" :key="item.id">
                     <Lesson :topic="item" :currentPageUser="currentTopicUser" :currentLessonUser="currentLessonUser" />
                 </div>
-                <a class="scroll-top" @click="scollToCurrent">
-                    <div class="img-up-arrow"></div>
-                </a>
+                <div class="container fixed-wrap">
+                    <div class="col-8 d-flex align-items-center justify-content-between" style="height: 100%;">
+                        <router-link to="/practise" class="practise">
+                            <div class="img-practise"></div>
+                        </router-link>
+                        <a class="scroll-top" @click="scollToCurrent">
+                            <div class="img-up-arrow"></div>
+                        </a>
+                    </div>
+                </div>
+                
             </div>
             <Personal :listUser="listUser" :currentUser="currentUser"/>
         </div>
@@ -173,18 +181,39 @@ export default {
     padding-top: 20px;
 }
 
+.fixed-wrap {
+    position: fixed;
+    bottom: 0;
+    height: 70px;
+    z-index: 1;
+}
+
 .scroll-top {
     border: 2px solid #e6e6e6;
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    position: fixed;
-    bottom: 20px;
-    right: 40%;
+    margin-right: 50px;
+    /* position: fixed; */
+    /* bottom: 20px; */
+    /* right: 40%; */
     z-index: 1;
     background-color: #fff;
     cursor: pointer;
     /* display: none; */
+}
+
+.practise {
+    border: 2px solid #e6e6e6;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    /* position: fixed; */
+    /* bottom: 20px; */
+    /* left: 0; */
+    z-index: 1;
+    background-color: #fff;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

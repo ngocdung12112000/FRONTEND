@@ -127,6 +127,13 @@
     height: 20px;
 }
 
+.img-practise {
+    background-image: url(../images/ICON/icon-practise.svg);
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 20px;
+}
+
 .streak-img {
     background-image: url(../../assets/images/flame-icon.svg);
     background-size: contain;
