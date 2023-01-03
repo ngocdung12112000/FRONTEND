@@ -125,7 +125,7 @@ export default {
         Loading
     },
     beforeMount(){
-        this.getLessonQuestions(this.$store.getters['AUTH/currentLessonId']);
+        this.getLessonQuestions();
     },
     data() {
         return {
@@ -274,10 +274,11 @@ export default {
             this.$router.push("/home");
         },
         // Hàm lấy ra câu hỏi của bài học
-        getLessonQuestions(id) {
-            let me = this;
+        getLessonQuestions() {
+            let me = this,
+                loginUserId = this.$store.getters['AUTH/userId'];
                 
-            this.axios.get(`${baseURL}api/Lesson/QuestionRand?lessonid=${id}`)
+            this.axios.get(`${baseURL}api/Lesson/QuestionRand?userID=${loginUserId}`)
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     let arrQuestions = res.data.map(item => JSON.parse(item.content.toString()));
@@ -296,23 +297,13 @@ export default {
         updateData() {
             let me = this,
                 loginUserId = this.$store.getters['AUTH/userId'],
-                lessonId = this.$route.params.idLesson,
-                gem = lessonId == (this.$route.params.currentTopicId*5 -1) ? 5 : 0;
-
-            this.$store.dispatch('AUTH/setGem', gem);
+                lessonId = this.$store.getters['AUTH/currentLessonId'];
 
             this.axios
-                .post(`${baseURL}api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}`)
+                .post(`${baseURL}api/Lesson/Word?userId=${loginUserId}&lessonId=${lessonId}&isPractise=true`)
                 .then((response) => {
                     if (response.data) {
                         console.log(response.data);
-                    }
-                });
-
-            this.axios
-                .put(`${baseURL}api/Users/UpdateUserLesson?userId=${loginUserId}&point=${this.numberCorrect}&gem=${gem}`)
-                .then((response) => {
-                    if (response.data) {
                         // Thực hiện chuyển về trang home
                         setTimeout(() => {
                             me.isShowLoading = false;

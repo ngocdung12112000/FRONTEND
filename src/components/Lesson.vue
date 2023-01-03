@@ -202,7 +202,7 @@ export default {
                     params: {
                         currentTopicId: this.currentPageUser,
                         currentLessonName: this.currentLessonUser,
-                        idLesson: lessonPage,
+                        idLesson: this.currentPageUser*5-(5-this.currentLessonUser),
                     },
                 });
             }
