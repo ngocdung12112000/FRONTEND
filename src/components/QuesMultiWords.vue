@@ -4,7 +4,7 @@
         <div class="title mb-5">{{ question.question_text.name }}</div>
         <div class="ques-content mb-3 d-flex justify-content-center align-items-center ">
             <div class="ques-img me-3">
-                <img src="../assets/images/STORY/s1.svg" alt="">
+                <img :src="image" alt="">
             </div>
             <div class="ques-text d-flex align-items-center">
                 <div @click="speakWord(question.question_text.text, question.question_text.lang)"
@@ -45,8 +45,13 @@ export default {
     },
     data() {
         return {
-
+            random: 1,
+            image: ""
         }
+    },
+    mounted() {
+        this.random = Math.floor(Math.random() * 12) + 1;
+        this.image = require(`../assets/images/STORY/s${this.random}.svg`);
     },
     methods: {
         btnWordClick(e) {
